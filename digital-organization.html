@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Digital Organization to Agentic Transformation – PCC Group</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --navy: #0D1B3E;
+      --blue: #1A4A8A;
+      --blue2: #1565C0;
+      --teal: #00695C;
+      --orange: #E65100;
+      --green: #2E7D32;
+      --purple: #4527A0;
+      --indigo: #283593;
+    }
+    html, body { width:100%; overflow-x:hidden; }
+    body { font-family:'Sarabun','Inter',sans-serif; background:#EEF3FA; color:#1E3A5F; font-size:13px; }
+
+    /* ─── TOP NAV ─── */
+    .top-nav {
+      background: linear-gradient(135deg,#0D1B3E 0%,#1A237E 60%,#283593 100%);
+      padding: 10px 24px; display:flex; align-items:center; gap:16px;
+      position:sticky; top:0; z-index:100; box-shadow: 0 2px 12px rgba(0,0,0,.3);
+    }
+    .top-nav .back-btn {
+      background:rgba(255,255,255,.12); color:#fff; border:1px solid rgba(255,255,255,.25);
+      border-radius:8px; padding:6px 14px; font-size:12px; font-weight:700;
+      cursor:pointer; font-family:'Sarabun',sans-serif; transition:all .2s;
+      text-decoration:none; display:inline-flex; align-items:center; gap:6px;
+    }
+    .top-nav .back-btn:hover { background:rgba(255,255,255,.22); }
+    .top-nav .nav-title { color:#fff; font-size:15px; font-weight:800; letter-spacing:1px; }
+    .top-nav .nav-sub { color:rgba(255,255,255,.6); font-size:10px; margin-left:auto; }
+
+    /* ─── PAGE HEADER ─── */
+    .page-header {
+      background: linear-gradient(135deg,#0D1B3E 0%,#1A237E 55%,#1565C0 100%);
+      padding: 20px 28px 16px;
+    }
+    .page-header h1 { color:#fff; font-size:28px; font-weight:900; letter-spacing:1.5px; line-height:1; }
+    .page-header .tagline { color:rgba(255,255,255,.75); font-size:11.5px; margin-top:4px; font-weight:600; }
+    .page-header .sub2 { color:rgba(255,255,255,.55); font-size:10px; margin-top:2px; }
+
+    /* ─── 3-COLUMN LAYOUT ─── */
+    .do-layout {
+      display:grid;
+      grid-template-columns: 210px 1fr 230px;
+      gap:0;
+      min-height:calc(100vh - 120px);
+    }
+
+    /* ─── LEFT SIDEBAR ─── */
+    .left-sidebar {
+      background:#fff;
+      border-right:2px solid rgba(0,40,120,.1);
+      padding:16px 14px;
+    }
+    .sidebar-title {
+      font-size:9px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase;
+      color:rgba(0,40,120,.5); margin-bottom:10px; padding-bottom:6px;
+      border-bottom:1px solid rgba(0,40,120,.1);
+    }
+    /* Technology triangle */
+    .tech-tri-wrap { text-align:center; margin-bottom:16px; }
+    .tech-tri-wrap svg { width:100%; max-width:180px; }
+
+    /* 5PS levels list */
+    .levels-list { margin-top:4px; }
+    .level-item {
+      display:flex; gap:8px; align-items:flex-start;
+      padding:7px 8px; border-radius:8px; margin-bottom:4px;
+      border:1px solid rgba(0,40,120,.06);
+      background:rgba(0,40,120,.02);
+    }
+    .level-num {
+      width:22px; height:22px; border-radius:50%; background:var(--blue2);
+      color:#fff; font-size:10px; font-weight:800; display:flex; align-items:center;
+      justify-content:center; flex-shrink:0;
+    }
+    .level-text strong { display:block; font-size:10px; font-weight:800; color:#1A237E; }
+    .level-text span { font-size:9px; color:#6B7A99; line-height:1.3; }
+
+    /* ─── CENTER PYRAMID ─── */
+    .pyramid-center {
+      background: linear-gradient(180deg,#D6E8F8 0%,#DCE9F5 50%,#E0EDF7 100%);
+      overflow: visible;
+      position: relative;
+    }
+    /* SVG pyramid overlay */
+    .pyr-svg-bg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: visible;
+    }
+
+    /* Layer shared */
+    .pyr-layer {
+      position:relative;
+      border-bottom: 1px solid rgba(0,40,120,.08);
+    }
+    .layer-label-badge {
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:9px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase;
+      padding:3px 10px; border-radius:20px; margin-bottom:8px;
+    }
+
+    /* ── L1: OBJECTIVE ── */
+    .layer-objective {
+      background:rgba(13,27,62,0.88);
+      position:relative;
+      z-index:4;
+      padding:16px 24px 14px;
+      text-align:center;
+    }
+    .layer-objective .obj-title {
+      font-size:18px; font-weight:900; color:#fff; letter-spacing:1px;
+    }
+    .layer-objective .obj-sub {
+      font-size:10.5px; color:rgba(255,255,255,.75); margin-top:6px; line-height:1.6;
+    }
+
+    /* ── L2: PROJECT FUNCTIONS ── */
+    .layer-pf {
+      background:rgba(255,255,255,0.78);
+      position:relative;
+      z-index:4;
+      padding:14px 20px;
+    }
+    .layer-pf-header {
+      font-size:10px; font-weight:800; color:var(--navy); letter-spacing:1px;
+      text-transform:uppercase; margin-bottom:10px;
+    }
+    .pf-grid {
+      display:grid; grid-template-columns:repeat(4,1fr); gap:10px;
+    }
+    .pf-card {
+      border-radius:10px; padding:10px 12px; border:1.5px solid;
+      cursor:pointer; transition:transform .2s, box-shadow .2s;
+    }
+    .pf-card:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,.15); }
+    .pf-card .pf-num { font-size:9px; font-weight:800; letter-spacing:.8px; margin-bottom:4px; }
+    .pf-card .pf-name { font-size:11px; font-weight:800; line-height:1.3; margin-bottom:3px; }
+    .pf-card .pf-bracket { font-size:8.5px; font-style:italic; opacity:.8; }
+    /* PF colors */
+    .pf1 { background:rgba(230,81,0,.08); border-color:rgba(230,81,0,.3); }
+    .pf1 .pf-num { color:#E65100; }
+    .pf1 .pf-name { color:#BF360C; }
+    .pf2 { background:rgba(0,105,92,.08); border-color:rgba(0,105,92,.3); }
+    .pf2 .pf-num { color:#00695C; }
+    .pf2 .pf-name { color:#004D40; }
+    .pf3 { background:rgba(25,118,210,.08); border-color:rgba(25,118,210,.3); }
+    .pf3 .pf-num { color:#1565C0; }
+    .pf3 .pf-name { color:#0D47A1; }
+    .pf4 { background:rgba(69,39,160,.08); border-color:rgba(69,39,160,.3); }
+    .pf4 .pf-num { color:#4527A0; }
+    .pf4 .pf-name { color:#311B92; }
+
+    /* ── L3: MAJOR SYSTEMS ── */
+    .layer-ms {
+      background:rgba(255,255,255,0.82);
+      position:relative;
+      z-index:4;
+      padding:12px 20px;
+    }
+    .layer-ms-header {
+      font-size:10px; font-weight:800; color:var(--navy); letter-spacing:1px;
+      text-transform:uppercase; margin-bottom:10px;
+    }
+    .ms-grid {
+      display:grid; grid-template-columns:repeat(4,1fr); gap:8px;
+    }
+    .ms-col { display:flex; flex-direction:column; gap:6px; }
+    .ms-card {
+      border-radius:8px; padding:8px 10px; border:1px solid;
+      font-size:9.5px;
+    }
+    .ms-card .ms-id { font-weight:800; font-size:9px; margin-bottom:3px; }
+    .ms-card .ms-name { font-weight:700; font-size:10px; margin-bottom:4px; line-height:1.3; }
+    .ms-card ul { padding-left:12px; }
+    .ms-card li { font-size:8.5px; line-height:1.5; color:#3A4A6A; }
+    .ms-c1 { background:rgba(230,81,0,.05); border-color:rgba(230,81,0,.2); }
+    .ms-c1 .ms-id { color:#E65100; }
+    .ms-c2 { background:rgba(0,105,92,.05); border-color:rgba(0,105,92,.2); }
+    .ms-c2 .ms-id { color:#00695C; }
+    .ms-c3 { background:rgba(25,118,210,.05); border-color:rgba(25,118,210,.2); }
+    .ms-c3 .ms-id { color:#1565C0; }
+    .ms-c4 { background:rgba(69,39,160,.05); border-color:rgba(69,39,160,.2); }
+    .ms-c4 .ms-id { color:#4527A0; }
+
+    /* ── L4: SUBSYSTEMS ── */
+    .layer-ss {
+      background:rgba(236,245,255,0.80);
+      position:relative;
+      z-index:4;
+      padding:10px 20px;
+    }
+    .layer-ss-header {
+      font-size:10px; font-weight:800; color:var(--navy); letter-spacing:1px;
+      text-transform:uppercase; margin-bottom:8px;
+    }
+    .ss-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+    .ss-col { display:flex; flex-direction:column; gap:5px; }
+    .ss-card {
+      border-radius:6px; padding:7px 9px; border-left:3px solid;
+      background:#fff; font-size:8.5px;
+    }
+    .ss-card .ss-id { font-weight:800; font-size:8.5px; margin-bottom:2px; }
+    .ss-card .ss-name { font-weight:700; font-size:9px; margin-bottom:3px; line-height:1.3; }
+    .ss-card li { font-size:8px; line-height:1.4; color:#4A5A7A; }
+    .ss-c1 .ss-id { color:#E65100; } .ss-c1 { border-color:#E65100; }
+    .ss-c2 .ss-id { color:#00695C; } .ss-c2 { border-color:#00695C; }
+    .ss-c3 .ss-id { color:#1565C0; } .ss-c3 { border-color:#1565C0; }
+    .ss-c4 .ss-id { color:#4527A0; } .ss-c4 { border-color:#4527A0; }
+
+    /* ── L5: SUB-SUBSYSTEMS ── */
+    .layer-sss {
+      background:rgba(255,255,255,0.72);
+      position:relative;
+      z-index:4;
+      padding:10px 20px;
+    }
+    .sss-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+    .sss-col { display:flex; flex-direction:column; gap:3px; }
+    .sss-item {
+      font-size:8px; padding:4px 8px; border-radius:4px;
+      background:rgba(0,40,120,.04); border:1px solid rgba(0,40,120,.1);
+      line-height:1.4; color:#1E3050;
+    }
+    .sss-item .sss-id { font-weight:700; color:#1565C0; font-size:7.5px; }
+
+    /* ── L6: TASKS ── */
+    .layer-tasks {
+      background:rgba(240,248,255,0.80);
+      position:relative;
+      z-index:4;
+      padding:10px 20px;
+    }
+    .tasks-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+    .tasks-col { }
+    .task-item {
+      font-size:7.5px; padding:3px 6px; border-radius:3px;
+      background:#fff; border:1px solid rgba(0,40,120,.08);
+      margin-bottom:3px; line-height:1.4; color:#1E3050;
+    }
+    .task-id { font-weight:700; color:#1565C0; }
+
+    /* ── L7: WORK PACKAGES ── */
+    .layer-wp {
+      background:rgba(230,240,255,0.75);
+      position:relative;
+      z-index:4;
+      padding:10px 20px;
+    }
+    .wp-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+    .wp-item {
+      font-size:7.5px; padding:3px 6px; border-radius:3px;
+      background:#fff; border:1px solid rgba(0,40,120,.1);
+      margin-bottom:3px; line-height:1.4; color:#1E3050;
+    }
+    .wp-id { font-weight:700; color:#283593; }
+
+    /* Layer headers shared */
+    .layer-hdr-band {
+      display:flex; align-items:center; gap:10px; margin-bottom:8px;
+    }
+    .layer-hdr-badge {
+      font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:1px;
+      padding:3px 10px; border-radius:12px; white-space:nowrap;
+    }
+    .layer-hdr-title { font-size:12px; font-weight:700; }
+
+    /* ─── FOUNDATION BAR ─── */
+    .foundation-bar {
+      background:linear-gradient(135deg,#1A237E 0%,#283593 100%);
+      padding:12px 24px;
+    }
+    .foundation-bar .fb-title {
+      font-size:9px; font-weight:800; color:rgba(255,255,255,.7);
+      letter-spacing:1.5px; text-transform:uppercase; margin-bottom:10px;
+    }
+    .fb-grid {
+      display:grid; grid-template-columns:repeat(6,1fr); gap:10px;
+    }
+    .fb-item {
+      background:rgba(255,255,255,.12); border-radius:8px; padding:8px 10px;
+      border:1px solid rgba(255,255,255,.15); text-align:center;
+    }
+    .fb-item .fb-icon { font-size:16px; margin-bottom:4px; }
+    .fb-item .fb-name { font-size:8px; font-weight:700; color:#fff; line-height:1.4; }
+
+    /* ─── PAGE FOOTER ─── */
+    .page-footer {
+      background:#0D1B3E; padding:10px 24px; text-align:center;
+      font-size:9px; color:rgba(255,255,255,.65); letter-spacing:.3px;
+    }
+    .page-footer strong { color:#64B5F6; }
+
+    /* ─── RIGHT SIDEBAR ─── */
+    .right-sidebar {
+      background:#fff; border-left:2px solid rgba(0,40,120,.1); padding:14px 12px;
+      overflow-y:auto;
+    }
+    .rs-section { margin-bottom:16px; }
+    .rs-title {
+      font-size:9px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase;
+      color:#1A237E; margin-bottom:8px; padding-bottom:5px;
+      border-bottom:2px solid rgba(26,35,126,.15);
+    }
+    .rs-item {
+      display:flex; gap:6px; align-items:flex-start;
+      font-size:9px; color:#2A3A5A; margin-bottom:5px; line-height:1.4;
+    }
+    .rs-item .rs-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; margin-top:3px; }
+    .rs-check { color:#2E7D32; font-size:11px; flex-shrink:0; }
+    .rs-icon { font-size:13px; flex-shrink:0; margin-top:1px; }
+    .sm-row { margin-bottom:6px; }
+    .sm-row .sm-cat { font-size:8.5px; font-weight:800; color:#1A237E; }
+    .sm-row .sm-val { font-size:8px; color:#4A5A7A; }
+
+    /* success measures box */
+    .sm-box {
+      background:linear-gradient(135deg,#1A237E,#283593);
+      border-radius:8px; padding:8px 10px;
+    }
+    .sm-box .sm-title { font-size:9px; font-weight:800; color:#fff; margin-bottom:6px; }
+
+    /* Pyramid outline overlay (SVG) */
+    .pyr-outline-wrap {
+      position:relative;
+    }
+
+    /* ─── Compact layer headers ─── */
+    .compact-hdr {
+      position: relative;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: center;   /* ← centered horizontally */
+      gap: 10px;
+      padding: 9px 20px 7px;
+      background: rgba(0,0,0,.04);
+      border-bottom: 1.5px solid rgba(0,40,120,.10);
+    }
+    .compact-hdr .ch-num {
+      width: 26px; height: 26px; border-radius: 50%; background: #C0392B;
+      color: #fff; font-size: 11px; font-weight: 900;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(192,57,43,.35);
+    }
+    .compact-hdr .ch-label {
+      font-size: 14px;            /* ← bigger */
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #C0392B;             /* ← red */
+    }
+    .compact-hdr .ch-sub {
+      font-size: 9px; color: #8A6A6A; margin-left: 2px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ▶ TOP NAVIGATION -->
+<nav class="top-nav">
+    <!-- display:none ตั้งเป็น inline style เพราะ .back-btn มี display:inline-flex ซึ่งทับ attribute hidden -->
+    <button class="back-btn" id="back-btn" style="display:none">← กลับหน้าหลัก</button>
+    <script>
+      /* ปุ่มกลับทำงานได้เฉพาะตอนถูกฝังเป็น iframe — เปิดหน้านี้เดี่ยวๆ จะซ่อนไว้ */
+      (function () {
+        if (window.parent === window) return;
+        var btn = document.getElementById('back-btn');
+        btn.style.display = '';
+        btn.onclick = function () {
+          /* ล็อก targetOrigin เฉพาะบน http(s) — บน file:// ตัว location.origin คืนค่า
+             "file://" แต่ origin จริงเป็น opaque ทำให้ message ถูก drop เงียบๆ */
+          var p = window.location.protocol;
+          var target = (p === 'http:' || p === 'https:') ? window.location.origin : '*';
+          window.parent.postMessage('closeDorg', target);
+        };
+      })();
+    </script>
+  <span class="nav-title">DIGITAL ORGANIZATION TO AGENTIC TRANSFORMATION</span>
+  <span class="nav-sub">5Ps Pyramid × Technology Triangle Paradigm</span>
+</nav>
+
+<!-- ▶ PAGE HEADER -->
+<div class="page-header">
+  <h1>DIGITAL ORGANIZATION TO AGENTIC TRANSFORMATION</h1>
+  <div class="tagline">5Ps Pyramid × Technology Triangle Paradigm &nbsp;·&nbsp; Horizontal (SCM) + Vertical (IS for Management)</div>
+  <div class="sub2">Transform to Agentic Organization ในอนาคต</div>
+</div>
+
+<!-- ▶ 3-COLUMN LAYOUT -->
+<div class="do-layout">
+
+  <!-- ════ LEFT SIDEBAR ════ -->
+  <aside class="left-sidebar">
+    <div class="sidebar-title">Paradigm Technology Triangle</div>
+    <div class="tech-tri-wrap">
+      <svg viewBox="0 0 180 160" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="triGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#1A237E" stop-opacity=".15"/>
+            <stop offset="100%" stop-color="#283593" stop-opacity=".05"/>
+          </linearGradient>
+        </defs>
+        <polygon points="90,8 178,150 2,150" fill="url(#triGrad)" stroke="#1A237E" stroke-width="2"/>
+        <!-- Center labels -->
+        <text x="90" y="52" text-anchor="middle" font-size="8.5" font-weight="800" fill="#1A237E" font-family="Arial">BUSINESS</text>
+        <text x="90" y="63" text-anchor="middle" font-size="8.5" font-weight="800" fill="#1A237E" font-family="Arial">VALUE</text>
+        <text x="90" y="74" text-anchor="middle" font-size="8" font-weight="700" fill="#E65100" font-family="Arial">PCC</text>
+        <!-- Center SCA -->
+        <text x="90" y="95" text-anchor="middle" font-size="7.5" font-weight="700" fill="#2E7D32" font-family="Arial">SUSTAINABLE</text>
+        <text x="90" y="106" text-anchor="middle" font-size="7.5" font-weight="700" fill="#2E7D32" font-family="Arial">COMPETITIVE</text>
+        <text x="90" y="117" text-anchor="middle" font-size="7.5" font-weight="700" fill="#2E7D32" font-family="Arial">ADVANTAGE</text>
+        <!-- Bottom labels -->
+        <text x="36" y="142" text-anchor="middle" font-size="7" font-weight="700" fill="#555" font-family="Arial">TECHNOLOGY</text>
+        <text x="36" y="152" text-anchor="middle" font-size="7" font-weight="700" fill="#555" font-family="Arial">ENABLERS</text>
+        <text x="144" y="142" text-anchor="middle" font-size="7" font-weight="700" fill="#555" font-family="Arial">ORGANIZATION</text>
+        <text x="144" y="152" text-anchor="middle" font-size="7" font-weight="700" fill="#555" font-family="Arial">CAPABILITY</text>
+      </svg>
+    </div>
+
+    <div class="sidebar-title">Levels of 5PS</div>
+    <div class="levels-list">
+      <div class="level-item"><div class="level-num">1</div><div class="level-text"><strong>OBJECTIVE</strong><span>What we want to achieve</span></div></div>
+      <div class="level-item"><div class="level-num">2</div><div class="level-text"><strong>PROJECT FUNCTIONS</strong><span>What we must excel at</span></div></div>
+      <div class="level-item"><div class="level-num">3</div><div class="level-text"><strong>MAJOR SYSTEMS</strong><span>Our key capabilities</span></div></div>
+      <div class="level-item"><div class="level-num">4</div><div class="level-text"><strong>SUBSYSTEMS</strong><span>How we build capabilities</span></div></div>
+      <div class="level-item"><div class="level-num">5</div><div class="level-text"><strong>SUB-SUBSYSTEMS</strong><span>Detailed components</span></div></div>
+      <div class="level-item"><div class="level-num">6</div><div class="level-text"><strong>TASKS</strong><span>What we do</span></div></div>
+      <div class="level-item"><div class="level-num">7</div><div class="level-text"><strong>WORK PACKAGES</strong><span>How we deliver</span></div></div>
+    </div>
+  </aside>
+
+  <!-- ════ CENTER PYRAMID ════ -->
+  <main class="pyramid-center">
+    <!-- ▲ PYRAMID SVG BACKGROUND — white triangle + layer grid lines -->
+    <svg class="pyr-svg-bg" viewBox="0 0 1000 1000" preserveAspectRatio="none"
+         xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <clipPath id="doPyrClip">
+          <polygon points="500,0 1000,1000 0,1000"/>
+        </clipPath>
+      </defs>
+
+      <!-- White pyramid body -->
+      <polygon points="500,0 1000,1000 0,1000"
+               fill="white" fill-opacity="0.90" stroke="none"/>
+
+      <!-- All grid lines clipped to pyramid shape -->
+      <g clip-path="url(#doPyrClip)">
+
+        <!-- ── Horizontal layer separators ── -->
+        <!-- L1/L2  @ y=100 -->
+        <line x1="0" y1="107" x2="1000" y2="107"
+              stroke="#2A2A2A" stroke-width="1.8" vector-effect="non-scaling-stroke"/>
+        <!-- L2/L3  @ y=220 -->
+        <line x1="0" y1="203" x2="1000" y2="203"
+              stroke="#2A2A2A" stroke-width="1.8" vector-effect="non-scaling-stroke"/>
+        <!-- L3/L4  @ y=470 -->
+        <line x1="0" y1="470" x2="1000" y2="470"
+              stroke="#2A2A2A" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+        <!-- L4/L5  @ y=665 -->
+        <line x1="0" y1="665" x2="1000" y2="665"
+              stroke="#2A2A2A" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+        <!-- L5/L6  @ y=780 -->
+        <line x1="0" y1="780" x2="1000" y2="780"
+              stroke="#2A2A2A" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+        <!-- L6/L7  @ y=886 -->
+        <line x1="0" y1="886" x2="1000" y2="886"
+              stroke="#2A2A2A" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+
+        <!-- ── Vertical dividers ── -->
+        <!-- L1: center spine only -->
+        <line x1="500" y1="0" x2="500" y2="100"
+              stroke="#2A2A2A" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+
+        <!-- L2–L7: 4 equal columns (x=250, 500, 750) -->
+        <line x1="250" y1="100" x2="250" y2="1000"
+              stroke="#555" stroke-width="1.1" vector-effect="non-scaling-stroke"/>
+        <line x1="500" y1="100" x2="500" y2="1000"
+              stroke="#555" stroke-width="1.1" vector-effect="non-scaling-stroke"/>
+        <line x1="750" y1="100" x2="750" y2="1000"
+              stroke="#555" stroke-width="1.1" vector-effect="non-scaling-stroke"/>
+
+      </g>
+
+      <!-- Pyramid outline border -->
+      <polygon points="500,0 1000,1000 0,1000"
+               fill="none" stroke="#2A2A2A" stroke-width="3"
+               vector-effect="non-scaling-stroke"/>
+    </svg>
+
+    <!-- L1: OBJECTIVE -->
+    <div class="compact-hdr" style="background:rgba(13,27,62,.06);">
+      <div class="ch-num">1</div>
+      <span class="ch-label">Objective</span>
+    </div>
+    <div class="layer-objective">
+      <div style="display:inline-block;background:rgba(255,255,255,.12);border-radius:20px;padding:2px 14px;font-size:12px;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:1px;margin-bottom:8px;">DIGITAL ORGANIZATION TO AGENTIC TRANSFORMATION</div>
+      <div class="obj-title">DIGITAL ORGANIZATION TO AGENTIC TRANSFORMATION</div>
+      <div class="obj-sub">
+        พัฒนาองค์กรสู่ Digital Organization ใน Horizontal (SCM) และ Vertical (IS for Management)<br/>
+        ทุกระดับ รองรับการพัฒนาไปสู่ <strong style="font-size:12px;font-weight:700;color:#64B5F6;cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px;" onclick="document.getElementById('modal-agentic-org').style.display='flex'" title="คลิกเพื่อดู Agentic Organization">Agentic Organization</strong> ในอนาคต
+      </div>
+    </div>
+
+    <!-- L2: PROJECT FUNCTIONS -->
+    <div class="compact-hdr">
+      <div class="ch-num">2</div>
+      <span class="ch-label">Project Functions</span>
+      <span class="ch-sub">4 Core Transformation Pillars</span>
+    </div>
+    <div class="layer-pf">
+      <div class="pf-grid">
+        <div class="pf-card pf1" style="cursor:pointer;transition:all .2s;"
+             onclick="document.getElementById('modal-pf1-doc').style.display='flex'"
+             onmouseover="this.style.background='rgba(230,81,0,.18)'"
+             onmouseout="this.style.background=''">
+          <div class="pf-num">PF1</div>
+          <div class="pf-name">Digital Business Process &amp; Operations</div>
+          <div class="pf-bracket">[The Internal Engine – PCF 13 Categories]</div>
+          <div style="font-size:9px;color:#E65100;margin-top:6px;letter-spacing:.5px;">คลิกเพื่อดู Document ▶</div>
+        </div>
+        <div class="pf-card pf2" style="cursor:pointer;transition:all .2s;"
+             onclick="document.getElementById('modal-pf2-doc').style.display='flex'"
+             onmouseover="this.style.background='rgba(2,119,189,.18)'"
+             onmouseout="this.style.background=''">
+          <div class="pf-num">PF2</div>
+          <div class="pf-name">Digital Technology &amp; Platform Ecosystem</div>
+          <div class="pf-bracket">[The Architecture – DE &amp; DBTP Core Products]</div>
+          <div style="font-size:9px;color:#0277BD;margin-top:6px;letter-spacing:.5px;">คลิกเพื่อดู Document ▶</div>
+        </div>
+        <div class="pf-card pf3" onclick="document.getElementById('modal-pf3-infra').style.display='flex'" style="cursor:pointer;transition:all .2s;" onmouseover="this.style.background='rgba(25,118,210,.18)';this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(25,118,210,.25)'" onmouseout="this.style.background='';this.style.transform='';this.style.boxShadow=''">
+          <div class="pf-num">PF3</div>
+          <div class="pf-name">Digital Infrastructure</div>
+          <div class="pf-bracket">[The Foundation]</div>
+          <div style="font-size:9px;color:#1565C0;margin-top:4px;font-weight:600;">▶ คลิกดู Detail</div>
+        </div>
+        <div class="pf-card pf4" onclick="document.getElementById('modal-pf4-agentic').style.display='flex'" style="cursor:pointer;transition:all .2s;" onmouseover="this.style.background='rgba(69,39,160,.18)'" onmouseout="this.style.background=''">
+          <div class="pf-num">PF4</div>
+          <div class="pf-name">Intellectual Capital &amp; Agentic Transformation</div>
+          <div class="pf-bracket">[The Human-AI Bridge]</div>
+          <div style="font-size:9px;color:#9C88F5;margin-top:6px;letter-spacing:.5px;">คลิกเพื่อดู Roadmap ▶</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- L3: MAJOR SYSTEMS FUNCTIONS -->
+    <div class="compact-hdr">
+      <div class="ch-num">3</div>
+      <span class="ch-label">Major Systems Functions</span>
+      <span class="ch-sub">14 Systems</span>
+    </div>
+    <div class="layer-ms">
+      <div class="ms-grid">
+        <!-- Col 1: PF1 systems -->
+        <div class="ms-col">
+          <div class="ms-card ms-c1">
+            <div class="ms-id">MS1.1</div>
+            <div class="ms-name">Operating Processes (PCF 1.0–6.0)</div>
+            <ul>
+              <li>Develop Vision &amp; Strategy</li>
+              <li>Develop &amp; Manage Products</li>
+              <li>Market &amp; Sell (Tendering, Omni Channel, TCS, Recurring, PPA and Longterm Contract, Investment in other industries)</li>
+              <li>Deliver Physical Products</li>
+              <li>Deliver Services</li>
+              <li>Manage Customer Service</li>
+            </ul>
+          </div>
+          <div class="ms-card ms-c1">
+            <div class="ms-id">MS1.2</div>
+            <div class="ms-name">Management &amp; Support Services (PCF 7.0–13.0)</div>
+            <ul>
+              <li>Human Capital (7.0)</li>
+              <li>IT Management (8.0)</li>
+              <li>Financial Resources (9.0)</li>
+              <li>Asset Management (10.0)</li>
+              <li>Risk &amp; Compliance (11.0)</li>
+              <li>External Relations (12.0)</li>
+              <li>Business Capabilities (13.0)</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Col 2: PF2 systems -->
+        <div class="ms-col">
+          <div class="ms-card ms-c2">
+            <div class="ms-id">MS2.1</div>
+            <div class="ms-name">Internal Platform Architecture</div>
+            <ul>
+              <li>ERP &amp; Integration Layer (Odoo)</li>
+              <li>Cloud &amp; Data Architecture</li>
+              <li>AI/Agentic Runtime</li>
+            </ul>
+          </div>
+          <div class="ms-card ms-c2">
+            <div class="ms-id">MS2.2</div>
+            <div class="ms-name">Equipment Product Development</div>
+            <ul>
+              <li>Smart Grid Hardware</li>
+              <li>IoT-enabled Electrical Equipment</li>
+            </ul>
+          </div>
+          <div class="ms-card ms-c2">
+            <div class="ms-id">MS2.3</div>
+            <div class="ms-name">Digital Engineering (DE)</div>
+            <ul>
+              <li>Digital Twin Engine</li>
+              <li>Engineering Simulation Tools</li>
+              <li>Factory 4.0</li>
+            </ul>
+          </div>
+          <div class="ms-card ms-c2">
+            <div class="ms-id">MS2.4</div>
+            <div class="ms-name">DBTP for LCC × STEM</div>
+            <ul>
+              <li>LCC Intelligence Engine</li>
+              <li>Channel Member Platform</li>
+              <li>End User Portal</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Col 3: PF3 systems -->
+        <div class="ms-col">
+          <div class="ms-card ms-c3">
+            <div class="ms-id">MS3.1</div>
+            <div class="ms-name">Network &amp; Connectivity Infrastructure</div>
+            <ul>
+              <li>WAN/LAN/Fiber</li>
+              <li>Cybersecurity Layer</li>
+            </ul>
+          </div>
+          <div class="ms-card ms-c3">
+            <div class="ms-id">MS3.2</div>
+            <div class="ms-name">Data Center &amp; Cloud</div>
+            <ul>
+              <li>On-premise / Hybrid Cloud</li>
+              <li>Backup &amp; Disaster Recovery</li>
+            </ul>
+          </div>
+          <div class="ms-card ms-c3">
+            <div class="ms-id">MS3.3</div>
+            <div class="ms-name">End-User Compute</div>
+            <ul>
+              <li>Device Management</li>
+              <li>Collaboration Tools</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Col 4: PF4 systems -->
+        <div class="ms-col">
+          <div class="ms-card ms-c4">
+            <div class="ms-id">MS4.1</div>
+            <div class="ms-name">Human Capital Development System</div>
+            <ul>
+              <li>ICM Framework (UPGRADE-UTILIZE-GENERATE)</li>
+              <li>Competency Architecture</li>
+              <li>AI Upskilling Program (50-Person Pilot)</li>
+              <li>GenAI Tool Deployment (6 tools)</li>
+            </ul>
+          </div>
+          <div class="ms-card ms-c4">
+            <div class="ms-id">MS4.2</div>
+            <div class="ms-name">Organizational Design</div>
+            <ul>
+              <li>Agentic Org Structure</li>
+              <li>Human-in-the-Loop Governance</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- L4: SUBSYSTEMS -->
+    <div class="compact-hdr">
+      <div class="ch-num">4</div>
+      <span class="ch-label">Subsystems</span>
+      <span class="ch-sub">How we build capabilities</span>
+    </div>
+    <div class="layer-ss">
+      <div class="ss-grid">
+        <!-- SS PF1 -->
+        <div class="ss-col">
+          <div class="ss-card ss-c1">
+            <div class="ss-id">SS1.1</div>
+            <div class="ss-name">Horizontal SCM Integration</div>
+            <ul>
+              <li>Supplier portal, Procurement automation</li>
+              <li>Production workflow, Delivery tracking</li>
+              <li>Customer portal, After-sales</li>
+            </ul>
+          </div>
+          <div class="ss-card ss-c1">
+            <div class="ss-id" style="color:#BF360C;">SS1.2</div>
+            <div class="ss-name">Vertical IS for Management</div>
+            <ul>
+              <li>Strategic Dashboard (C-Level)</li>
+              <li>Tactical Reports (VP/Dept Head)</li>
+              <li>Operational Monitoring (Manager)</li>
+              <li>Execution Tools (Staff)</li>
+            </ul>
+          </div>
+        </div>
+        <!-- SS PF2 -->
+        <div class="ss-col">
+          <div class="ss-card ss-c2">
+            <div class="ss-id">SS2.1</div>
+            <div class="ss-name">Odoo ERP Modules</div>
+            <ul><li>Sales, Inventory, Manufacturing</li><li>HR, Accounting, Project</li></ul>
+          </div>
+          <div class="ss-card ss-c2">
+            <div class="ss-id">SS2.2</div>
+            <div class="ss-name">DBTP Portal</div>
+            <ul><li>LCC Calculator Module</li><li>Proposal Generator</li><li>Asset Health Dashboard</li></ul>
+          </div>
+          <div class="ss-card ss-c2">
+            <div class="ss-id">SS2.3</div>
+            <div class="ss-name">DE Simulation Engine</div>
+            <ul><li>Load Flow Analysis</li><li>Fault Simulation</li><li>Energy Efficiency Model</li></ul>
+          </div>
+        </div>
+        <!-- SS PF3 -->
+        <div class="ss-col">
+          <div class="ss-card ss-c3">
+            <div class="ss-id">SS3.1</div>
+            <div class="ss-name">Network Segmentation</div>
+            <ul><li>OT/IT separation</li><li>DMZ for customer portal</li><li>IaaS for ERP hosting</li></ul>
+          </div>
+          <div class="ss-card ss-c3">
+            <div class="ss-id">SS3.2</div>
+            <div class="ss-name">Cloud Services</div>
+            <ul><li>IaaS for ERP hosting</li><li>SaaS integration middleware</li></ul>
+          </div>
+          <div class="ss-card ss-c3">
+            <div class="ss-id">SS3.3</div>
+            <div class="ss-name">Security Operations</div>
+            <ul><li>SOC monitoring</li><li>Identity &amp; Access Management</li></ul>
+          </div>
+        </div>
+        <!-- SS PF4 -->
+        <div class="ss-col">
+          <div class="ss-card ss-c4">
+            <div class="ss-id">SS4.1</div>
+            <div class="ss-name">ICM Knowledge Platform</div>
+            <ul><li>Knowledge capture tools</li><li>Expert knowledge repository</li></ul>
+          </div>
+          <div class="ss-card ss-c4">
+            <div class="ss-id">SS4.2</div>
+            <div class="ss-name">AI Copilot Deployment</div>
+            <ul><li>Role-based copilot config</li><li>Prompt library per function</li></ul>
+          </div>
+          <div class="ss-card ss-c4">
+            <div class="ss-id">SS4.3</div>
+            <div class="ss-name">Change Management</div>
+            <ul><li>Communication plan</li><li>Adoption tracking</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- L5: SUB-SUBSYSTEMS -->
+    <div class="compact-hdr">
+      <div class="ch-num">5</div>
+      <span class="ch-label">Sub-Subsystems Functions</span>
+      <span class="ch-sub">16 Components</span>
+    </div>
+    <div class="layer-sss">
+      <div class="sss-grid">
+        <div class="sss-col">
+          <div class="sss-item"><span class="sss-id">SSS1.1.1</span> Supplier EDI/API Connection</div>
+          <div class="sss-item"><span class="sss-id">SSS1.1.2</span> Purchase Order Automation</div>
+          <div class="sss-item"><span class="sss-id">SSS1.2.1</span> KPI Dashboard – C-Level</div>
+          <div class="sss-item"><span class="sss-id">SSS1.2.2</span> Departmental Report Engine</div>
+          <div class="sss-item"><span class="sss-id">SSS1.2.3</span> Mobile Operational App</div>
+        </div>
+        <div class="sss-col">
+          <div class="sss-item"><span class="sss-id">SSS2.1.1</span> Odoo Sales Module Config</div>
+          <div class="sss-item"><span class="sss-id">SSS2.1.2</span> Odoo Manufacturing MRP</div>
+          <div class="sss-item"><span class="sss-id">SSS2.2.1</span> LCC Input Form &amp; Calculator</div>
+          <div class="sss-item"><span class="sss-id">SSS2.2.2</span> Distributor Proposal Tool</div>
+          <div class="sss-item"><span class="sss-id">SSS2.3.1</span> Transformer LCC Model</div>
+        </div>
+        <div class="sss-col">
+          <div class="sss-item"><span class="sss-id">SSS3.1.1</span> Firewall &amp; IDS/IPS Setup</div>
+          <div class="sss-item"><span class="sss-id">SSS3.1.2</span> VPN for remote access</div>
+          <div class="sss-item"><span class="sss-id">SSS3.2.1</span> Cloud migration plan</div>
+          <div class="sss-item"><span class="sss-id">SSS3.3.1</span> SSO &amp; MFA deployment</div>
+        </div>
+        <div class="sss-col">
+          <div class="sss-item"><span class="sss-id">SSS4.1.1</span> Knowledge taxonomy design</div>
+          <div class="sss-item"><span class="sss-id">SSS4.1.2</span> Document digitization</div>
+          <div class="sss-item"><span class="sss-id">SSS4.2.1</span> Copilot – Sales function</div>
+          <div class="sss-item"><span class="sss-id">SSS4.2.2</span> Copilot – Engineering</div>
+          <div class="sss-item"><span class="sss-id">SSS4.3.1</span> Training curriculum design</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- L6: TASKS -->
+    <div class="compact-hdr">
+      <div class="ch-num">6</div>
+      <span class="ch-label">Tasks Functions</span>
+      <span class="ch-sub">Examples</span>
+    </div>
+    <div class="layer-tasks">
+      <div class="tasks-grid">
+        <div class="tasks-col">
+          <div class="task-item"><span class="task-id">T1.1</span> Process mapping per PCF category</div>
+          <div class="task-item"><span class="task-id">T1.2</span> AS-IS vs TO-BE gap analysis</div>
+          <div class="task-item"><span class="task-id">T1.3</span> Digital workflow design</div>
+          <div class="task-item"><span class="task-id">T1.4</span> User acceptance testing (UAT)</div>
+          <div class="task-item"><span class="task-id">T1.5</span> SOP documentation update</div>
+        </div>
+        <div class="tasks-col">
+          <div class="task-item"><span class="task-id">T2.1</span> ERP system configuration</div>
+          <div class="task-item"><span class="task-id">T2.2</span> Data migration &amp; cleansing</div>
+          <div class="task-item"><span class="task-id">T2.3</span> Integration API development</div>
+          <div class="task-item"><span class="task-id">T2.4</span> DBTP UI/UX design</div>
+          <div class="task-item"><span class="task-id">T2.5</span> LCC model calibration per product</div>
+        </div>
+        <div class="tasks-col">
+          <div class="task-item"><span class="task-id">T3.1</span> Network topology design</div>
+          <div class="task-item"><span class="task-id">T3.2</span> Hardware procurement &amp; install</div>
+          <div class="task-item"><span class="task-id">T3.3</span> Cloud environment setup</div>
+          <div class="task-item"><span class="task-id">T3.4</span> Security policy implementation</div>
+          <div class="task-item"><span class="task-id">T3.5</span> Disaster recovery drill</div>
+        </div>
+        <div class="tasks-col">
+          <div class="task-item"><span class="task-id">T4.1</span> AI competency assessment</div>
+          <div class="task-item"><span class="task-id">T4.2</span> Training content development</div>
+          <div class="task-item"><span class="task-id">T4.3</span> Copilot pilot deployment</div>
+          <div class="task-item"><span class="task-id">T4.4</span> Knowledge capture sessions</div>
+          <div class="task-item"><span class="task-id">T4.5</span> Change readiness survey</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- L7: WORK PACKAGES -->
+    <div class="compact-hdr">
+      <div class="ch-num">7</div>
+      <span class="ch-label">Work Packages Functions</span>
+      <span class="ch-sub">Deliverables</span>
+    </div>
+    <div class="layer-wp">
+      <div class="wp-grid">
+        <div>
+          <div class="wp-item"><span class="wp-id">WP1.1</span> PCF process maps (per category)</div>
+          <div class="wp-item"><span class="wp-id">WP1.2</span> Gap Analysis Report</div>
+          <div class="wp-item"><span class="wp-id">WP1.3</span> Workflow diagrams (BPMN)</div>
+          <div class="wp-item"><span class="wp-id">WP1.4</span> UAT test scripts &amp; results</div>
+          <div class="wp-item"><span class="wp-id">WP1.5</span> Updated SOP manual</div>
+        </div>
+        <div>
+          <div class="wp-item"><span class="wp-id">WP2.1</span> Odoo module spec document</div>
+          <div class="wp-item"><span class="wp-id">WP2.2</span> Data migration script</div>
+          <div class="wp-item"><span class="wp-id">WP2.3</span> API specification</div>
+          <div class="wp-item"><span class="wp-id">WP2.4</span> DBTP prototype (wireframe)</div>
+          <div class="wp-item"><span class="wp-id">WP2.5</span> LCC model (per product line)</div>
+        </div>
+        <div>
+          <div class="wp-item"><span class="wp-id">WP3.1</span> Network design diagram</div>
+          <div class="wp-item"><span class="wp-id">WP3.2</span> Equipment installation record</div>
+          <div class="wp-item"><span class="wp-id">WP3.3</span> Cloud architecture document</div>
+          <div class="wp-item"><span class="wp-id">WP3.4</span> Security policy document</div>
+          <div class="wp-item"><span class="wp-id">WP3.5</span> DR runbook</div>
+        </div>
+        <div>
+          <div class="wp-item"><span class="wp-id">WP4.1</span> Competency gap report</div>
+          <div class="wp-item"><span class="wp-id">WP4.2</span> Training deck (per role)</div>
+          <div class="wp-item"><span class="wp-id">WP4.3</span> Copilot deployment guide</div>
+          <div class="wp-item"><span class="wp-id">WP4.4</span> Knowledge article library</div>
+          <div class="wp-item"><span class="wp-id">WP4.5</span> Change readiness assessment</div>
+        </div>
+      </div>
+    </div>
+
+  </main><!-- end pyramid-center -->
+
+  <!-- ════ RIGHT SIDEBAR ════ -->
+  <aside class="right-sidebar">
+
+    <!-- Business Value -->
+    <div class="rs-section">
+      <div class="rs-title">Business Value Outcomes</div>
+      <div class="rs-item"><span class="rs-check">✅</span>Operational Excellence &amp; Efficiency</div>
+      <div class="rs-item"><span class="rs-check">✅</span>Data-Driven Decision Making</div>
+      <div class="rs-item"><span class="rs-check">✅</span>New Digital Business Models</div>
+      <div class="rs-item"><span class="rs-check">✅</span>Agile &amp; Scalable Operations</div>
+      <div class="rs-item"><span class="rs-check">✅</span>Sustainable Growth &amp; Profitability</div>
+      <div class="rs-item"><span class="rs-check">✅</span>Human-AI Collaboration</div>
+    </div>
+
+    <!-- Technology Enablers -->
+    <div class="rs-section">
+      <div class="rs-title">Technology Enablers</div>
+      <div class="rs-item"><span class="rs-icon">☁️</span>Cloud &amp; Data Platform</div>
+      <div class="rs-item"><span class="rs-icon">🤖</span>AI / ML Services</div>
+      <div class="rs-item"><span class="rs-icon">🔗</span>Integration &amp; API Platform</div>
+      <div class="rs-item"><span class="rs-icon">🔒</span>Cybersecurity</div>
+      <div class="rs-item"><span class="rs-icon">📡</span>IoT &amp; Edge Computing</div>
+      <div class="rs-item"><span class="rs-icon">⚙️</span>Odoo ERP Platform</div>
+    </div>
+
+    <!-- Organization Capabilities -->
+    <div class="rs-section">
+      <div class="rs-title">Organization Capabilities</div>
+      <div class="rs-item"><div class="rs-dot" style="background:#1565C0;"></div>Digital Mindset &amp; Culture</div>
+      <div class="rs-item"><div class="rs-dot" style="background:#00695C;"></div>Process Excellence</div>
+      <div class="rs-item"><div class="rs-dot" style="background:#E65100;"></div>Skilled Workforce</div>
+      <div class="rs-item"><div class="rs-dot" style="background:#4527A0;"></div>Agile Governance</div>
+      <div class="rs-item"><div class="rs-dot" style="background:#2E7D32;"></div>Ecosystem Collaboration</div>
+    </div>
+
+    <!-- Success Measures -->
+    <div class="rs-section">
+      <div class="sm-box">
+        <div class="sm-title">📊 Success Measures</div>
+        <div style="color:rgba(255,255,255,.9);font-size:8px;line-height:1.7;">
+          <div><strong style="color:#FFD54F;">Financial:</strong> NPAT Growth, ROI, Cost Reduction</div>
+          <div><strong style="color:#FFD54F;">Customer:</strong> Satisfaction, Retention, NPS</div>
+          <div><strong style="color:#FFD54F;">Process:</strong> Cycle Time, Automation Rate</div>
+          <div><strong style="color:#FFD54F;">People:</strong> Skills, Engagement, Productivity</div>
+          <div><strong style="color:#FFD54F;">Platform:</strong> Adoption, Uptime, Scalability</div>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+</div><!-- end do-layout -->
+
+<!-- ════ FOUNDATION ENABLERS BAR ════ -->
+<div class="foundation-bar">
+  <div class="fb-title">Foundation Enablers (Cross-Cutting Capabilities)</div>
+  <div class="fb-grid">
+    <div class="fb-item"><div class="fb-icon">🗄️</div><div class="fb-name">Data &amp; Integration Architecture</div></div>
+    <div class="fb-item"><div class="fb-icon">🔐</div><div class="fb-name">Cybersecurity &amp; Compliance</div></div>
+    <div class="fb-item"><div class="fb-icon">☁️</div><div class="fb-name">Cloud &amp; Infrastructure Services</div></div>
+    <div class="fb-item"><div class="fb-icon">🤖</div><div class="fb-name">AI &amp; Automation Enablers</div></div>
+    <div class="fb-item"><div class="fb-icon">📣</div><div class="fb-name">Change Management &amp; Communications</div></div>
+    <div class="fb-item"><div class="fb-icon">📋</div><div class="fb-name">Governance, Risk &amp; Performance</div></div>
+  </div>
+</div>
+
+<!-- ════ PAGE FOOTER ════ -->
+<div class="page-footer">
+  <strong>Integrated 5Ps Pyramid</strong> + <strong>Technology Triangle</strong> =
+  Structured Transformation &nbsp;•&nbsp; Measurable Outcomes &nbsp;•&nbsp;
+  Sustainable Competitive Advantage &nbsp;•&nbsp; Long-term Value Creation
+</div>
+
+
+<!-- ══ MODAL: Agentic Organization ══ -->
+<div id="modal-agentic-org" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.72);align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#0D1B3E;border:1.5px solid rgba(255,193,7,.4);border-radius:16px;max-width:920px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.6);">
+    <!-- Header -->
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 22px;border-bottom:1px solid rgba(255,193,7,.25);background:linear-gradient(135deg,#1A2A4A,#0D1B3E);border-radius:16px 16px 0 0;">
+      <div>
+        <div style="font-size:10px;font-weight:700;color:#FFC107;letter-spacing:1px;margin-bottom:3px;">DIGITAL ORGANIZATION → FUTURE STATE</div>
+        <div style="font-size:17px;font-weight:800;color:#FFD54F;font-family:'Sarabun',sans-serif;">Full Agentic Organization</div>
+        <div style="font-size:11px;color:#aaa;margin-top:2px;">จาก Digital Organization สู่ Autonomous AI-Driven Enterprise</div>
+      </div>
+      <button onclick="document.getElementById('modal-agentic-org').style.display='none'" style="background:rgba(255,255,255,.1);border:none;color:#fff;font-size:18px;width:34px;height:34px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+    </div>
+    <!-- Image -->
+    <div style="padding:20px 22px 12px;text-align:center;">
+      <img src="./assets/do-digital-vs-agentic.jpg"
+           alt="Digital Organization vs Full Agentic Organization"
+           style="width:100%;max-width:860px;border-radius:10px;border:1px solid rgba(255,193,7,.25);box-shadow:0 4px 20px rgba(0,0,0,.4);cursor:zoom-in;"
+           onclick="this.style.maxWidth=this.style.maxWidth==='100%'?'none':'100%'" />
+    </div>
+    <!-- Summary -->
+    <div style="padding:8px 22px 22px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+        <!-- Left: Present State -->
+        <div style="background:rgba(100,181,246,.08);border:1.5px solid rgba(100,181,246,.3);border-radius:12px;padding:14px 16px;">
+          <div style="font-size:11px;font-weight:800;color:#64B5F6;letter-spacing:.5px;margin-bottom:8px;">🔵 DIGITAL ORGANIZATION (PRESENT STATE)</div>
+          <div style="font-size:11.5px;color:#E0E0E0;line-height:1.7;">
+            <strong style="color:#90CAF9;">Focus:</strong> Doing Things Faster<br/>
+            • กระบวนการถูก Digitize เป็น Cloud-Native<br/>
+            • ขับเคลื่อนด้วย Standard Automation<br/>
+            • ข้อมูลแยกเป็น Data Silos (ERP / CRM / HRIS)<br/>
+            • ซอฟต์แวร์ทำตามคำสั่งที่โปรแกรมไว้ล่วงหน้า
+          </div>
+        </div>
+        <!-- Right: Future State -->
+        <div style="background:rgba(255,193,7,.07);border:1.5px solid rgba(255,193,7,.35);border-radius:12px;padding:14px 16px;">
+          <div style="font-size:11px;font-weight:800;color:#FFC107;letter-spacing:.5px;margin-bottom:8px;">🟡 FULL AGENTIC ORGANIZATION (FUTURE STATE)</div>
+          <div style="font-size:11.5px;color:#E0E0E0;line-height:1.7;">
+            <strong style="color:#FFD54F;">Focus:</strong> Systems Figure Out How To Do Things<br/>
+            • AI Agents ทำงานอัตโนมัติ ตัดสินใจและ Collaborate ได้<br/>
+            • Dynamically &amp; Unified Data Pool แทน Data Silos<br/>
+            • Agents เฉพาะทาง: Market Research · Strategy · Data Viz<br/>
+            • งาน High-Friction ถูกแทนด้วย AI (Resume Screening, Helpdesk)
+          </div>
+        </div>
+      </div>
+      <!-- Key Insight -->
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:12px 16px;font-size:11.5px;color:#ccc;line-height:1.7;text-align:center;">
+        🎯 <strong style="color:#FFD54F;">เป้าหมายของ PRECISE:</strong> เริ่มจาก Digital Organization (Horizontal SCM + Vertical IS for Management) &nbsp;→&nbsp;
+        วางรากฐานข้อมูลและกระบวนการให้พร้อม &nbsp;→&nbsp; ก้าวสู่ <strong style="color:#FFC107;">Full Agentic Organization</strong> ที่ AI Agents ขับเคลื่อนการตัดสินใจทั่วทั้งองค์กร
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ MODAL: PF4 Intellectual Capital & Agentic Transformation ══ -->
+<div id="modal-pf4-agentic" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.5);align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#FFFFFF;border:1.5px solid rgba(99,70,200,.25);border-radius:18px;max-width:960px;width:100%;margin:auto;box-shadow:0 24px 72px rgba(0,0,0,.2);">
+
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,#EDE7F6,#F3E5F5);border-radius:18px 18px 0 0;padding:20px 26px;border-bottom:1.5px solid rgba(99,70,200,.15);display:flex;justify-content:space-between;align-items:flex-start;">
+      <div>
+        <div style="font-size:10px;font-weight:800;color:#6A3FA0;letter-spacing:1.5px;margin-bottom:5px;">PF4 · INTELLECTUAL CAPITAL &amp; AGENTIC TRANSFORMATION</div>
+        <div style="font-size:20px;font-weight:900;color:#1A0A3A;font-family:'Sarabun',sans-serif;line-height:1.2;">Agentic AI Organization Transformation</div>
+        <div style="font-size:12px;color:#6B5E8B;margin-top:5px;">แผนลดอัตรากำลังพล 799 → 700 คน ภายใน 3 ปี ผ่าน AI Agent Automation</div>
+      </div>
+      <button onclick="document.getElementById('modal-pf4-agentic').style.display='none'" style="background:rgba(99,70,200,.12);border:1.5px solid rgba(99,70,200,.3);color:#6A3FA0;font-size:16px;width:36px;height:36px;border-radius:50%;cursor:pointer;flex-shrink:0;margin-left:16px;font-weight:700;">✕</button>
+    </div>
+
+    <div style="padding:22px 26px 26px;background:#FAFAFA;border-radius:0 0 18px 18px;">
+
+      <!-- KPI Bar -->
+      <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:12px;margin-bottom:22px;text-align:center;">
+        <div style="background:#FFF3F0;border:1.5px solid #FFCCBC;border-radius:12px;padding:16px;">
+          <div style="font-size:38px;font-weight:900;color:#D84315;">799</div>
+          <div style="font-size:11px;color:#8D6E63;margin-top:3px;font-weight:600;">อัตรากำลังพลปัจจุบัน (ปีที่ 0)</div>
+        </div>
+        <div style="background:#F3E5F5;border:1.5px solid rgba(99,70,200,.35);border-radius:12px;padding:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:130px;">
+          <div style="font-size:28px;font-weight:900;color:#6A3FA0;">99 คน</div>
+          <div style="font-size:11px;color:#8B68B0;margin-top:2px;font-weight:600;">เป้าหมายลด (12.4%)</div>
+          <div style="font-size:24px;color:#9C88D0;margin-top:2px;">↓</div>
+        </div>
+        <div style="background:#F1F8E9;border:1.5px solid #C5E1A5;border-radius:12px;padding:16px;">
+          <div style="font-size:38px;font-weight:900;color:#388E3C;">700</div>
+          <div style="font-size:11px;color:#6A9C5E;margin-top:3px;font-weight:600;">อัตรากำลังพลเป้าหมาย (ปีที่ 3)</div>
+        </div>
+      </div>
+
+      <!-- 3-Phase Plan -->
+      <div style="margin-bottom:20px;">
+        <div style="font-size:11px;font-weight:800;color:#6A3FA0;letter-spacing:1px;margin-bottom:10px;text-transform:uppercase;padding-bottom:6px;border-bottom:2px solid rgba(99,70,200,.15);">แผน 3 ระยะ — Digital to Full Agentic</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+
+          <!-- Year 1 -->
+          <div style="background:#E3F2FD;border:1.5px solid #90CAF9;border-radius:12px;padding:14px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+              <span style="background:#1565C0;color:#fff;font-size:9px;font-weight:800;padding:3px 10px;border-radius:10px;">ปีที่ 1</span>
+              <span style="font-size:9px;background:rgba(21,101,192,.12);color:#1565C0;padding:3px 10px;border-radius:8px;font-weight:700;border:1px solid rgba(21,101,192,.3);">Step 1–2</span>
+            </div>
+            <div style="font-size:13px;font-weight:800;color:#0D2B5E;margin-bottom:8px;">Foundation &amp; Copilot</div>
+            <div style="font-size:11px;color:#1E4A7A;line-height:1.9;">
+              • รวม Data Silo → Unified Data Pool<br/>
+              • ติดตั้ง Gen AI / Copilot Tools<br/>
+              • อบรม Prompt Engineering ทั่วองค์กร<br/>
+              • Human-in-the-Loop: Augmentation
+            </div>
+            <div style="margin-top:10px;padding:6px 10px;background:#BBDEFB;border-radius:8px;font-size:11.5px;font-weight:800;color:#0D47A1;text-align:center;border:1px solid #90CAF9;">ลด ~33 คน → เหลือ 766</div>
+          </div>
+
+          <!-- Year 2 -->
+          <div style="background:#E8F5E9;border:1.5px solid #A5D6A7;border-radius:12px;padding:14px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+              <span style="background:#2E7D32;color:#fff;font-size:9px;font-weight:800;padding:3px 10px;border-radius:10px;">ปีที่ 2</span>
+              <span style="font-size:9px;background:rgba(46,125,50,.1);color:#2E7D32;padding:3px 10px;border-radius:8px;font-weight:700;border:1px solid rgba(46,125,50,.3);">Step 3–4</span>
+            </div>
+            <div style="font-size:13px;font-weight:800;color:#1B3A1D;margin-bottom:8px;">Domain Task Agents</div>
+            <div style="font-size:11px;color:#2A5E2E;line-height:1.9;">
+              • Deploy: HR / Finance / L1 IT Helpdesk Agent<br/>
+              • Automate: Report, Resume Screening<br/>
+              • Multi-Agent Collaboration ข้ามฝ่าย<br/>
+              • Strategy + Market Research Agent
+            </div>
+            <div style="margin-top:10px;padding:6px 10px;background:#C8E6C9;border-radius:8px;font-size:11.5px;font-weight:800;color:#1B5E20;text-align:center;border:1px solid #A5D6A7;">ลด ~33 คน → เหลือ 733</div>
+          </div>
+
+          <!-- Year 3 -->
+          <div style="background:#FFF8E1;border:1.5px solid #FFE082;border-radius:12px;padding:14px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+              <span style="background:#E65100;color:#fff;font-size:9px;font-weight:800;padding:3px 10px;border-radius:10px;">ปีที่ 3</span>
+              <span style="font-size:9px;background:rgba(230,81,0,.1);color:#E65100;padding:3px 10px;border-radius:8px;font-weight:700;border:1px solid rgba(230,81,0,.3);">Step 5</span>
+            </div>
+            <div style="font-size:13px;font-weight:800;color:#3E2000;margin-bottom:8px;">Autonomous Goal-Driven</div>
+            <div style="font-size:11px;color:#5D3A00;line-height:1.9;">
+              • Goal-Oriented Prompting + KPI Agents<br/>
+              • Supply Chain / Ops Optimization Agent<br/>
+              • Continuous Learning Loops<br/>
+              • Advanced Governance + Kill Switch
+            </div>
+            <div style="margin-top:10px;padding:6px 10px;background:#FFECB3;border-radius:8px;font-size:11.5px;font-weight:800;color:#E65100;text-align:center;border:1px solid #FFE082;">ลด ~33 คน → เหลือ 700</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Principle -->
+      <div style="background:linear-gradient(135deg,#EDE7F6,#E8EAF6);border:1.5px solid rgba(99,70,200,.25);border-radius:12px;padding:14px 20px;margin-bottom:20px;font-size:12.5px;color:#3A2060;text-align:center;line-height:1.8;">
+        🎯 <strong style="color:#4A1FA0;">หลักการสำคัญ:</strong> ไม่ใช่การลดงานที่สร้างคุณค่า แต่เป็นการ <strong style="color:#E65100;">ให้ AI รับงาน Routine ที่ซ้ำซาก</strong> เพื่อให้พนักงานมีเวลา <strong style="color:#2E7D32;">Redeploy ไปสู่งานที่ต้องการความคิดสร้างสรรค์และการตัดสินใจ</strong>
+      </div>
+
+      <!-- 4 Strategies -->
+      <div style="margin-bottom:20px;">
+        <div style="font-size:11px;font-weight:800;color:#6A3FA0;letter-spacing:1px;margin-bottom:10px;text-transform:uppercase;padding-bottom:6px;border-bottom:2px solid rgba(99,70,200,.15);">กลยุทธ์ลดกำลังพล 4 แนวทาง</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+
+          <div style="background:#FFFFFF;border:1.5px solid #E0E0E0;border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 2px 8px rgba(0,0,0,.06);">
+            <div style="font-size:26px;flex-shrink:0;margin-top:2px;">🤖</div>
+            <div>
+              <div style="font-size:12.5px;font-weight:800;color:#212121;margin-bottom:5px;">Task Automation <span style="color:#D84315;">(High-Friction Jobs)</span></div>
+              <div style="font-size:11px;color:#555;line-height:1.7;">งาน Rule-based เช่น IT Helpdesk L1, Resume Screening, Financial Report ถูกแทนด้วย AI Agent โดยตรง — ลดภาระซ้ำซากและข้อผิดพลาดจากมนุษย์</div>
+            </div>
+          </div>
+
+          <div style="background:#FFFFFF;border:1.5px solid #E0E0E0;border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 2px 8px rgba(0,0,0,.06);">
+            <div style="font-size:26px;flex-shrink:0;margin-top:2px;">🔄</div>
+            <div>
+              <div style="font-size:12.5px;font-weight:800;color:#212121;margin-bottom:5px;">Attrition &amp; Redeployment</div>
+              <div style="font-size:11px;color:#555;line-height:1.7;"><strong style="color:#388E3C;">ไม่ Layoff</strong> — ใช้การลาออกตามธรรมชาติ + โยกย้ายพนักงานไปบทบาท Oversight / Agent Trainer ที่สร้างมูลค่าสูงขึ้น</div>
+            </div>
+          </div>
+
+          <div style="background:#FFFFFF;border:1.5px solid #E0E0E0;border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 2px 8px rgba(0,0,0,.06);">
+            <div style="font-size:26px;flex-shrink:0;margin-top:2px;">📊</div>
+            <div>
+              <div style="font-size:12.5px;font-weight:800;color:#212121;margin-bottom:5px;">Span of Control Expansion</div>
+              <div style="font-size:11px;color:#555;line-height:1.7;">ผู้จัดการ 1 คน ดูแลงานได้มากขึ้น เพราะ AI Agent รับผิดชอบ Routine Reporting และ Analysis แทน — เพิ่ม Productivity ต่อหัว</div>
+            </div>
+          </div>
+
+          <div style="background:#FFFFFF;border:1.5px solid #E0E0E0;border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 2px 8px rgba(0,0,0,.06);">
+            <div style="font-size:26px;flex-shrink:0;margin-top:2px;">🎯</div>
+            <div>
+              <div style="font-size:12.5px;font-weight:800;color:#212121;margin-bottom:5px;">Reskill → New Value Roles</div>
+              <div style="font-size:11px;color:#555;line-height:1.7;">พนักงานที่เหลือถูก Upskill เป็น <strong style="color:#6A3FA0;">AI Overseer · Prompt Engineer · Data Steward</strong> — เพิ่ม Value/Head และสร้างความได้เปรียบเชิงกลยุทธ์</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center;">
+        <button onclick="document.getElementById('modal-pf4-agentic').style.display='none'"
+                style="background:linear-gradient(135deg,#6A3FA0,#8B5CF6);border:none;color:#fff;border-radius:10px;padding:11px 32px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Sarabun',sans-serif;box-shadow:0 4px 12px rgba(99,70,200,.3);">
+          ปิด
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ MODAL: PF1 Digital Business Process & Operations ══ -->
+<div id="modal-pf1-doc" style="display:none;position:fixed;inset:0;z-index:9999;
+     background:rgba(0,0,0,.78);align-items:flex-start;justify-content:center;
+     padding:20px;overflow-y:auto;"
+     onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#1A0F00;border:1.5px solid rgba(230,81,0,.4);border-radius:16px;
+              max-width:1100px;width:100%;margin:auto;
+              box-shadow:0 24px 72px rgba(0,0,0,.7);">
+
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,#2D1200,#4A1F00);border-radius:16px 16px 0 0;
+                padding:16px 22px;border-bottom:1px solid rgba(230,81,0,.3);
+                display:flex;justify-content:space-between;align-items:flex-start;">
+      <div>
+        <div style="font-size:10px;font-weight:800;color:#FF8A65;letter-spacing:1.5px;margin-bottom:4px;">
+          PF1 · DIGITAL BUSINESS PROCESS &amp; OPERATIONS
+        </div>
+        <div style="font-size:17px;font-weight:900;color:#FFCCBC;font-family:'Sarabun',sans-serif;">
+          Digital Organization — 5Ps Pyramid
+        </div>
+        <div style="font-size:11px;color:#BCAAA4;margin-top:3px;">
+          Horizontal (SCM) + Vertical (IS) Digital Transformation · 2569–2572
+        </div>
+      </div>
+      <button onclick="document.getElementById('modal-pf1-doc').style.display='none'"
+              style="background:rgba(255,255,255,.1);border:none;color:#fff;font-size:18px;
+                     width:36px;height:36px;border-radius:50%;cursor:pointer;flex-shrink:0;margin-left:16px;">✕</button>
+    </div>
+
+    <!-- Image -->
+    <div style="padding:16px 18px 18px;text-align:center;">
+      <img src="./assets/pf1-wbs-master.jpg"
+           alt="PF1 Digital Business Process & Operations"
+           style="width:100%;border-radius:10px;border:1px solid rgba(230,81,0,.25);
+                  box-shadow:0 4px 20px rgba(0,0,0,.5);cursor:zoom-in;"
+           onclick="this.style.maxWidth=this.style.maxWidth==='100%'?'none':'100%'" />
+      <div style="font-size:9.5px;color:#888;margin-top:8px;">
+        📌 คลิกรูปเพื่อขยาย | WBS Master | Digital Business Process &amp; Operations Aligned to Roadmap 2569–2572
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══ MODAL: PF2 Digital Technology & Platform Ecosystem ══ -->
+<style>
+.pf2-tab{background:rgba(255,255,255,.08);border:1px solid rgba(2,136,209,.3);color:#90CAF9;border-radius:8px;padding:6px 14px;font-size:10.5px;font-weight:700;cursor:pointer;font-family:'Sarabun',sans-serif;transition:all .2s;}
+.pf2-tab.active{background:#01579B;border-color:#0288D1;color:#fff;box-shadow:0 3px 10px rgba(1,87,155,.4);}
+.pf2-slide{display:none;}
+.pf2-slide.active{display:block;}
+</style>
+<div id="modal-pf2-doc" style="display:none;position:fixed;inset:0;z-index:9999;
+     background:rgba(0,0,0,.78);align-items:flex-start;justify-content:center;
+     padding:20px;overflow-y:auto;"
+     onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#001529;border:1.5px solid rgba(2,136,209,.4);border-radius:16px;
+              max-width:1100px;width:100%;margin:auto;
+              box-shadow:0 24px 72px rgba(0,0,0,.7);">
+
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,#001F3A,#012E57);border-radius:16px 16px 0 0;
+                padding:14px 22px;border-bottom:1px solid rgba(2,136,209,.3);
+                display:flex;justify-content:space-between;align-items:flex-start;">
+      <div>
+        <div style="font-size:10px;font-weight:800;color:#4FC3F7;letter-spacing:1.5px;margin-bottom:4px;">
+          PF2 · DIGITAL TECHNOLOGY &amp; PLATFORM ECOSYSTEM
+        </div>
+        <div style="font-size:16px;font-weight:900;color:#B3E5FC;font-family:'Sarabun',sans-serif;">
+          Factory 4.0 Digital Transformation
+        </div>
+        <div style="font-size:10.5px;color:#78909C;margin-top:3px;">
+          Rev.8 · 23 เมษายน 2026 · DE &amp; DBTP Core Products · ปลดล็อกคอขวดการผลิต
+        </div>
+      </div>
+      <button onclick="document.getElementById('modal-pf2-doc').style.display='none'"
+              style="background:rgba(255,255,255,.1);border:none;color:#fff;font-size:18px;
+                     width:36px;height:36px;border-radius:50%;cursor:pointer;flex-shrink:0;margin-left:16px;">✕</button>
+    </div>
+
+    <div style="padding:14px 18px 18px;">
+
+      <!-- Tab buttons -->
+      <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
+        <button class="pf2-tab active" id="pf2-btn-1" onclick="pf2Tab(1)">📊 Slide A — Factory 4.0 Overview</button>
+        <button class="pf2-tab" id="pf2-btn-2" onclick="pf2Tab(2)">🗺️ Slide B — 4 แกนหลัก &amp; Roadmap</button>
+        <button class="pf2-tab" id="pf2-btn-3" onclick="pf2Tab(3)">📈 Slide C — Business Impact</button>
+      </div>
+
+      <!-- Slide 1 -->
+      <div class="pf2-slide active" id="pf2-slide-1">
+        <img src="./assets/pf2-factory40-slide-a.jpg"
+             alt="Factory 4.0 Slide A"
+             style="width:100%;border-radius:10px;border:1px solid rgba(2,136,209,.25);
+                    box-shadow:0 4px 16px rgba(0,0,0,.4);cursor:zoom-in;display:block;"
+             onclick="this.style.maxWidth=this.style.maxWidth==='100%'?'none':'100%'" />
+        <div style="font-size:9px;color:#546E7A;text-align:center;margin-top:6px;">📌 คลิกรูปเพื่อขยาย</div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="pf2-slide" id="pf2-slide-2">
+        <img src="./assets/pf2-factory40-slide-b.jpg"
+             alt="Factory 4.0 Slide B"
+             style="width:100%;border-radius:10px;border:1px solid rgba(2,136,209,.25);
+                    box-shadow:0 4px 16px rgba(0,0,0,.4);cursor:zoom-in;display:block;"
+             onclick="this.style.maxWidth=this.style.maxWidth==='100%'?'none':'100%'" />
+        <div style="font-size:9px;color:#546E7A;text-align:center;margin-top:6px;">📌 คลิกรูปเพื่อขยาย</div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="pf2-slide" id="pf2-slide-3">
+        <img src="./assets/pf2-factory40-slide-c.jpg"
+             alt="Factory 4.0 Slide C"
+             style="width:100%;border-radius:10px;border:1px solid rgba(2,136,209,.25);
+                    box-shadow:0 4px 16px rgba(0,0,0,.4);cursor:zoom-in;display:block;"
+             onclick="this.style.maxWidth=this.style.maxWidth==='100%'?'none':'100%'" />
+        <div style="font-size:9px;color:#546E7A;text-align:center;margin-top:6px;">📌 คลิกรูปเพื่อขยาย</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function pf2Tab(n) {
+  [1,2,3].forEach(i => {
+    document.getElementById('pf2-slide-'+i).classList.toggle('active', i===n);
+    document.getElementById('pf2-btn-'+i).classList.toggle('active', i===n);
+  });
+}
+</script>
+
+<!-- ═══ MODAL: PF3 Digital Infrastructure ═══ -->
+<div id="modal-pf3-infra" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.55);align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#FFFFFF;border:1.5px solid rgba(25,118,210,.25);border-radius:18px;max-width:960px;width:100%;margin:auto;box-shadow:0 24px 72px rgba(0,0,0,.25);">
+
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,#E3F2FD,#BBDEFB);border-radius:18px 18px 0 0;padding:20px 26px;border-bottom:1.5px solid rgba(25,118,210,.15);display:flex;justify-content:space-between;align-items:flex-start;">
+      <div>
+        <div style="font-size:10px;font-weight:800;color:#1565C0;letter-spacing:1.5px;margin-bottom:5px;">PF3 · DIGITAL INFRASTRUCTURE · THE FOUNDATION</div>
+        <div style="font-size:20px;font-weight:900;color:#0D253F;font-family:'Sarabun',sans-serif;line-height:1.2;">🏗️ Digital Infrastructure Strategic Roadmap</div>
+        <div style="font-size:12px;color:#1976D2;margin-top:5px;">Transforming Strategy through Digital Infrastructure — 4-Phase Path to Enterprise Intelligence</div>
+      </div>
+      <button onclick="document.getElementById('modal-pf3-infra').style.display='none'" style="background:rgba(25,118,210,.12);border:1.5px solid rgba(25,118,210,.3);color:#1565C0;font-size:16px;width:36px;height:36px;border-radius:50%;cursor:pointer;flex-shrink:0;margin-left:16px;font-weight:700;">✕</button>
+    </div>
+
+    <!-- Body -->
+    <div style="padding:22px 26px 26px;background:#FAFBFF;border-radius:0 0 18px 18px;">
+
+      <!-- Slide 1: Decision Level Paradigm (portrait) -->
+      <div style="margin-bottom:20px;">
+        <div style="font-size:9px;font-weight:700;color:#1565C0;letter-spacing:1px;margin-bottom:8px;text-transform:uppercase;">Slide 1 · The Decision Level Paradigm: Transforming Strategy through Digital Infrastructure</div>
+        <img src="./assets/pf3-decision-paradigm.png"
+             alt="The Decision Level Paradigm - Transforming Strategy through Digital Infrastructure"
+             onclick="this.style.maxWidth=this.style.maxWidth==='100%'?'none':'100%'"
+             style="width:100%;border-radius:10px;border:1px solid rgba(25,118,210,.2);
+                    box-shadow:0 4px 16px rgba(0,0,0,.12);cursor:zoom-in;display:block;" />
+        <div style="font-size:9px;color:#555;margin-top:6px;text-align:center;">คลิกรูปเพื่อขยาย / Click image to zoom</div>
+      </div>
+
+      <!-- Divider -->
+      <div style="border-top:1.5px solid rgba(25,118,210,.15);margin:4px 0 20px;"></div>
+
+      <!-- Slide 2: 4-Phase Roadmap (landscape) -->
+      <div>
+        <div style="font-size:9px;font-weight:700;color:#1565C0;letter-spacing:1px;margin-bottom:8px;text-transform:uppercase;">Slide 2 · Digital Infrastructure Strategic Roadmap: A 4-Phase Path to Enterprise Intelligence</div>
+        <img src="./assets/pf3-infra-roadmap.png"
+             alt="Digital Infrastructure Strategic Roadmap - 4-Phase Path to Enterprise Intelligence"
+             onclick="this.style.maxWidth=this.style.maxWidth==='100%'?'none':'100%'"
+             style="width:100%;border-radius:10px;border:1px solid rgba(25,118,210,.2);
+                    box-shadow:0 4px 16px rgba(0,0,0,.12);cursor:zoom-in;display:block;" />
+        <div style="font-size:9px;color:#555;margin-top:6px;text-align:center;">คลิกรูปเพื่อขยาย / Click image to zoom</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>
