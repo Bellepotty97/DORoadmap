@@ -12,7 +12,9 @@ Digital Organization to Agentic Transformation
 ```
 .
 ├── digital-organization.html     # หน้าหลัก — 5Ps Pyramid 7 Layers + PF Modals
+├── index.html                    # redirect ไป digital-organization.html (สำหรับ URL ราก)
 ├── assets/                       # รูปประกอบ 7 ไฟล์
+├── .nojekyll                     # ปิด Jekyll processing บน GitHub Pages
 └── README.md
 ```
 
@@ -22,8 +24,14 @@ Digital Organization to Agentic Transformation
 
 ```bash
 npx http-server -p 8080
-# เปิด http://127.0.0.1:8080/digital-organization.html
+# เปิด http://127.0.0.1:8080/   (index.html จะ redirect ให้เอง)
 ```
+
+### GitHub Pages
+
+`Settings → Pages → Source: Deploy from a branch` แล้วเลือก branch นี้ + `/ (root)`
+
+URL ราก (`https://<user>.github.io/DORoadmap/`) จะ redirect ไปหน้าจริงอัตโนมัติ
 
 ---
 
