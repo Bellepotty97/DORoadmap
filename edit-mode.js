@@ -1,17 +1,28 @@
 /*
- * edit-mode.js — แก้ไขข้อความในหน้าแล้วบันทึกเป็นไฟล์ HTML ใหม่
+ * edit-mode.js — แก้ไขข้อความในหน้า แล้วบันทึกเป็นไฟล์ หรือ publish ขึ้นเว็บโดยตรง
  *
- * ทำไมต้องดาวน์โหลดไฟล์แทนที่จะบันทึกตรงๆ:
- * หน้าเว็บนี้เป็น static HTML บน GitHub Pages ไม่มี backend ให้เขียนไฟล์กลับ
- * และการฝัง GitHub token ไว้ในหน้าเพื่อ commit เองคือการเปิดเผย credential
- * บน repo สาธารณะ จึงใช้วิธี "แก้ → ดาวน์โหลดไฟล์ใหม่ → วางทับใน repo" แทน
+ * ── เรื่อง token ──────────────────────────────────────────────────────
+ * ไฟล์นี้ "ไม่มี" GitHub token ฝังอยู่ และต้องไม่มีตลอดไป เหตุผล:
+ *   1. repo เป็น public — ใครก็อ่านไฟล์นี้ได้ ต่อให้เข้ารหัสไว้ก็เปิด
+ *      DevTools ดู header ของ request ได้อยู่ดี
+ *   2. GitHub secret scanning จะ revoke token ที่เจอใน public repo อัตโนมัติ
+ *      ฝังไปก็ใช้ได้ไม่กี่นาที
+ *   3. สิทธิ์ต่ำสุดที่ commit ได้คือ Contents:RW ซึ่งให้คนแทรก JavaScript
+ *      ลงหน้านี้ได้ — สคริปต์นั้นจะรันในเบราว์เซอร์ทุกคนที่เปิดลิงก์
  *
- * ขอบเขตการแก้ไข: เฉพาะ element ที่เป็น "ใบสุดท้ายของข้อความ" (ไม่มี block
- * element ซ้อนข้างใน) เพื่อกันไม่ให้ลบโครงสร้างหน้าเสียหายโดยไม่ตั้งใจ
+ * จึงใช้วิธี: ให้คนที่จะแก้ "กรอก token ของตัวเอง" ตอนกด publish
+ * token อยู่แค่ในหน่วยความจำของเบราว์เซอร์คนนั้น (เลือกเก็บใน sessionStorage
+ * ได้ = ปิดแท็บแล้วหาย) ไม่เคยถูกเขียนลงไฟล์ และส่งไปที่ api.github.com เท่านั้น
+ *
+ * Token ที่ต้องใช้ — Fine-grained PAT ขอบเขตแคบที่สุดที่ commit ได้:
+ *   Repository access : Only select repositories -> DORoadmap
+ *   Permissions       : Contents = Read and write   (อย่างอื่น No access)
+ *   Expiration        : 30 วัน
+ *
+ * ── ขอบเขตการแก้ไข ───────────────────────────────────────────────────
+ * แก้ได้เฉพาะ element ที่เป็น "ใบสุดท้ายของข้อความ" (ไม่มี block element
+ * ซ้อนข้างใน) เพื่อกันการลบโครงสร้างหน้าเสียหายโดยไม่ตั้งใจ
  * รูปภาพและ SVG ไม่ถูกแตะต้อง
- *
- * เพิ่ม ?edit=1 ต่อท้าย URL ถ้าต้องการให้ปุ่มแสดงเฉพาะตอนที่ต้องการแก้
- * (ดูตัวแปร SHOW_ALWAYS ด้านล่าง)
  */
 (function () {
   'use strict';
@@ -19,14 +30,17 @@
   /* ตั้งเป็น false ถ้าอยากให้ปุ่มโผล่เฉพาะเมื่อ URL มี ?edit=1 */
   var SHOW_ALWAYS = true;
 
-  /* ลิงก์ไปหน้าแก้ไฟล์บน GitHub — เปลี่ยนได้ถ้าย้าย repo */
-  var REPO_UPLOAD_URL = 'https://github.com/Bellepotty97/DORoadmap/upload/main';
+  /* ปลายทางที่จะ commit — แก้ตรงนี้ถ้าย้าย repo หรือเปลี่ยน branch */
+  var REPO = { owner: 'Bellepotty97', repo: 'DORoadmap', branch: 'main' };
+
+  var TOKEN_URL = 'https://github.com/settings/personal-access-tokens/new';
+  var TOKEN_KEY = 'do_gh_token';
 
   if (!SHOW_ALWAYS && !/[?&]edit=1\b/.test(location.search)) return;
 
   var UI_ATTR = 'data-edit-ui';
 
-  /* element ระดับ block — ถ้า element ไหนมีลูกเป็นพวกนี้ แปลว่ายังไม่ใช่ใบสุดท้าย */
+  /* element ระดับ block — ถ้ามีลูกเป็นพวกนี้ แปลว่ายังไม่ใช่ใบสุดท้ายของข้อความ */
   var BLOCK = 'address,article,aside,blockquote,details,div,dl,dd,dt,fieldset,' +
               'figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,hr,' +
               'li,main,nav,ol,p,pre,section,table,tbody,td,tfoot,th,thead,tr,ul';
@@ -37,7 +51,8 @@
   var dirty = false;
   var originals = null;   /* Map<Element, innerHTML> ไว้ใช้ตอนกดเลิกทำทั้งหมด */
 
-  /* ── หา element ที่ควรแก้ไขได้ ──────────────────────────────────── */
+  /* ═══ ส่วนที่ 1: โหมดแก้ไข ═════════════════════════════════════════ */
+
   function collectTargets() {
     var out = [];
     var all = document.body.querySelectorAll('*');
@@ -58,7 +73,6 @@
     return out;
   }
 
-  /* ── เข้า / ออก โหมดแก้ไข ───────────────────────────────────────── */
   function enter() {
     var targets = collectTargets();
     originals = new Map();
@@ -91,7 +105,8 @@
     status('ย้อนกลับเป็นข้อความเดิมทั้งหมดแล้ว');
   }
 
-  /* ── สร้างไฟล์ HTML ที่สะอาด (ไม่มี UI ของโหมดแก้ไขติดไป) ──────── */
+  /* ═══ ส่วนที่ 2: สร้างไฟล์ HTML ที่สะอาด ═══════════════════════════ */
+
   function serialize() {
     var clone = document.documentElement.cloneNode(true);
     clone.querySelectorAll('[' + UI_ATTR + ']').forEach(function (n) { n.remove(); });
@@ -109,7 +124,17 @@
     return (name && /\.html?$/i.test(name)) ? name : 'index.html';
   }
 
-  function save() {
+  /* path ของไฟล์นี้เทียบกับรากของ repo
+     บน Pages โครงสร้างคือ /<repo>/<path> จึงต้องตัดชื่อ repo ออก */
+  function repoPath() {
+    var p = location.pathname.replace(/^\/+/, '');
+    var prefix = REPO.repo + '/';
+    if (p.toLowerCase().indexOf(prefix.toLowerCase()) === 0) p = p.slice(prefix.length);
+    if (!p || p.slice(-1) === '/') p += 'index.html';
+    return p;
+  }
+
+  function download() {
     var name = currentFileName();
     var blob = new Blob([serialize()], { type: 'text/html;charset=utf-8' });
     var url = URL.createObjectURL(blob);
@@ -123,38 +148,225 @@
     setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
     dirty = false;
     render();
-    showNext(name);
+    modal(
+      '✅ ดาวน์โหลด <code>' + esc(name) + '</code> แล้ว',
+      '<p>ไฟล์ที่ได้คือหน้านี้พร้อมข้อความที่แก้แล้ว<br>' +
+      '<b>หน้าเว็บจริงจะยังไม่เปลี่ยนจนกว่าจะเอาไฟล์นี้ไปวางทับใน repo</b></p>' +
+      '<ol><li>เปิดหน้าอัปโหลดของ GitHub</li>' +
+      '<li>ลากไฟล์ <code>' + esc(name) + '</code> เข้าไปวาง</li>' +
+      '<li>กด <b>Commit changes</b> แล้วรอ Pages build 1–2 นาที</li></ol>',
+      [{ label: 'เปิด GitHub เพื่อวางไฟล์ ↗', primary: true,
+         href: 'https://github.com/' + REPO.owner + '/' + REPO.repo + '/upload/' + REPO.branch },
+       { label: 'ปิด' }]
+    );
   }
 
-  /* ── หน้าต่างบอกขั้นตอนถัดไปหลังดาวน์โหลด ───────────────────────── */
-  function showNext(name) {
-    var old = document.getElementById('em-next');
-    if (old) old.remove();
-    var box = document.createElement('div');
-    box.id = 'em-next';
-    box.setAttribute(UI_ATTR, '');
-    box.innerHTML =
-      '<div class="em-next-card">' +
-        '<div class="em-next-h">✅ ดาวน์โหลด <code>' + name + '</code> แล้ว</div>' +
-        '<div class="em-next-b">' +
-          'ไฟล์ที่ได้คือหน้านี้พร้อมข้อความที่แก้แล้ว เปิดดูได้เลย<br>' +
-          '<b>หน้าเว็บจริงจะยังไม่เปลี่ยนจนกว่าจะเอาไฟล์นี้ไปวางทับใน repo</b>' +
-        '</div>' +
-        '<ol class="em-next-l">' +
-          '<li>กดปุ่มด้านล่างเพื่อเปิดหน้าอัปโหลดของ GitHub</li>' +
-          '<li>ลากไฟล์ <code>' + name + '</code> ที่เพิ่งโหลดเข้าไปวาง</li>' +
-          '<li>กด <b>Commit changes</b> แล้วรอ 1–2 นาที ให้ Pages build ใหม่</li>' +
-        '</ol>' +
-        '<div class="em-next-a">' +
-          '<a class="em-btn em-primary" href="' + REPO_UPLOAD_URL + '" target="_blank" rel="noopener">เปิด GitHub เพื่อวางไฟล์ ↗</a>' +
-          '<button class="em-btn" type="button" data-em="close-next">ปิด</button>' +
-        '</div>' +
-      '</div>';
-    document.body.appendChild(box);
+  /* ═══ ส่วนที่ 3: publish ขึ้น GitHub โดยตรง ════════════════════════ */
+
+  /* btoa รับได้เฉพาะ binary string จึงต้องแปลง UTF-8 เป็น byte ก่อน
+     และต้องแบ่งเป็นก้อน ไม่งั้น apply จะ stack overflow กับไฟล์ใหญ่ */
+  function toBase64(str) {
+    var bytes = new TextEncoder().encode(str);
+    var bin = '';
+    var CHUNK = 0x8000;
+    for (var i = 0; i < bytes.length; i += CHUNK) {
+      bin += String.fromCharCode.apply(null, bytes.subarray(i, i + CHUNK));
+    }
+    return btoa(bin);
   }
 
-  /* ── แถบเครื่องมือ ──────────────────────────────────────────────── */
-  var bar, msgEl, msgTimer;
+  function getToken() {
+    try { return sessionStorage.getItem(TOKEN_KEY) || ''; } catch (e) { return ''; }
+  }
+  function setToken(t, remember) {
+    if (!remember) return;
+    try { sessionStorage.setItem(TOKEN_KEY, t); } catch (e) { /* โหมดส่วนตัว */ }
+  }
+  function forgetToken() {
+    try { sessionStorage.removeItem(TOKEN_KEY); } catch (e) { /* ไม่เป็นไร */ }
+  }
+
+  function api(path, token, options) {
+    var opts = options || {};
+    opts.headers = Object.assign({
+      'Accept': 'application/vnd.github+json',
+      'Authorization': 'Bearer ' + token,
+      'X-GitHub-Api-Version': '2022-11-28'
+    }, opts.headers || {});
+    return fetch('https://api.github.com' + path, opts);
+  }
+
+  function friendlyError(res, body) {
+    if (res.status === 401) return 'Token ไม่ถูกต้องหรือหมดอายุแล้ว — สร้างใหม่แล้วลองอีกครั้ง';
+    if (res.status === 403) return 'Token ใช้ได้ แต่สิทธิ์ไม่พอ — ต้องตั้ง Contents = Read and write บน repo นี้';
+    if (res.status === 404) return 'หาไฟล์หรือ repo ไม่เจอ — token อาจไม่ได้เลือก repo นี้ไว้ (ตั้ง Only select repositories → ' + REPO.repo + ')';
+    if (res.status === 409 || res.status === 422) return 'ไฟล์บน GitHub ถูกแก้ไปแล้วหลังจากคุณเปิดหน้านี้ — รีโหลดหน้าแล้วแก้ใหม่ เพื่อไม่ให้ทับงานคนอื่น';
+    return 'GitHub ตอบกลับ ' + res.status + (body && body.message ? ' — ' + body.message : '');
+  }
+
+  async function publish(token, remember) {
+    var path = repoPath();
+    var base = '/repos/' + REPO.owner + '/' + REPO.repo + '/contents/' + path;
+    busy(true, 'กำลังตรวจไฟล์ปัจจุบันบน GitHub…');
+
+    try {
+      /* 1) ขอ sha ของไฟล์ปัจจุบัน — GitHub ใช้ตรวจว่าเราเขียนทับของเก่าจริง */
+      var getRes = await api(base + '?ref=' + encodeURIComponent(REPO.branch), token, { cache: 'no-store' });
+      if (!getRes.ok) {
+        var gb = await getRes.json().catch(function () { return null; });
+        throw new Error(friendlyError(getRes, gb));
+      }
+      var meta = await getRes.json();
+
+      /* 2) เขียนทับ พร้อมแนบ sha เดิม — ถ้า sha ไม่ตรง GitHub จะปฏิเสธ */
+      busy(true, 'กำลัง commit ขึ้น ' + REPO.branch + '…');
+      var putRes = await api(base, token, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: 'Edit ' + path + ' from in-page editor',
+          content: toBase64(serialize()),
+          sha: meta.sha,
+          branch: REPO.branch
+        })
+      });
+      var pb = await putRes.json().catch(function () { return null; });
+      if (!putRes.ok) throw new Error(friendlyError(putRes, pb));
+
+      setToken(token, remember);
+      dirty = false;
+      busy(false);
+      render();
+
+      var commitUrl = pb && pb.commit && pb.commit.html_url;
+      modal(
+        '🚀 เผยแพร่ขึ้นเว็บแล้ว',
+        '<p>commit ไฟล์ <code>' + esc(path) + '</code> ขึ้น branch <code>' + esc(REPO.branch) + '</code> เรียบร้อย</p>' +
+        '<p><b>รอ 1–2 นาที</b> ให้ GitHub Pages build ใหม่ แล้วรีโหลดหน้านี้จะเห็นข้อความที่แก้</p>',
+        [ commitUrl ? { label: 'ดู commit ↗', href: commitUrl } : null,
+          { label: 'เสร็จแล้ว', primary: true } ].filter(Boolean)
+      );
+    } catch (err) {
+      busy(false);
+      modal('❌ เผยแพร่ไม่สำเร็จ',
+        '<p class="em-err">' + esc(err.message) + '</p>' +
+        '<p>ข้อความที่แก้ยังอยู่ในหน้านี้ ไม่หายไปไหน — แก้ปัญหาแล้วกดเผยแพร่ใหม่ได้ ' +
+        'หรือกด <b>บันทึกเป็นไฟล์</b> เก็บไว้ก่อน</p>',
+        [{ label: 'ปิด', primary: true }]);
+    }
+  }
+
+  function askTokenThenPublish() {
+    var saved = getToken();
+    if (saved) { publish(saved, true); return; }
+
+    modal(
+      '🔑 ใส่ GitHub Token',
+      '<p>หน้านี้อยู่บน static hosting จึงต้องใช้ token ของคุณเองในการ commit<br>' +
+      '<b>token ไม่ถูกบันทึกลงไฟล์ใดๆ</b> และส่งไปที่ <code>api.github.com</code> เท่านั้น</p>' +
+      '<div class="em-field">' +
+        '<input type="password" id="em-token" placeholder="github_pat_…" autocomplete="off" spellcheck="false">' +
+        '<label class="em-check"><input type="checkbox" id="em-remember" checked> จำไว้จนกว่าจะปิดแท็บ</label>' +
+      '</div>' +
+      '<details class="em-help"><summary>วิธีสร้าง token แบบจำกัดสิทธิ์ที่สุด</summary>' +
+        '<ol>' +
+        '<li>เลือกชนิด <b>Fine-grained</b> (อย่าใช้ Classic — ให้สิทธิ์ทุก repo)</li>' +
+        '<li>Repository access → <b>Only select repositories</b> → <code>' + esc(REPO.repo) + '</code></li>' +
+        '<li>Permissions → <b>Contents = Read and write</b> อย่างเดียว ที่เหลือ No access</li>' +
+        '<li>Expiration → <b>30 วัน</b></li>' +
+        '</ol></details>',
+      [{ label: 'สร้าง token ↗', href: TOKEN_URL },
+       { label: 'ยกเลิก' },
+       { label: 'เผยแพร่', primary: true, keep: true, onClick: function (box) {
+           var t = box.querySelector('#em-token').value.trim();
+           var r = box.querySelector('#em-remember').checked;
+           if (!t) { box.querySelector('#em-token').focus(); return; }
+           closeModal();
+           publish(t, r);
+         } }]
+    );
+    var inp = document.querySelector('#em-token');
+    if (inp) {
+      inp.focus();
+      inp.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          var box = document.querySelector('.em-modal-card');
+          var t = inp.value.trim();
+          if (!t) return;
+          var r = box.querySelector('#em-remember').checked;
+          closeModal();
+          publish(t, r);
+        }
+      });
+    }
+  }
+
+  /* ═══ ส่วนที่ 4: UI ════════════════════════════════════════════════ */
+
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
+  function closeModal() {
+    var m = document.getElementById('em-modal');
+    if (m) m.remove();
+  }
+
+  /* buttons: [{label, primary?, href?, onClick?, keep?}] — keep = ไม่ปิด modal เอง */
+  function modal(title, bodyHtml, buttons) {
+    closeModal();
+    var wrap = document.createElement('div');
+    wrap.id = 'em-modal';
+    wrap.setAttribute(UI_ATTR, '');
+    var card = document.createElement('div');
+    card.className = 'em-modal-card';
+    card.innerHTML = '<div class="em-modal-h">' + title + '</div>' +
+                     '<div class="em-modal-b">' + bodyHtml + '</div>';
+    var acts = document.createElement('div');
+    acts.className = 'em-modal-a';
+    (buttons || []).forEach(function (b) {
+      var el;
+      if (b.href) {
+        el = document.createElement('a');
+        el.href = b.href; el.target = '_blank'; el.rel = 'noopener';
+      } else {
+        el = document.createElement('button');
+        el.type = 'button';
+      }
+      el.className = 'em-btn' + (b.primary ? ' em-primary' : '');
+      el.textContent = b.label;
+      el.addEventListener('click', function () {
+        if (b.onClick) b.onClick(card);
+        else if (!b.keep && !b.href) closeModal();
+      });
+      acts.appendChild(el);
+    });
+    card.appendChild(acts);
+    wrap.appendChild(card);
+    wrap.addEventListener('click', function (e) { if (e.target === wrap) closeModal(); });
+    document.body.appendChild(wrap);
+    return card;
+  }
+
+  var bar, msgEl, msgTimer, busyEl;
+
+  function busy(on, text) {
+    if (on) {
+      closeModal();
+      if (!busyEl) {
+        busyEl = document.createElement('div');
+        busyEl.id = 'em-busy';
+        busyEl.setAttribute(UI_ATTR, '');
+        document.body.appendChild(busyEl);
+      }
+      busyEl.innerHTML = '<div class="em-busy-card"><span class="em-spin"></span>' + esc(text || 'กำลังทำงาน…') + '</div>';
+      busyEl.style.display = 'flex';
+    } else if (busyEl) {
+      busyEl.style.display = 'none';
+    }
+  }
 
   function status(text) {
     if (!msgEl) return;
@@ -167,9 +379,11 @@
     if (!bar) return;
     bar.className = 'em-bar' + (editing ? ' em-on' : '');
     bar.querySelector('[data-em="toggle"]').textContent = editing ? '✕ ออกจากโหมดแก้ไข' : '✏️ แก้ไขข้อความ';
-    bar.querySelector('[data-em="save"]').disabled = !dirty;
-    bar.querySelector('[data-em="revert"]').disabled = !dirty;
-    bar.querySelector('.em-dirty').textContent = dirty ? '● มีการแก้ไขที่ยังไม่บันทึก' : '';
+    ['save', 'publish', 'revert'].forEach(function (k) {
+      bar.querySelector('[data-em="' + k + '"]').disabled = !dirty;
+    });
+    bar.querySelector('[data-em="forget"]').style.display = getToken() ? '' : 'none';
+    bar.querySelector('.em-dirty').textContent = dirty ? '● ยังไม่บันทึก' : '';
   }
 
   function buildBar() {
@@ -178,24 +392,23 @@
     bar.innerHTML =
       '<span class="em-dirty"></span>' +
       '<span class="em-msg"></span>' +
+      '<button class="em-btn" type="button" data-em="forget" title="ลบ token ออกจากเบราว์เซอร์">🔓 ลืม token</button>' +
       '<button class="em-btn" type="button" data-em="revert">↩ เลิกทำทั้งหมด</button>' +
-      '<button class="em-btn em-primary" type="button" data-em="save">💾 บันทึกเป็นไฟล์</button>' +
+      '<button class="em-btn" type="button" data-em="save">💾 บันทึกเป็นไฟล์</button>' +
+      '<button class="em-btn em-primary" type="button" data-em="publish">🚀 เผยแพร่ขึ้นเว็บ</button>' +
       '<button class="em-btn em-toggle" type="button" data-em="toggle"></button>';
     document.body.appendChild(bar);
     msgEl = bar.querySelector('.em-msg');
 
     bar.addEventListener('click', function (e) {
       var b = e.target.closest('[data-em]');
-      if (!b) return;
+      if (!b || b.disabled) return;
       var act = b.getAttribute('data-em');
       if (act === 'toggle') { editing ? leave() : enter(); }
-      else if (act === 'save') { save(); }
+      else if (act === 'save') { download(); }
+      else if (act === 'publish') { askTokenThenPublish(); }
       else if (act === 'revert') { revertAll(); }
-    });
-
-    document.addEventListener('click', function (e) {
-      var b = e.target.closest('[data-em="close-next"]');
-      if (b) document.getElementById('em-next').remove();
+      else if (act === 'forget') { forgetToken(); render(); status('ลบ token ออกจากเบราว์เซอร์แล้ว'); }
     });
 
     render();
@@ -209,46 +422,71 @@
       '  display:flex;align-items:center;gap:8px;padding:9px 11px;border-radius:12px;',
       '  background:rgba(13,27,62,.95);border:1px solid rgba(255,255,255,.18);',
       '  box-shadow:0 8px 28px rgba(0,0,0,.45);backdrop-filter:blur(6px);',
-      '  font-family:"Sarabun","IBM Plex Sans Thai",system-ui,sans-serif;}',
-      '.em-bar .em-btn{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.1);',
+      '  font-family:"Sarabun","IBM Plex Sans Thai",system-ui,sans-serif;flex-wrap:wrap;',
+      '  max-width:calc(100vw - 32px);justify-content:flex-end;}',
+      '.em-btn{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.1);',
       '  color:#fff;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;',
-      '  cursor:pointer;font-family:inherit;white-space:nowrap;}',
+      '  cursor:pointer;font-family:inherit;white-space:nowrap;text-decoration:none;',
+      '  display:inline-flex;align-items:center;}',
       '.em-bar .em-btn:hover:not(:disabled){background:rgba(255,255,255,.2);}',
-      '.em-bar .em-btn:disabled{opacity:.35;cursor:not-allowed;}',
-      '.em-btn.em-primary{background:linear-gradient(135deg,#1565C0,#1E88E5);border-color:transparent;}',
+      '.em-btn:disabled{opacity:.35;cursor:not-allowed;}',
+      '.em-bar .em-primary{background:linear-gradient(135deg,#2E7D32,#43A047);border-color:transparent;}',
       '.em-btn.em-toggle{background:linear-gradient(135deg,#E65100,#F57C00);border-color:transparent;}',
       '.em-bar .em-dirty{color:#FFB74D;font-size:11px;font-weight:700;}',
-      '.em-bar .em-msg{color:#B0BEC5;font-size:11px;max-width:280px;}',
-      /* ซ่อนปุ่มบันทึก/เลิกทำตอนยังไม่เข้าโหมดแก้ไข ให้แถบไม่เกะกะ */
-      '.em-bar:not(.em-on) [data-em="save"],.em-bar:not(.em-on) [data-em="revert"]{display:none;}',
-      /* ไฮไลต์ช่องที่แก้ได้ เฉพาะตอนอยู่ในโหมดแก้ไข */
+      '.em-bar .em-msg{color:#B0BEC5;font-size:11px;max-width:260px;}',
+      /* ตอนยังไม่เข้าโหมดแก้ไข แสดงเฉพาะปุ่มเปิดโหมด */
+      '.em-bar:not(.em-on) [data-em="save"],.em-bar:not(.em-on) [data-em="publish"],',
+      '.em-bar:not(.em-on) [data-em="revert"],.em-bar:not(.em-on) [data-em="forget"]{display:none !important;}',
+      /* ไฮไลต์ช่องที่แก้ได้ */
       'body.em-active [contenteditable="true"]{outline:1px dashed rgba(21,101,192,.45);',
       '  outline-offset:2px;border-radius:3px;}',
       'body.em-active [contenteditable="true"]:hover{background:rgba(21,101,192,.08);}',
       'body.em-active [contenteditable="true"]:focus{outline:2px solid #1565C0;',
       '  background:rgba(21,101,192,.12);}',
-      /* หน้าต่างขั้นตอนถัดไป */
-      '#em-next{position:fixed;inset:0;z-index:2147483100;background:rgba(0,0,0,.6);',
+      /* modal */
+      '#em-modal{position:fixed;inset:0;z-index:2147483100;background:rgba(0,0,0,.6);',
       '  display:flex;align-items:center;justify-content:center;padding:20px;',
       '  font-family:"Sarabun","IBM Plex Sans Thai",system-ui,sans-serif;}',
-      '.em-next-card{background:#fff;color:#1E3A5F;border-radius:14px;max-width:480px;',
-      '  width:100%;padding:22px 24px;box-shadow:0 20px 60px rgba(0,0,0,.4);}',
-      '.em-next-h{font-size:16px;font-weight:800;margin-bottom:10px;}',
-      '.em-next-b{font-size:13px;line-height:1.8;color:#455A64;margin-bottom:12px;}',
-      '.em-next-l{font-size:13px;line-height:1.9;color:#37474F;margin:0 0 16px 18px;padding:0;}',
-      '.em-next-card code{background:#ECEFF1;border-radius:4px;padding:1px 6px;font-size:12px;}',
-      '.em-next-a{display:flex;gap:10px;justify-content:flex-end;}',
-      '.em-next-a .em-btn{border:1px solid #CFD8DC;background:#ECEFF1;color:#37474F;',
-      '  border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;',
-      '  font-family:inherit;text-decoration:none;display:inline-flex;align-items:center;}',
-      '.em-next-a .em-primary{background:linear-gradient(135deg,#1565C0,#1E88E5);',
+      '.em-modal-card{background:#fff;color:#1E3A5F;border-radius:14px;max-width:500px;',
+      '  width:100%;padding:22px 24px;box-shadow:0 20px 60px rgba(0,0,0,.4);',
+      '  max-height:85vh;overflow-y:auto;}',
+      '.em-modal-h{font-size:16px;font-weight:800;margin-bottom:10px;}',
+      '.em-modal-b{font-size:13px;line-height:1.8;color:#455A64;}',
+      '.em-modal-b p{margin:0 0 10px;}',
+      '.em-modal-b ol{margin:0 0 10px 18px;padding:0;line-height:1.9;}',
+      '.em-modal-card code{background:#ECEFF1;border-radius:4px;padding:1px 6px;font-size:12px;}',
+      '.em-err{background:#FFEBEE;border-left:3px solid #C62828;color:#B71C1C;',
+      '  padding:10px 12px;border-radius:6px;font-weight:600;}',
+      '.em-field{margin:12px 0;}',
+      '#em-token{width:100%;padding:10px 12px;border:1.5px solid #CFD8DC;border-radius:8px;',
+      '  font-size:13px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;box-sizing:border-box;}',
+      '#em-token:focus{outline:none;border-color:#1565C0;}',
+      '.em-check{display:flex;align-items:center;gap:7px;margin-top:9px;font-size:12px;color:#546E7A;}',
+      '.em-help{margin-top:6px;font-size:12px;}',
+      '.em-help summary{cursor:pointer;color:#1565C0;font-weight:700;}',
+      '.em-help ol{margin:8px 0 0 18px;}',
+      '.em-modal-a{display:flex;gap:10px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap;}',
+      '.em-modal-a .em-btn{border:1px solid #CFD8DC;background:#ECEFF1;color:#37474F;',
+      '  padding:8px 16px;font-size:13px;}',
+      '.em-modal-a .em-btn:hover{background:#CFD8DC;}',
+      '.em-modal-a .em-primary{background:linear-gradient(135deg,#2E7D32,#43A047);',
       '  color:#fff;border-color:transparent;}',
-      '@media print{.em-bar,#em-next{display:none !important;}}'
+      /* busy */
+      '#em-busy{position:fixed;inset:0;z-index:2147483200;background:rgba(0,0,0,.55);',
+      '  display:flex;align-items:center;justify-content:center;',
+      '  font-family:"Sarabun","IBM Plex Sans Thai",system-ui,sans-serif;}',
+      '.em-busy-card{background:#fff;color:#1E3A5F;border-radius:12px;padding:18px 24px;',
+      '  font-size:13px;font-weight:700;display:flex;align-items:center;gap:12px;}',
+      '.em-spin{width:16px;height:16px;border:2px solid #CFD8DC;border-top-color:#1565C0;',
+      '  border-radius:50%;animation:em-rot .8s linear infinite;flex-shrink:0;}',
+      '@keyframes em-rot{to{transform:rotate(360deg);}}',
+      '@media print{.em-bar,#em-modal,#em-busy{display:none !important;}}'
     ].join('\n');
     document.head.appendChild(css);
   }
 
-  /* ── ติดตั้ง ─────────────────────────────────────────────────────── */
+  /* ═══ ติดตั้ง ══════════════════════════════════════════════════════ */
+
   function init() {
     styles();
     buildBar();
@@ -257,6 +495,10 @@
       if (!editing) return;
       if (e.target.closest('[' + UI_ATTR + ']')) return;
       if (!dirty) { dirty = true; render(); }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeModal();
     });
 
     window.addEventListener('beforeunload', function (e) {
