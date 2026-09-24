@@ -38,6 +38,22 @@
     .top-nav .nav-title { color:#fff; font-size:15px; font-weight:800; letter-spacing:1px; }
     .top-nav .nav-sub { color:rgba(255,255,255,.6); font-size:10px; margin-left:auto; }
 
+    /* ปุ่มไปหน้าเวอร์ชันปรับปรุง (R.8) — ใช้สีส้มให้ต่างจากปุ่มอื่นในแถบ */
+    .top-nav .rev-btn {
+      background:linear-gradient(135deg,#E65100,#F57C00); color:#fff;
+      border:1px solid rgba(255,255,255,.3); border-radius:8px;
+      padding:6px 14px; font-size:12px; font-weight:700;
+      cursor:pointer; font-family:'Sarabun',sans-serif; transition:all .2s;
+      text-decoration:none; display:inline-flex; align-items:center; gap:7px;
+      white-space:nowrap; flex-shrink:0;
+      box-shadow:0 2px 8px rgba(230,81,0,.35);
+    }
+    .top-nav .rev-btn:hover { filter:brightness(1.12); box-shadow:0 3px 12px rgba(230,81,0,.5); }
+    .top-nav .rev-btn .rev-tag {
+      background:rgba(255,255,255,.22); border-radius:5px;
+      padding:1px 6px; font-size:10px; letter-spacing:.5px;
+    }
+
     /* ─── PAGE HEADER ─── */
     .page-header {
       background: linear-gradient(135deg,#0D1B3E 0%,#1A237E 55%,#1565C0 100%);
@@ -392,6 +408,10 @@
     </script>
   <span class="nav-title">DIGITAL ORGANIZATION TO AGENTIC TRANSFORMATION</span>
   <span class="nav-sub">5Ps Pyramid × Technology Triangle Paradigm</span>
+  <a class="rev-btn" href="./digital-organization-r8.html"
+     title="เปิดฉบับปรับปรุง Revision 8">
+    <span class="rev-tag">R.8</span> ดูฉบับปรับปรุง ↗
+  </a>
 </nav>
 
 <!-- ▶ PAGE HEADER -->
@@ -1338,5 +1358,6 @@ function pf2Tab(n) {
     </div>
   </div>
 </div>
+<script src="./edit-mode.js"></script>
 </body>
 </html>

@@ -11,12 +11,17 @@ Digital Organization to Agentic Transformation
 
 ```
 .
-├── digital-organization.html     # หน้าหลัก — 5Ps Pyramid 7 Layers + PF Modals
+├── digital-organization.html     # ฉบับเดิม — 5Ps Pyramid 7 Layers + PF Modals
+├── digital-organization-r8.html  # ฉบับปรับปรุง R.8 — Odoo / PMIS-II Roadmap
 ├── index.html                    # redirect ไป digital-organization.html (สำหรับ URL ราก)
+├── edit-mode.js                  # โหมดแก้ไขข้อความในหน้า (ใช้ร่วมกันทั้งสองหน้า)
 ├── assets/                       # รูปประกอบ 7 ไฟล์
 ├── .nojekyll                     # ปิด Jekyll processing บน GitHub Pages
 └── README.md
 ```
+
+สองฉบับลิงก์หากันผ่านปุ่มบนแถบนำทาง:
+`ฉบับเดิม —[R.8 ดูฉบับปรับปรุง ↗]→ R.8` และ `R.8 —[← ฉบับเดิม]→ ฉบับเดิม`
 
 ## การเปิดใช้งาน
 
@@ -32,6 +37,32 @@ npx http-server -p 8080
 `Settings → Pages → Source: Deploy from a branch` แล้วเลือก branch นี้ + `/ (root)`
 
 URL ราก (`https://<user>.github.io/DORoadmap/`) จะ redirect ไปหน้าจริงอัตโนมัติ
+
+---
+
+## โหมดแก้ไขข้อความ (`edit-mode.js`)
+
+ทั้งสองหน้ามีปุ่ม **✏️ แก้ไขข้อความ** ลอยอยู่มุมขวาล่าง
+
+1. กดปุ่ม → ทุกข้อความในหน้าขึ้นกรอบประ คลิกแล้วพิมพ์ทับได้เลย
+2. กด **💾 บันทึกเป็นไฟล์** → ได้ไฟล์ HTML ใหม่ที่มีข้อความที่แก้แล้ว
+3. เอาไฟล์นั้นวางทับใน repo (มีปุ่มพาไปหน้าอัปโหลดของ GitHub ให้)
+
+> ⚠️ **กดบันทึกแล้วหน้าเว็บจริงยังไม่เปลี่ยน**
+> GitHub Pages เป็น static hosting ไม่มี backend ให้เขียนไฟล์กลับ และการฝัง
+> GitHub token ไว้ในหน้าเพื่อ commit เองคือการเปิดเผย credential บน repo
+> สาธารณะ จึงใช้วิธีดาวน์โหลดไฟล์แล้ว commit แทน
+
+รายละเอียดการทำงาน:
+
+- แก้ได้เฉพาะ element ที่เป็น**ใบสุดท้ายของข้อความ** (ไม่มี block element ซ้อนข้างใน)
+  เพื่อกันการลบโครงสร้างหน้าเสียหายโดยไม่ตั้งใจ — รูปและ SVG ไม่ถูกแตะ
+- ไฟล์ที่ได้**สะอาด** — ถอด `contenteditable`, แถบเครื่องมือ และ CSS ของโหมดแก้ไขออกหมด
+  แต่ยังมี `edit-mode.js` ติดไป จึงแก้ต่อได้เรื่อยๆ
+- มี `beforeunload` เตือนถ้าปิดหน้าทั้งที่ยังไม่บันทึก
+- ปุ่ม **↩ เลิกทำทั้งหมด** ย้อนกลับเป็นข้อความเดิมได้
+- ถ้าไม่อยากให้คนทั่วไปเห็นปุ่ม → ตั้ง `SHOW_ALWAYS = false` ใน `edit-mode.js`
+  ปุ่มจะโผล่เฉพาะตอนเปิด URL แบบ `?edit=1`
 
 ---
 
