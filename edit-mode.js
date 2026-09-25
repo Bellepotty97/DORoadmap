@@ -196,12 +196,35 @@
     return fetch('https://api.github.com' + path, opts);
   }
 
-  function friendlyError(res, body) {
-    if (res.status === 401) return 'Token ไม่ถูกต้องหรือหมดอายุแล้ว — สร้างใหม่แล้วลองอีกครั้ง';
-    if (res.status === 403) return 'Token ใช้ได้ แต่สิทธิ์ไม่พอ — ต้องตั้ง Contents = Read and write บน repo นี้';
-    if (res.status === 404) return 'หาไฟล์หรือ repo ไม่เจอ — token อาจไม่ได้เลือก repo นี้ไว้ (ตั้ง Only select repositories → ' + REPO.repo + ')';
-    if (res.status === 409 || res.status === 422) return 'ไฟล์บน GitHub ถูกแก้ไปแล้วหลังจากคุณเปิดหน้านี้ — รีโหลดหน้าแล้วแก้ใหม่ เพื่อไม่ให้ทับงานคนอื่น';
-    return 'GitHub ตอบกลับ ' + res.status + (body && body.message ? ' — ' + body.message : '');
+  /* stage: 'read' = ตอนดึง sha, 'write' = ตอน commit
+     GitHub ส่ง header x-accepted-github-permissions มาบอกตรงๆ ว่าต้องการสิทธิ์อะไร
+     จึงแสดงทั้ง header นั้นและ message ดิบของ GitHub ไว้ด้วย เพื่อให้วินิจฉัยได้จริง */
+  function friendlyError(res, body, stage) {
+    var need = res.headers.get('x-accepted-github-permissions') || '';
+    var raw  = (body && body.message) ? body.message : '';
+    var msg;
+
+    if (res.status === 401) {
+      msg = 'Token ไม่ถูกต้องหรือหมดอายุแล้ว — สร้างใหม่แล้วลองอีกครั้ง';
+    } else if (res.status === 403) {
+      msg = stage === 'write'
+        ? 'Token อ่าน repo ได้ แต่เขียนไม่ได้ — สิทธิ์ Contents ยังเป็น Read-only ' +
+          'ต้องเปลี่ยนเป็น Read and write แล้วกด Update token'
+        : 'Token ใช้ได้ แต่สิทธิ์ไม่พอสำหรับ repo นี้';
+    } else if (res.status === 404) {
+      msg = 'หาไฟล์หรือ repo ไม่เจอ — token อาจไม่ได้เลือก repo นี้ไว้ ' +
+            '(ตั้ง Only select repositories → ' + REPO.repo + ')';
+    } else if (res.status === 409 || res.status === 422) {
+      msg = 'ไฟล์บน GitHub ถูกแก้ไปแล้วหลังจากคุณเปิดหน้านี้ — รีโหลดหน้าแล้วแก้ใหม่ เพื่อไม่ให้ทับงานคนอื่น';
+    } else {
+      msg = 'GitHub ตอบกลับ ' + res.status;
+    }
+
+    var detail = [];
+    if (raw) detail.push('GitHub: ' + raw);
+    if (need) detail.push('สิทธิ์ที่ GitHub ต้องการ: ' + need);
+    detail.push('ขั้นตอน: ' + (stage === 'write' ? 'commit (PUT)' : 'อ่านไฟล์ (GET)') + ' · HTTP ' + res.status);
+    return msg + '\n\u0000' + detail.join('\n');
   }
 
   async function publish(token, remember) {
@@ -214,7 +237,7 @@
       var getRes = await api(base + '?ref=' + encodeURIComponent(REPO.branch), token, { cache: 'no-store' });
       if (!getRes.ok) {
         var gb = await getRes.json().catch(function () { return null; });
-        throw new Error(friendlyError(getRes, gb));
+        throw new Error(friendlyError(getRes, gb, 'read'));
       }
       var meta = await getRes.json();
 
@@ -231,7 +254,7 @@
         })
       });
       var pb = await putRes.json().catch(function () { return null; });
-      if (!putRes.ok) throw new Error(friendlyError(putRes, pb));
+      if (!putRes.ok) throw new Error(friendlyError(putRes, pb, 'write'));
 
       setToken(token, remember);
       dirty = false;
@@ -248,11 +271,15 @@
       );
     } catch (err) {
       busy(false);
+      var parts = String(err.message).split('\u0000');
       modal('❌ เผยแพร่ไม่สำเร็จ',
-        '<p class="em-err">' + esc(err.message) + '</p>' +
+        '<p class="em-err">' + esc(parts[0]) + '</p>' +
+        (parts[1] ? '<pre class="em-detail">' + esc(parts[1]) + '</pre>' : '') +
         '<p>ข้อความที่แก้ยังอยู่ในหน้านี้ ไม่หายไปไหน — แก้ปัญหาแล้วกดเผยแพร่ใหม่ได้ ' +
         'หรือกด <b>บันทึกเป็นไฟล์</b> เก็บไว้ก่อน</p>',
-        [{ label: 'ปิด', primary: true }]);
+        [{ label: 'เปิดหน้าตั้งค่า token ↗',
+           href: 'https://github.com/settings/personal-access-tokens' },
+         { label: 'ปิด', primary: true }]);
     }
   }
 
@@ -457,6 +484,9 @@
       '.em-modal-card code{background:#ECEFF1;border-radius:4px;padding:1px 6px;font-size:12px;}',
       '.em-err{background:#FFEBEE;border-left:3px solid #C62828;color:#B71C1C;',
       '  padding:10px 12px;border-radius:6px;font-weight:600;}',
+      '.em-detail{background:#263238;color:#B2DFDB;border-radius:6px;padding:10px 12px;',
+'  font-size:11px;line-height:1.7;white-space:pre-wrap;word-break:break-word;',
+'  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;margin:0 0 10px;}',
       '.em-field{margin:12px 0;}',
       '#em-token{width:100%;padding:10px 12px;border:1.5px solid #CFD8DC;border-radius:8px;',
       '  font-size:13px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;box-sizing:border-box;}',
