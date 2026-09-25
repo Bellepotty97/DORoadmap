@@ -277,16 +277,91 @@
         (parts[1] ? '<pre class="em-detail">' + esc(parts[1]) + '</pre>' : '') +
         '<p>ข้อความที่แก้ยังอยู่ในหน้านี้ ไม่หายไปไหน — แก้ปัญหาแล้วกดเผยแพร่ใหม่ได้ ' +
         'หรือกด <b>บันทึกเป็นไฟล์</b> เก็บไว้ก่อน</p>',
-        [{ label: 'เปิดหน้าตั้งค่า token ↗',
+        [{ label: '🔍 ตรวจสอบ token', keep: true, onClick: function () {
+             var t = getToken();
+             if (t) { closeModal(); diagnose(t); }
+             else { closeModal(); askTokenFor(diagnose); }
+           } },
+         { label: 'เปิดหน้าตั้งค่า token ↗',
            href: 'https://github.com/settings/personal-access-tokens' },
          { label: 'ปิด', primary: true }]);
     }
   }
 
+  /* ตรวจว่า token ติดปัญหาอะไรกันแน่ — เดาจาก 403 อย่างเดียวไม่พอ เพราะ
+     repo นี้เป็น public การ GET จึงสำเร็จได้แม้ token ไม่ได้เลือก repo นี้ไว้
+     ตัวชี้ขาดคือ permissions.push จาก /repos/{owner}/{repo} */
+  async function diagnose(token) {
+    busy(true, 'กำลังตรวจสอบ token…');
+    try {
+      var uRes = await api('/user', token, { cache: 'no-store' });
+      if (uRes.status === 401) {
+        busy(false);
+        return verdict('C', 'Token ใช้ไม่ได้', [
+          ['Token valid', 'ไม่ — GitHub ตอบ 401', false]
+        ], 'token ผิด คัดลอกไม่ครบ หรือหมดอายุแล้ว — สร้างใหม่');
+      }
+      var u = await uRes.json();
+      var isClassic = /^gh[pousr]_/.test(token);
+
+      var rRes = await api('/repos/' + REPO.owner + '/' + REPO.repo, token, { cache: 'no-store' });
+      var r = await rRes.json().catch(function () { return {}; });
+      var perms = r.permissions || {};
+      var canPush = !!perms.push;
+
+      busy(false);
+      var rows = [
+        ['Token ใช้งานได้', 'ใช่ — เป็นของ @' + u.login, true],
+        ['ชนิด token', isClassic ? 'Classic (ไม่แนะนำ)' : 'Fine-grained', !isClassic],
+        ['เห็น repo ' + REPO.repo, rRes.ok ? 'ใช่' : 'ไม่ (HTTP ' + rRes.status + ')', rRes.ok],
+        ['เขียน repo ได้ (push)', canPush ? 'ใช่' : 'ไม่ ← สาเหตุอยู่ตรงนี้', canPush]
+      ];
+
+      if (canPush) {
+        return verdict('OK', 'Token พร้อมใช้งาน', rows,
+          'สิทธิ์ครบแล้ว ลองกดเผยแพร่อีกครั้งได้เลย ' +
+          'ถ้ายังไม่ผ่าน แปลว่าเป็นปัญหาอื่น ไม่ใช่เรื่องสิทธิ์');
+      }
+      if (isClassic) {
+        return verdict('C', 'ใช้ Classic token อยู่', rows,
+          'Classic token ต้องติ๊ก scope ถึงจะเขียนได้ — repo นี้เป็น public จึงใช้ ' +
+          '<b>public_repo</b> พอ (แคบกว่า <b>repo</b> ที่ให้สิทธิ์ private ด้วย)<br>' +
+          'ถ้าเลือกได้ แนะนำ Fine-grained มากกว่า เพราะจำกัดได้ทีละ repo');
+      }
+      return verdict('AB', 'Token เขียน repo นี้ไม่ได้', rows,
+        'เกิดได้ 2 กรณี ตรวจทั้งคู่ที่หน้าตั้งค่า token:<br>' +
+        '<b>1.</b> Repository access ต้องเป็น <b>Only select repositories</b> ' +
+        'และติ๊ก <code>' + esc(REPO.repo) + '</code> ไว้จริง<br>' +
+        '<b>2.</b> Repository permissions → <code>Contents</code> ต้องเป็น ' +
+        '<b>Read and write</b> (ไม่ใช่ Read-only)<br>' +
+        'แก้แล้วอย่าลืมกด <b>Update token</b> ล่างสุด');
+    } catch (e) {
+      busy(false);
+      return verdict('C', 'ตรวจสอบไม่สำเร็จ',
+        [['เชื่อมต่อ api.github.com', 'ไม่สำเร็จ', false]], esc(e.message));
+    }
+  }
+
+  function verdict(kind, title, rows, advice) {
+    var ok = kind === 'OK';
+    var html = '<table class="em-diag">' + rows.map(function (r) {
+      return '<tr><td>' + esc(r[0]) + '</td><td class="' + (r[2] ? 'em-ok' : 'em-no') + '">' +
+             (r[2] ? '✅ ' : '❌ ') + esc(r[1]) + '</td></tr>';
+    }).join('') + '</table><p class="em-advice">' + advice + '</p>';
+    modal((ok ? '✅ ' : '🔍 ') + esc(title), html,
+      [{ label: 'เปิดหน้าตั้งค่า token ↗',
+         href: 'https://github.com/settings/personal-access-tokens' },
+       { label: 'ปิด', primary: true }]);
+  }
+
   function askTokenThenPublish() {
     var saved = getToken();
     if (saved) { publish(saved, true); return; }
+    askTokenFor(publish);
 
+  }
+
+  function askTokenFor(then) {
     modal(
       '🔑 ใส่ GitHub Token',
       '<p>หน้านี้อยู่บน static hosting จึงต้องใช้ token ของคุณเองในการ commit<br>' +
@@ -309,7 +384,7 @@
            var r = box.querySelector('#em-remember').checked;
            if (!t) { box.querySelector('#em-token').focus(); return; }
            closeModal();
-           publish(t, r);
+           then(t, r);
          } }]
     );
     var inp = document.querySelector('#em-token');
@@ -322,7 +397,7 @@
           if (!t) return;
           var r = box.querySelector('#em-remember').checked;
           closeModal();
-          publish(t, r);
+          then(t, r);
         }
       });
     }
@@ -420,6 +495,7 @@
       '<span class="em-dirty"></span>' +
       '<span class="em-msg"></span>' +
       '<button class="em-btn" type="button" data-em="forget" title="ลบ token ออกจากเบราว์เซอร์">🔓 ลืม token</button>' +
+      '<button class="em-btn" type="button" data-em="check" title="ตรวจว่า token มีสิทธิ์พอไหม">🔍 ตรวจสอบ token</button>' +
       '<button class="em-btn" type="button" data-em="revert">↩ เลิกทำทั้งหมด</button>' +
       '<button class="em-btn" type="button" data-em="save">💾 บันทึกเป็นไฟล์</button>' +
       '<button class="em-btn em-primary" type="button" data-em="publish">🚀 เผยแพร่ขึ้นเว็บ</button>' +
@@ -434,6 +510,7 @@
       if (act === 'toggle') { editing ? leave() : enter(); }
       else if (act === 'save') { download(); }
       else if (act === 'publish') { askTokenThenPublish(); }
+      else if (act === 'check') { var t = getToken(); t ? diagnose(t) : askTokenFor(diagnose); }
       else if (act === 'revert') { revertAll(); }
       else if (act === 'forget') { forgetToken(); render(); status('ลบ token ออกจากเบราว์เซอร์แล้ว'); }
     });
@@ -463,7 +540,8 @@
       '.em-bar .em-msg{color:#B0BEC5;font-size:11px;max-width:260px;}',
       /* ตอนยังไม่เข้าโหมดแก้ไข แสดงเฉพาะปุ่มเปิดโหมด */
       '.em-bar:not(.em-on) [data-em="save"],.em-bar:not(.em-on) [data-em="publish"],',
-      '.em-bar:not(.em-on) [data-em="revert"],.em-bar:not(.em-on) [data-em="forget"]{display:none !important;}',
+      '.em-bar:not(.em-on) [data-em="revert"],.em-bar:not(.em-on) [data-em="forget"],',
+      '.em-bar:not(.em-on) [data-em="check"]{display:none !important;}',
       /* ไฮไลต์ช่องที่แก้ได้ */
       'body.em-active [contenteditable="true"]{outline:1px dashed rgba(21,101,192,.45);',
       '  outline-offset:2px;border-radius:3px;}',
@@ -487,6 +565,13 @@
       '.em-detail{background:#263238;color:#B2DFDB;border-radius:6px;padding:10px 12px;',
 '  font-size:11px;line-height:1.7;white-space:pre-wrap;word-break:break-word;',
 '  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;margin:0 0 10px;}',
+      '.em-diag{width:100%;border-collapse:collapse;margin:4px 0 12px;font-size:12.5px;}',
+'.em-diag td{padding:7px 8px;border-bottom:1px solid #ECEFF1;vertical-align:top;}',
+'.em-diag td:first-child{color:#607D8B;white-space:nowrap;}',
+'.em-diag .em-ok{color:#2E7D32;font-weight:700;}',
+'.em-diag .em-no{color:#C62828;font-weight:700;}',
+'.em-advice{background:#FFF8E1;border-left:3px solid #F57C00;padding:10px 12px;',
+'  border-radius:6px;font-size:12.5px;line-height:1.8;}',
       '.em-field{margin:12px 0;}',
       '#em-token{width:100%;padding:10px 12px;border:1.5px solid #CFD8DC;border-radius:8px;',
       '  font-size:13px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;box-sizing:border-box;}',
