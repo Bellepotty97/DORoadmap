@@ -351,6 +351,24 @@
     content:'✓';width:auto;height:auto;border-radius:0;background:none;opacity:1;
     color:#2f8f5b;font-size:13px;font-weight:900;line-height:1;
   }
+  /* sub-item ที่กดเข้าไปดูหน้ารายละเอียดได้ */
+  .sub-item.is-link{
+    text-decoration:none;cursor:pointer;
+    transition:transform .16s,box-shadow .16s,border-color .16s,background .16s;
+  }
+  .sub-item.is-link:hover,.sub-item.is-link:focus-visible{
+    background:var(--white);border-color:var(--pf-color);
+    transform:translateY(-2px);box-shadow:0 6px 16px rgba(18,32,61,.14);
+  }
+  .sub-item .si-go{
+    margin-left:5px;font-size:14px;font-weight:800;color:var(--pf-color);
+    line-height:1;transition:transform .16s;
+  }
+  .sub-item.is-link:hover .si-go{transform:translateX(3px);}
+  @media (prefers-reduced-motion:reduce){
+    .sub-item.is-link,.sub-item .si-go{transition:none;}
+    .sub-item.is-link:hover{transform:none;}
+  }
   .sub-item .si-tag{
     margin-left:4px;background:#2f8f5b;color:#fff;border-radius:999px;
     padding:2px 8px;font-size:10.5px;font-weight:700;letter-spacing:.02em;
@@ -1707,7 +1725,7 @@
         <h3>Data Management</h3>
         <p>การบริหารจัดการข้อมูลของกลุ่ม ประกอบด้วย 2 เรื่องหลัก</p>
         <div class="sub-items">
-          <div class="sub-item">Customer 360</div>
+          <a class="sub-item is-link" href="./customer360.html" title="เปิดหน้า Customer 360 — Single View of Customer">Customer 360<span class="si-go">→</span></a>
           <div class="sub-item">Datalake</div>
         </div>
         <span class="sub-pending">⏳ รอเอกสารรายละเอียด</span>
