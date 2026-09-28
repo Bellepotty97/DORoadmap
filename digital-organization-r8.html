@@ -569,7 +569,7 @@
 
     <!-- ROADMAP OPTION TABS -->
     <div class="opt-tabs">
-      <button class="opt-tab on" onclick="showOpt('A', this)">
+      <button class="opt-tab" onclick="showOpt('A', this)">
         Option A · Grouped by Fiscal Phase
         <span class="opt-sub">3 Phase ตามปีงบประมาณ 2569–2571</span>
       </button>
@@ -577,14 +577,14 @@
         Option B · Sequential Standalone Rollout
         <span class="opt-sub">PEM→PSL→PPP→PCC(แยก)→PDE→PSP→PCC(Console) · 12/2570–12/2572</span>
       </button>
-      <button class="opt-tab" onclick="showOpt('C', this)">
+      <button class="opt-tab on" onclick="showOpt('C', this)">
         Option C · 3 Phase หลัก + Optional
         <span class="opt-sub">Group Go-Live เร่งรวม 12/2570 · PSP มีทางเลือกเสริม 1 แนวทาง</span>
       </button>
     </div>
 
     <!-- ============ OPTION A PANEL ============ -->
-    <div class="opt-panel on" id="panelA">
+    <div class="opt-panel" id="panelA">
 
     <!-- TIMELINE -->
     <div class="timeline">
@@ -793,7 +793,7 @@
     <!-- ============ END OPTION B PANEL ============ -->
 
     <!-- ============ OPTION C PANEL ============ -->
-    <div class="opt-panel" id="panelC">
+    <div class="opt-panel on" id="panelC">
 
       <p style="font-size:13px;color:var(--ink-soft);line-height:1.75;margin:0 0 6px;">
         แนวทางนี้อิงจากตาราง Timeline ล่าสุด (<b>PCC Group Odoo Roadmap v7</b>) จัดกลุ่มเป็น
