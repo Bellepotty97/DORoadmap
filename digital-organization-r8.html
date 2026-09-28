@@ -418,6 +418,28 @@
     .sub-pending.sub-open,.sub-pending.sub-open .sp-go{transition:none;}
     .sub-pending.sub-open:hover{transform:none;}
   }
+
+  /* ---------- ภาพประกอบประจำ section ---------- */
+  .sec-photo{
+    margin:0 auto 30px;max-width:430px;
+  }
+  .sec-photo .ph-frame{
+    background:var(--white);border:1px solid var(--line);
+    border-top:4px solid var(--pf-color);border-radius:18px;
+    padding:10px;box-shadow:0 10px 30px rgba(18,32,61,.10);
+  }
+  .sec-photo img{
+    display:block;width:100%;height:auto;
+    border-radius:0 0 11px 11px;background:var(--paper-2);
+  }
+  .sec-photo figcaption{
+    margin-top:13px;font-size:12.5px;font-weight:600;color:var(--ink-soft);
+    display:flex;align-items:center;gap:8px;line-height:var(--lh-dense);
+  }
+  .sec-photo figcaption::before{
+    content:'';width:7px;height:7px;border-radius:50%;
+    background:var(--pf-color);flex:0 0 auto;
+  }
   .pfsec-back{
     display:inline-flex;align-items:center;gap:7px;margin-top:30px;
     font-size:13px;font-weight:600;color:var(--ink-soft);text-decoration:none;
@@ -1748,6 +1770,14 @@
     <h2>Digital Infrastructure</h2>
     <p class="pfsec-lead">
       [The Foundation] แบ่งเป็น 2 ส่วนหลัก&nbsp;</p>
+
+    <figure class="sec-photo">
+      <div class="ph-frame">
+        <img src="./assets/pf3-datacenter-room.webp" width="1108" height="1478" loading="lazy"
+             alt="ทางเดินระหว่างแถวตู้ Rack ในศูนย์ข้อมูลใหม่ของกลุ่ม PCC มีพื้นยกระดับแบบมีรูระบายอากาศ กล้องวงจรปิด และหัวสปริงเกลอร์บนเพดาน">
+      </div>
+      <figcaption>ศูนย์ข้อมูลใหม่ของกลุ่ม PCC — ก่อสร้างเสร็จสมบูรณ์แล้ว</figcaption>
+    </figure>
 
     <div class="sub-grid">
       <div class="sub-card">
