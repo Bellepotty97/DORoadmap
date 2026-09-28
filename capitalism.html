@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PCC — Evolution of Capitalism</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F0F4F8;--ink:#12233A;--mute:#5A6E88;--line:#D3DEEA;
+  --blue:#0077B6;--blue2:#005A8E;--navy:#0B2447;
+  --ind:#64748B;--ind2:#475569;   /* Industrial  */
+  --plat:#1D74C4;--plat2:#12569A; /* Platform    */
+  --eco:#2E9E62;--eco2:#1F7A49;   /* Ecosystem   */
+  --gold:#E0A526}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:radial-gradient(1400px 800px at 50% -12%,#FFFFFF 0%,transparent 62%),var(--paper);
+  color:var(--ink);font-family:'Sarabun','Inter','Noto Sans Thai',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:'Inter','Sarabun',sans-serif;margin:0}
+svg.ic{width:1em;height:1em;vertical-align:-.16em;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- แถบเครื่องมือ ---------- */
+.bar{position:sticky;top:0;z-index:60;display:flex;flex-wrap:wrap;gap:6px;align-items:center;
+  padding:8px 16px;background:rgba(240,244,248,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.brand{display:flex;flex-direction:column;line-height:1.1;margin-right:4px}
+.brand b{font-family:'Inter',sans-serif;font-size:13px;font-weight:800;color:var(--blue2)}
+.brand span{font-family:'Inter',sans-serif;font-size:8.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#8FA3B8}
+.sep{width:1px;height:22px;background:var(--line);margin:0 3px}
+button{font-family:'Inter','Sarabun',sans-serif;font-size:11px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;
+  background:#fff;color:#41566E;border:1px solid var(--line);padding:6px 9px;cursor:pointer;border-radius:6px;white-space:nowrap;transition:.14s}
+button:hover{border-color:var(--blue);color:var(--blue)}
+button.on{background:var(--blue);border-color:var(--blue);color:#fff}
+button.pub{background:var(--blue2);border-color:var(--blue2);color:#fff}
+button:disabled{opacity:.5;cursor:default}
+a.back{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.02em;
+  text-decoration:none;color:#41566E;border:1px solid var(--line);padding:6px 9px;border-radius:6px}
+a.back:hover{border-color:var(--blue);color:var(--blue)}
+#autosave{font-family:'Inter',sans-serif;font-size:9.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#B7C4D2;margin-left:auto}
+#autosave.hit{color:#2E7D32}
+.tip{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:90;background:var(--navy);color:#fff;
+  padding:9px 18px;border-radius:9px;font-size:13.5px;opacity:0;pointer-events:none;transition:opacity .2s;box-shadow:0 6px 22px rgba(11,36,71,.28)}
+.tip.show{opacity:.96}
+#fmt{display:none;position:sticky;top:41px;z-index:59;flex-wrap:wrap;gap:5px;align-items:center;
+  padding:6px 16px;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 10px rgba(30,58,95,.06)}
+body.edit #fmt{display:flex}
+#fmt button{padding:4px 8px;font-size:11.5px;text-transform:none;letter-spacing:0;min-width:28px}
+#fmt .lb{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8FA3B8;margin:0 2px 0 6px}
+#fmt select{font-family:'Inter','Sarabun',sans-serif;font-size:11.5px;border:1px solid var(--line);border-radius:6px;padding:4px 6px;background:#fff;color:#41566E}
+.sws{display:flex;gap:3px}
+.sws i{width:17px;height:17px;border-radius:4px;cursor:pointer;display:block;box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.sws i:hover{transform:scale(1.15)}
+[contenteditable="true"]{outline:none}
+body.edit [contenteditable="true"]:hover{background:rgba(245,179,1,.12);border-radius:4px}
+[contenteditable="true"]:focus{outline:2px solid #F5B301;outline-offset:2px;border-radius:4px}
+
+/* ---------- โครงหน้า ---------- */
+.wrap{max-width:1680px;margin:0 auto;padding:22px 22px 110px}
+.hero{position:relative;overflow:hidden;border-radius:20px;padding:28px 34px;color:#fff;
+  background:linear-gradient(115deg,#0B2447 0%,#12569A 46%,#1F7A49 100%);box-shadow:0 14px 42px rgba(11,36,71,.32)}
+.hero:before{content:"";position:absolute;right:-70px;top:-90px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.07)}
+.hero:after{content:"";position:absolute;right:120px;bottom:-120px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.05)}
+.hero .kd{font-family:'Inter',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;opacity:.86}
+.hero h1{font-size:30px;font-weight:900;margin:5px 0 4px;letter-spacing:-.01em}
+.hero .sub{font-size:14.5px;opacity:.94;line-height:1.6;max-width:940px}
+.hero .quote{margin-top:14px;display:inline-block;background:rgba(255,255,255,.14);border-left:4px solid var(--gold);
+  border-radius:0 10px 10px 0;padding:10px 18px;font-family:'Inter','Sarabun',sans-serif;font-size:15px;font-weight:700;line-height:1.5}
+.sec{margin-top:26px}
+.sech{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sech .n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;
+  background:var(--navy);color:#fff;font-family:'Inter',sans-serif;font-size:13px;font-weight:800;flex:none}
+.sech h2{font-size:18px;font-weight:800;color:var(--navy)}
+.sech .cap{font-size:12.5px;color:var(--mute);margin-left:2px}
+.card{background:#fff;border:1px solid var(--line);border-radius:15px;box-shadow:0 3px 16px rgba(30,58,95,.06)}
+
+/* ---------- ยุค 3 ยุค ---------- */
+.stages{display:grid;grid-template-columns:1fr 34px 1fr 34px 1fr;align-items:stretch;gap:0}
+.arrowcell{display:flex;align-items:center;justify-content:center;color:#B4C4D6}
+.arrowcell svg{width:26px;height:26px;stroke-width:2.4}
+.stage{border-radius:16px;overflow:hidden;background:#fff;border:1px solid var(--line);box-shadow:0 4px 18px rgba(30,58,95,.08);display:flex;flex-direction:column}
+.stage .top{padding:16px 18px 14px;color:#fff;position:relative;overflow:hidden}
+.stage .top:before{content:"";position:absolute;right:-30px;top:-40px;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.10)}
+.stage .era{font-family:'Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;opacity:.88}
+.stage h3{font-size:19px;font-weight:900;margin:3px 0 1px;letter-spacing:-.01em}
+.stage .th{font-size:13px;opacity:.94}
+.stage .art{height:96px;display:flex;align-items:center;justify-content:center;position:relative}
+.stage .art svg{width:100%;height:100%}
+.stage .body{padding:4px 18px 16px;flex:1}
+.asset{display:inline-flex;align-items:center;gap:7px;font-family:'Inter','Sarabun',sans-serif;font-weight:800;font-size:13.5px;
+  padding:6px 13px;border-radius:999px;margin:0 0 11px}
+.attr{display:flex;gap:9px;align-items:flex-start;padding:7px 0;border-top:1px dashed #E3EBF3;font-size:12.5px;line-height:1.55}
+.attr:first-of-type{border-top:none}
+.attr .k{flex:none;width:92px;font-family:'Inter',sans-serif;font-size:9.5px;font-weight:800;letter-spacing:.08em;
+  text-transform:uppercase;color:#95A7BA;padding-top:3px}
+.attr .v{flex:1;min-width:0}
+.st-ind .top{background:linear-gradient(135deg,var(--ind2),var(--ind))}
+.st-plat .top{background:linear-gradient(135deg,var(--plat2),var(--plat))}
+.st-eco .top{background:linear-gradient(135deg,var(--eco2),var(--eco))}
+.st-ind{border-color:#C3CDD9}.st-plat{border-color:#B8D4EC}.st-eco{border-color:#B6DFC7}
+.st-ind .asset{background:#EEF2F6;color:var(--ind2)}
+.st-plat .asset{background:#E8F2FB;color:var(--plat2)}
+.st-eco .asset{background:#E7F6ED;color:var(--eco2)}
+.st-ind .art{background:#F6F8FA}.st-plat .art{background:#F2F8FD}.st-eco .art{background:#F1FAF4}
+
+/* ---------- ตารางเทียบ ---------- */
+.cmp{width:100%;border-collapse:separate;border-spacing:0;font-size:13px;background:#fff;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.cmp th,.cmp td{padding:11px 15px;text-align:left;vertical-align:top;border-bottom:1px solid #EAF0F6}
+.cmp tr:last-child td{border-bottom:none}
+.cmp thead th{font-family:'Inter','Sarabun',sans-serif;font-size:12.5px;font-weight:800;color:#fff}
+.cmp thead th:first-child{background:var(--navy)}
+.cmp thead th.h1c{background:linear-gradient(135deg,var(--ind2),var(--ind))}
+.cmp thead th.h2c{background:linear-gradient(135deg,var(--plat2),var(--plat))}
+.cmp thead th.h3c{background:linear-gradient(135deg,var(--eco2),var(--eco))}
+.cmp td.rk{font-family:'Inter','Sarabun',sans-serif;font-weight:700;color:var(--navy);background:#F7FAFD;width:15%}
+.cmp td.rk svg{color:var(--blue);margin-right:6px}
+.cmp tbody tr:hover td{background:#FCFDFF}
+.cmp td.c1{background:#FAFBFC}.cmp td.c2{background:#FAFCFE}.cmp td.c3{background:#FAFDFB}
+
+/* ---------- จุดเปลี่ยน ---------- */
+.shifts{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:16px}
+.shift{padding:18px 20px 18px;border-radius:15px;background:#fff;border:1px solid var(--line);border-top:5px solid;box-shadow:0 3px 16px rgba(30,58,95,.06)}
+.shift .lbl{font-family:'Inter',sans-serif;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#95A7BA}
+.shift h3{font-size:16.5px;font-weight:800;margin:4px 0 3px}
+.shift .fromto{display:flex;align-items:center;gap:10px;margin:11px 0 13px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 13px;border-radius:999px;font-size:12.5px;font-weight:700;
+  font-family:'Inter','Sarabun',sans-serif;background:#F1F5F9;color:#5A6E88}
+.pill.to{color:#fff}
+.shift ul{margin:0;padding-left:19px;font-size:13px;line-height:1.72}
+.shift li{margin-bottom:6px}
+.shift .mini{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.mbox{background:#F7FAFD;border:1px solid #E3ECF4;border-radius:10px;padding:9px 12px}
+.mbox .mt{font-family:'Inter',sans-serif;font-size:9.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#95A7BA;margin-bottom:3px}
+.mbox .mv{font-size:12.5px;line-height:1.55}
+
+/* ---------- ทางเลือก ---------- */
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(430px,1fr));gap:16px}
+.opt{border-radius:15px;overflow:hidden;background:#fff;border:1px solid var(--line);box-shadow:0 3px 16px rgba(30,58,95,.06)}
+.opt .oh{display:flex;align-items:center;gap:10px;padding:12px 18px;color:#fff}
+.opt .oh .tag{background:rgba(255,255,255,.22);border-radius:7px;padding:3px 9px;font-family:'Inter',sans-serif;font-size:10.5px;font-weight:800;letter-spacing:.08em}
+.opt .oh b{font-family:'Inter','Sarabun',sans-serif;font-size:15px;font-weight:800}
+.chain{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:14px 18px 4px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:#F1F5F9;border-radius:9px;padding:7px 11px;font-size:12px;font-weight:700;
+  font-family:'Inter','Sarabun',sans-serif;color:#41566E}
+.chain .ar{color:#B4C4D6}
+.opt .ob{padding:6px 18px 16px}
+.orow{display:flex;gap:10px;padding:9px 0;border-top:1px dashed #E3EBF3;font-size:12.8px;line-height:1.6}
+.orow:first-child{border-top:none}
+.orow .k{flex:none;width:104px;font-family:'Inter',sans-serif;font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#95A7BA;padding-top:3px}
+.brands{display:flex;flex-wrap:wrap;gap:6px}
+.brand-chip{font-family:'Inter',sans-serif;font-size:11.5px;font-weight:700;background:#fff;border:1px solid var(--line);
+  border-radius:7px;padding:4px 10px;color:#41566E}
+.endstate{margin-top:10px;text-align:center;font-family:'Inter','Sarabun',sans-serif;font-weight:800;font-size:13.5px;
+  padding:9px;border-radius:10px}
+
+/* ---------- Roadmap ---------- */
+.rm{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:14px}
+.ph{border-radius:15px;overflow:hidden;background:#fff;border:1px solid var(--line);box-shadow:0 3px 16px rgba(30,58,95,.06)}
+.ph .pt{padding:13px 17px;color:#fff;position:relative;overflow:hidden}
+.ph .pt:before{content:"";position:absolute;right:-24px;top:-30px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.10)}
+.ph .pt .yy{font-family:'Inter',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.14em;opacity:.9}
+.ph .pt b{display:block;font-family:'Inter','Sarabun',sans-serif;font-size:16px;font-weight:900;margin-top:2px}
+.ph .pb{padding:13px 17px 16px}
+.ph .focus{font-size:13.5px;font-weight:700;color:var(--navy);margin-bottom:9px;line-height:1.5}
+.ph .grp{margin-top:10px}
+.ph .gt{font-family:'Inter',sans-serif;font-size:9.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#95A7BA;margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.ph ul{margin:0;padding-left:18px;font-size:12.5px;line-height:1.65}
+.ph li{margin-bottom:3px}
+.kpis{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+.kpi{font-size:11.5px;background:#F1F5F9;border-radius:7px;padding:4px 9px;color:#41566E;font-weight:600}
+.ph1 .pt{background:linear-gradient(135deg,#0B2447,#1B4E86)}
+.ph2 .pt{background:linear-gradient(135deg,var(--plat2),#2E93D8)}
+.ph3 .pt{background:linear-gradient(135deg,var(--eco2),#4CB87A)}
+
+/* ---------- แถบสรุป ---------- */
+.take{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.tk{display:flex;gap:11px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:12px;padding:13px 15px;
+  box-shadow:0 3px 14px rgba(30,58,95,.05)}
+.tk .ti{flex:none;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  background:#FFF6E0;color:#B7841A;font-size:17px}
+.tk .tb b{display:block;font-family:'Inter','Sarabun',sans-serif;font-size:13.5px;font-weight:800;color:var(--navy);margin-bottom:2px}
+.tk .tb span{font-size:12.5px;line-height:1.6;color:#3C526C}
+.now{background:linear-gradient(120deg,#0B2447,#12569A);color:#fff;border-radius:15px;padding:18px 22px;box-shadow:0 10px 30px rgba(11,36,71,.28)}
+.now h3{font-size:16px;font-weight:800;margin-bottom:6px}
+.now .nb{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:12px}
+.nbox{background:rgba(255,255,255,.10);border-radius:11px;padding:11px 14px;font-size:12.8px;line-height:1.6}
+.nbox b{display:block;font-family:'Inter','Sarabun',sans-serif;font-size:12px;font-weight:800;letter-spacing:.05em;opacity:.85;margin-bottom:3px;text-transform:uppercase}
+#tokPanel{display:none;position:fixed;top:56px;right:14px;z-index:120;width:314px;background:#fff;border:1px solid var(--line);
+  border-radius:12px;padding:15px 16px;box-shadow:0 14px 44px rgba(30,58,95,.24)}
+#tokPanel h4{font-family:'Inter',sans-serif;font-weight:800;font-size:14px;margin:0 0 5px}
+#tokPanel p{font-size:11.5px;color:var(--mute);line-height:1.55;margin:0 0 10px}
+#tokPanel code{background:#EEF3F8;padding:1px 5px;border-radius:4px;font-size:11px}
+#tokInput{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:7px;font-family:'Inter',ui-monospace,monospace;font-size:12px;background:#F8FBFE}
+.tp-row{display:flex;gap:6px;margin-top:9px}
+#tokState{font-size:11px;margin-top:8px;color:var(--mute)}
+
+/* ---------- ขัดเกลาโหมดปกติ ---------- */
+#scrollbar{position:fixed;top:0;left:0;height:3px;width:0;z-index:200;
+  background:linear-gradient(90deg,var(--ind),var(--plat),var(--eco));transition:width .1s linear}
+#secnav{position:sticky;top:41px;z-index:58;display:flex;gap:6px;flex-wrap:wrap;align-items:center;
+  padding:8px 22px;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+body.edit #secnav{top:76px}
+#secnav a{font-family:'Inter','Sarabun',sans-serif;font-size:11.5px;font-weight:700;text-decoration:none;color:#5A6E88;
+  border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 13px;transition:.15s;white-space:nowrap}
+#secnav a:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-1px)}
+#secnav a.act{background:var(--navy);border-color:var(--navy);color:#fff}
+.sech .n{background:linear-gradient(135deg,var(--navy),#1B4E86);box-shadow:0 3px 10px rgba(11,36,71,.28)}
+.sec{scroll-margin-top:130px;opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+.sec.inview,body.pres .sec,body.noanim .sec{opacity:1;transform:none}
+.stage,.opt,.ph,.shift,.tk{transition:transform .18s ease,box-shadow .18s ease}
+.stage:hover,.opt:hover,.ph:hover,.shift:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(30,58,95,.13)}
+
+/* ---------- โหมดนำเสนอ ---------- */
+#pres{display:none;position:fixed;inset:0;z-index:300;background:radial-gradient(1200px 700px at 50% 0%,#12345C 0%,#08182C 62%,#050F1C 100%);
+  color:#fff;flex-direction:column}
+body.pres{overflow:hidden}
+body.pres #pres{display:flex}
+body.pres .bar,body.pres #fmt,body.pres #secnav,body.pres .wrap,body.pres #scrollbar{display:none!important}
+#presTop{display:flex;align-items:center;gap:12px;padding:14px 26px 10px}
+#presTop .pt{font-family:'Inter','Sarabun',sans-serif;font-size:15px;font-weight:800;letter-spacing:.01em}
+#presTop .pn{font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  background:rgba(255,255,255,.14);border-radius:999px;padding:4px 11px}
+#presTop .sp{flex:1}
+#presTop button{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.22);color:#fff}
+#presTop button:hover{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.4);color:#fff}
+#presStage{flex:1;min-height:0;display:flex;justify-content:center;align-items:center;padding:0 28px;overflow:hidden}
+#presInner{width:1500px;flex:0 0 auto;margin:auto;color:var(--ink);transform-origin:center center;transition:transform .18s ease}
+#presInner .sec{margin-top:0}
+#presInner .hero{box-shadow:0 22px 60px rgba(0,0,0,.45)}
+#presInner .sech h2{color:#fff}
+#presInner .sech .cap{color:rgba(255,255,255,.72)}
+#presInner .sech .n{background:linear-gradient(135deg,#fff,#D5E3F2);color:var(--navy)}
+#presInner:not(.narrow) .stages{grid-template-columns:1fr 34px 1fr 34px 1fr;gap:0}
+#presInner:not(.narrow) .arrowcell{transform:none;height:auto}
+[data-step]{transition:opacity .38s ease,transform .38s ease,filter .38s ease}
+body.pres [data-step].pdim{opacity:.10;filter:saturate(.2)}
+body.pres .stage[data-step].pdim,body.pres .shift[data-step].pdim,body.pres .opt[data-step].pdim,
+body.pres .ph[data-step].pdim,body.pres .tk[data-step].pdim,body.pres .nbox[data-step].pdim{opacity:.12;transform:translateY(10px) scale(.985)}
+#presBot{padding:10px 26px 18px}
+#presBar{height:4px;border-radius:3px;background:rgba(255,255,255,.14);overflow:hidden}
+#presFill{height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,#5AA9E6,#4CB87A);transition:width .28s ease}
+#presNav{display:flex;align-items:center;gap:14px;margin-top:11px}
+#presNav button.nv{width:40px;height:40px;padding:0;border-radius:50%;font-size:19px;line-height:1;
+  background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:#fff}
+#presNav button.nv:hover{background:rgba(255,255,255,.24);color:#fff;border-color:rgba(255,255,255,.42)}
+#presNav button.nv:disabled{opacity:.3}
+#presDots{flex:1;display:flex;gap:7px;justify-content:center;align-items:center}
+#presDots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.26);cursor:pointer;transition:.18s;display:block}
+#presDots i:hover{background:rgba(255,255,255,.55);transform:scale(1.25)}
+#presDots i.on{background:#fff;width:26px;border-radius:5px}
+#presHint{font-family:'Inter','Sarabun',sans-serif;font-size:11px;color:rgba(255,255,255,.5);letter-spacing:.02em;white-space:nowrap}
+#presHint kbd{background:rgba(255,255,255,.14);border-radius:4px;padding:1px 6px;font-family:'Inter',sans-serif;font-size:10.5px;margin:0 1px}
+@media(max-width:1180px){.stages{grid-template-columns:1fr;gap:12px}.arrowcell{transform:rotate(90deg);height:26px}}
+@media print{.bar,#fmt,.tip,#tokPanel,#secnav,#scrollbar,#pres{display:none!important}.sec{opacity:1!important;transform:none!important}body{background:#fff}.wrap{max-width:none;padding:0}
+  .card,.stage,.opt,.ph,.shift{box-shadow:none;break-inside:avoid}@page{size:A3 landscape;margin:9mm}}
+
+/* ---------- Top 5 Market Cap ในแต่ละยุค ---------- */
+.t5{margin:0 18px 16px;padding:12px 12px 8px;border-radius:12px;background:#F6F9FC;border:1px solid var(--line)}
+.t5 .t5h{font-family:'Inter','Sarabun',sans-serif;font-size:12.5px;font-weight:800;color:var(--navy);margin:0 0 8px;display:flex;justify-content:space-between;gap:8px}
+.t5 .t5h small{font-weight:600;color:var(--mute);font-size:11px}
+.t5 ol{list-style:none;margin:0;padding:0}
+.t5 li{display:grid;grid-template-columns:16px 30px 1fr auto;align-items:center;gap:8px;padding:5px 0;border-top:1px dashed #DCE5EF}
+.t5 li:first-child{border-top:0}
+.t5 .r{font-family:'Inter',sans-serif;font-size:11px;font-weight:800;color:#8FA3B8;text-align:right}
+.t5 .lg{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;
+  font-family:'Inter',sans-serif;font-size:11px;font-weight:800;color:#fff;background:var(--c,#475569);user-select:none}
+.t5 .lg img{width:100%;height:100%;object-fit:contain;background:#fff}
+body.edit .t5 .lg{cursor:pointer;box-shadow:0 0 0 2px rgba(245,179,1,.0)}
+body.edit .t5 .lg:hover{box-shadow:0 0 0 2px #F5B301}
+.t5 .nm{font-size:13px;font-weight:700;line-height:1.25}
+.t5 .nm small{display:block;font-weight:400;font-size:11px;color:var(--mute)}
+.t5 .mv{font-family:'Inter',sans-serif;font-size:13px;font-weight:800;color:var(--navy);white-space:nowrap}
+.st-ind .t5{--c:var(--ind2)} .st-plat .t5{--c:var(--plat2)} .st-eco .t5{--c:var(--eco2)}
+.t5scale{margin-top:12px;padding:12px 16px;display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;font-size:13px;line-height:1.6}
+.t5scale b{color:var(--navy)}
+.t5note{font-size:11.5px;color:var(--mute);line-height:1.6;margin-top:6px}
+.xlink{display:flex;align-items:center;gap:14px;margin-top:12px;padding:14px 18px;text-decoration:none;color:var(--ink);border-left:5px solid var(--eco)}
+.xlink:hover{border-color:var(--blue)}
+.xlink .xi{font-size:26px;flex:none}
+.xlink b{display:block;font-family:'Inter','Sarabun',sans-serif;font-size:15px;color:var(--navy)}
+.xlink span{font-size:13px;color:var(--mute)}
+.xlink .go{margin-left:auto;font-weight:700;color:var(--blue);white-space:nowrap;font-size:13px}
+
+/* ---------- Shift 2: ต้องทำ / ห้ามทำ ---------- */
+.dd{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dd .col{border-radius:12px;padding:11px 13px 8px}
+.dd .do{background:#EAF6EF;border:1px solid #C5E6D2}
+.dd .dont{background:#FDEEEE;border:1px solid #F3CDCD}
+.dd h4{margin:0 0 6px;font-family:'Inter','Sarabun',sans-serif;font-size:13.5px;font-weight:800;display:flex;align-items:center;gap:7px}
+.dd .do h4{color:var(--eco2)} .dd .dont h4{color:#A93226}
+.dd h4 i{font-style:normal;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;color:#fff;font-size:12px;flex:none}
+.dd .do h4 i{background:var(--eco)} .dd .dont h4 i{background:#C0392B}
+.dd ul{list-style:none;margin:0;padding:0;font-size:12.8px;line-height:1.6}
+.dd li{position:relative;padding-left:18px;margin-bottom:6px}
+.dd .do li:before{content:"✓";position:absolute;left:0;top:0;font-weight:800;color:var(--eco)}
+.dd .dont li:before{content:"✕";position:absolute;left:0;top:0;font-weight:800;color:#C0392B}
+.dd .src{grid-column:1/-1;font-size:11.5px;color:var(--mute);line-height:1.55;padding:2px 2px 0}
+@media(max-width:560px){.dd{grid-template-columns:1fr}}
+
+/* ---------- Section 5: สิ่งที่ดำเนินการแล้ว ---------- */
+.ph{display:flex;flex-direction:column}
+.ph .pb{flex:1}
+.ph .done{margin:0 17px 16px;padding:11px 13px 8px;border-radius:11px;border:1.5px dashed var(--dc);background:var(--db)}
+.ph1 .done{--dc:#8FB0D6;--db:#EEF4FB;--dt:#1B4E86}
+.ph2 .done{--dc:#8CC3EC;--db:#EDF6FD;--dt:var(--plat2)}
+.ph3 .done{--dc:#9ED3B4;--db:#EDF8F2;--dt:var(--eco2)}
+.ph .done .dh{display:flex;align-items:center;gap:7px;font-family:'Inter','Sarabun',sans-serif;font-size:12.5px;font-weight:800;color:var(--dt);margin-bottom:5px}
+.ph .done .dh i{font-style:normal;display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--dt);color:#fff;font-size:11px;flex:none}
+.ph .done .dh small{margin-left:auto;font-weight:600;font-size:10.5px;color:var(--mute)}
+.ph .done ul{list-style:none;padding:0;margin:0;font-size:12.5px;line-height:1.6}
+.ph .done li{position:relative;padding-left:17px;margin-bottom:4px}
+.ph .done li:before{content:"✓";position:absolute;left:0;font-weight:800;color:var(--dt)}
+.ph .done .hint{font-size:10.5px;color:#95A7BA;margin-top:3px}
+body:not(.edit) .ph .done .hint{display:none}
+@media print{.ph .done .hint{display:none}}
+</style>
+</head>
+<body class="edit">
+<!--CAP_DATA_START-->
+<script id="cap-data" type="application/json">{"savedAt":0}</script>
+<!--CAP_DATA_END-->
+
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg"><defs>
+<g id="i-factory"><path d="M3 21h18M4 21V10l5 3V10l5 3V7l6 4v10"/><path d="M8 21v-4h3v4M15 21v-4h3v4"/></g>
+<g id="i-phone"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18.5h2"/><circle cx="4" cy="7" r="1.6"/><circle cx="20" cy="7" r="1.6"/><circle cx="4" cy="17" r="1.6"/><circle cx="20" cy="17" r="1.6"/><path d="M5.4 8.2 7 10M18.6 8.2 17 10M5.4 15.8 7 14M18.6 15.8 17 14"/></g>
+<g id="i-eco"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="3.4" r="1.9"/><circle cx="12" cy="20.6" r="1.9"/><circle cx="3.4" cy="12" r="1.9"/><circle cx="20.6" cy="12" r="1.9"/><circle cx="6" cy="6" r="1.6"/><circle cx="18" cy="18" r="1.6"/><path d="M12 5.3v3.7M12 15v3.7M5.3 12H9M15 12h3.7M7.1 7.1 9.9 9.9M14.1 14.1l2.8 2.8"/></g>
+<g id="i-box"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></g>
+<g id="i-data"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></g>
+<g id="i-money"><circle cx="12" cy="12" r="9"/><path d="M12 6.5v11M14.8 9.3c-.6-.9-1.7-1.4-2.8-1.4-1.7 0-3 1-3 2.4s1.3 2 3 2.4 3 1 3 2.4-1.3 2.4-3 2.4c-1.1 0-2.2-.5-2.8-1.4"/></g>
+<g id="i-user"><circle cx="12" cy="8" r="3.4"/><path d="M4.5 20c0-3.6 3.4-6 7.5-6s7.5 2.4 7.5 6"/></g>
+<g id="i-users"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 19.5c0-3.4 3-5.6 6.5-5.6s6.5 2.2 6.5 5.6"/><path d="M16.5 5.2a3.2 3.2 0 0 1 0 6M18 13.9c2.1.5 3.5 2.2 3.5 4.4"/></g>
+<g id="i-chart"><path d="M3 21h18"/><path d="M6 17V9M11 17V5M16 17v-6M21 17v-9"/></g>
+<g id="i-gear"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v2.6M12 19.4V22M22 12h-2.6M4.6 12H2M19.1 4.9l-1.9 1.9M6.8 17.2l-1.9 1.9M19.1 19.1l-1.9-1.9M6.8 6.8 4.9 4.9"/></g>
+<g id="i-cloud"><path d="M6.5 18h11a4 4 0 0 0 .6-8 6 6 0 0 0-11.5 1.6A3.6 3.6 0 0 0 6.5 18z"/></g>
+<g id="i-shield"><path d="M12 2.5 4.5 5.5v6c0 4.6 3.1 8.7 7.5 10 4.4-1.3 7.5-5.4 7.5-10v-6z"/><path d="m9.2 12 2 2 3.6-3.8"/></g>
+<g id="i-link"><path d="M10 13.5a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1.5 1.5"/><path d="M14 10.5a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1.5-1.5"/></g>
+<g id="i-store"><path d="M3.5 9.5h17V20a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1z"/><path d="M3 9.5 4.8 4h14.4L21 9.5"/><path d="M9.5 21v-6h5v6"/></g>
+<g id="i-target"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="12" r="1.2"/></g>
+<g id="i-rocket"><path d="M12 2.5c3.4 2.5 5.2 6.3 5.2 10.2l-2.4 2.9H9.2l-2.4-2.9C6.8 8.8 8.6 5 12 2.5z"/><circle cx="12" cy="10" r="1.9"/><path d="M9.2 15.6 7 18.8l3-.5M14.8 15.6l2.2 3.2-3-.5M12 18.5V22"/></g>
+<g id="i-arrow"><path d="M5 12h13M13 6.5 18.5 12 13 17.5"/></g>
+<g id="i-flag"><path d="M5 21V3.5M5 4.2h11.5l-1.9 3.4 1.9 3.4H5"/></g>
+<g id="i-bulb"><path d="M9.2 17h5.6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.4 10.9c.6.4.9 1 .9 1.7v.4h5v-.4c0-.7.3-1.3.9-1.7A6 6 0 0 0 12 3z"/></g>
+<g id="i-lock"><rect x="4.5" y="10" width="15" height="10.5" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></g>
+<g id="i-globe"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.6 4 5.7 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.7-4-9s1.4-6.4 4-9z"/></g>
+</defs></svg>
+
+<div class="bar">
+  <div class="brand"><b>CAPITALISM</b><span>Evolution &amp; Transformation</span></div>
+  <a class="back" href="https://jinnaphas.github.io/PCC-Strategy/strategy-mapping.html">↩ Strategy Mapping</a>
+  <a class="back" href="https://jinnaphas.github.io/PCC-Strategy/sfam.html">🧊 SFAM</a>
+  <a class="back" href="amazon-walmart.html">🕸 Amazon vs Walmart</a>
+  <div class="sep"></div>
+  <button id="bEdit" class="on">✎ แก้ไข</button>
+  <div class="sep"></div>
+  <button id="bSave" class="pub" title="ดาวน์โหลดไฟล์ .html พร้อมข้อความที่แก้แล้ว (Ctrl+S)">💾 บันทึกเป็นไฟล์</button>
+  <button id="bReset" title="ล้างการแก้ไขทั้งหมด กลับเป็นข้อความเดิมของไฟล์">↺ คืนค่าเดิม</button>
+  <div class="sep"></div>
+  <button id="bPres" title="โหมดนำเสนอทีละขั้น (P)">🎬 นำเสนอ</button>
+  <button id="bPrint">พิมพ์ / PDF</button>
+  <span id="autosave">● บันทึกอัตโนมัติ</span>
+</div>
+
+<div id="fmt">
+  <span class="lb">อักษร</span>
+  <button data-cmd="bold" title="ตัวหนา"><b>B</b></button>
+  <button data-cmd="italic" title="ตัวเอียง"><i>I</i></button>
+  <button data-cmd="underline" title="ขีดเส้นใต้"><u>U</u></button>
+  <span class="lb">ขนาด</span>
+  <select id="fSize"><option value="">ขนาด…</option><option value="11px">11</option><option value="12.5px">12.5</option><option value="14px">14</option><option value="16px">16</option><option value="20px">20</option><option value="26px">26</option></select>
+  <span class="lb">สี</span><span class="sws" id="swFore"></span>
+  <input type="color" id="cFore" value="#0077B6" title="เลือกสีเอง" style="width:26px;height:24px;padding:0;border:1px solid var(--line);border-radius:5px;background:#fff;cursor:pointer">
+  <span class="lb">ไฮไลต์</span><span class="sws" id="swBack"></span>
+  <div class="sep"></div>
+  <button data-cmd="removeFormat">⟲ ล้างรูปแบบ</button>
+</div>
+
+
+<div id="scrollbar"></div>
+<div id="secnav">
+  <a href="#sec1">1 · 3 ยุค</a><a href="#sec2">2 · อะไรเปลี่ยน</a><a href="#sec3">3 · จุดเปลี่ยน</a>
+  <a href="#sec4">4 · 2 ทางเลือก</a><a href="#sec5">5 · แผน 3 ระยะ</a><a href="#sec6">6 · สรุป</a>
+</div>
+
+<div id="pres">
+  <div id="presTop">
+    <span class="pn" id="presNum">1 / 7</span><span class="pt" id="presTitle"></span>
+    <span class="sp"></span>
+    <button id="presFs" title="เต็มจอ (F)">⛶ เต็มจอ</button>
+    <button id="presX">✕ ออก · Esc</button>
+  </div>
+  <div id="presStage"><div id="presInner"></div></div>
+  <div id="presBot">
+    <div id="presBar"><div id="presFill"></div></div>
+    <div id="presNav">
+      <button class="nv" id="presPrev" title="ก่อนหน้า">‹</button>
+      <div id="presDots"></div>
+      <span id="presHint"><kbd>→</kbd><kbd>Space</kbd> ถัดไป · <kbd>←</kbd> ย้อน · <kbd>F</kbd> เต็มจอ · <kbd>Esc</kbd> ออก</span>
+      <button class="nv" id="presNext" title="ถัดไป">›</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kd">Evolution of Capitalism · PCC Transformation</div>
+    <h1 data-k="h1" contenteditable="true">จากโรงงาน สู่แพลตฟอร์ม สู่ระบบนิเวศ</h1>
+    <div class="sub" data-k="hsub" contenteditable="true">โลกธุรกิจเปลี่ยนนิยามของ “สินทรัพย์ที่สร้างกำไร” มาแล้ว 3 ครั้ง — จาก<b>สินค้า</b> เป็น<b>แพลตฟอร์ม</b> และกำลังเป็น<b>ระบบนิเวศ</b> · หน้านี้อธิบายว่าแต่ละยุคต่างกันอย่างไร PCC อยู่ตรงไหน และต้องเปลี่ยนอะไรบ้าง</div>
+    <div class="quote" data-k="hq" contenteditable="true">“From Product to Platform, From Platform to Ecosystem” — องค์กรที่อยู่รอด คือองค์กรที่ปรับตัวได้เร็วกว่าคู่แข่ง</div>
+  </div>
+
+  <!-- ========== 1 ยุคทั้งสาม ========== -->
+  <div class="sec" id="sec1">
+    <div class="sech"><span class="n">1</span><h2 data-k="s1h" contenteditable="true">การเดินทาง 3 ยุค</h2><span class="cap" data-k="s1c" contenteditable="true">คำถามเดียวที่เปลี่ยนไปทุกยุค — “อะไรคือสินทรัพย์ที่ทำเงินให้เรา?”</span></div>
+    <div class="stages">
+      <div class="stage st-ind">
+        <div class="top"><div class="era">18<sup>th</sup>–20<sup>th</sup> Century</div><h3>Industrial Capitalism</h3><div class="th" data-k="s1a" contenteditable="true">ยุคอุตสาหกรรม</div></div>
+        <div class="art"><svg viewBox="0 0 240 96"><g stroke="#64748B" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="34" y="46" width="52" height="34" rx="2"/><path d="M34 46l14-10 14 10M60 46l14-10 14 10"/>
+          <rect x="96" y="30" width="30" height="50" rx="2"/><path d="M104 24v6M116 24v6"/>
+          <rect x="136" y="52" width="70" height="28" rx="2"/><path d="M150 80V64h12v16M180 80V64h12v16"/>
+          <path d="M20 80h204"/><path d="M106 18c0-5 8-5 8-10M118 16c0-4 6-4 6-8"/>
+          <circle cx="44" cy="66" r="4"/><circle cx="72" cy="66" r="4"/></g></svg></div>
+        <div class="body">
+          <span class="asset"><svg class="ic"><use href="#i-box"/></svg>Product = Asset</span>
+          <div class="attr"><span class="k">Focus</span><span class="v" data-k="s1f1" contenteditable="true">ผลิตสินค้า ขายสินค้า ยิ่งผลิตมากยิ่งถูกลง</span></div>
+          <div class="attr"><span class="k">Value Chain</span><span class="v" data-k="s1v1" contenteditable="true"><b>Linear</b> — วัตถุดิบ → ผลิต → ขาย → จบ</span></div>
+          <div class="attr"><span class="k">Key Resource</span><span class="v" data-k="s1r1" contenteditable="true">แรงงาน · วัตถุดิบ · เครื่องจักร</span></div>
+          <div class="attr"><span class="k">ได้เปรียบเมื่อ</span><span class="v" data-k="s1w1" contenteditable="true">มีโรงงานใหญ่กว่า ต้นทุนต่อหน่วยต่ำกว่า</span></div>
+        </div>
+        <div class="t5"><div class="t5h" data-k="t5ah" contenteditable="true"><span>Top 5 Market Cap ปี 1900</span><small>ยุคอุตสาหกรรม · USD</small></div><ol data-k="t5a" contenteditable="true"><li><span class="r">1</span><span class="lg" contenteditable="false" title="คลิกเพื่อใส่รูปโลโก้ (โหมดแก้ไข)">SO</span><span class="nm">Standard Oil Co.<small>พลังงาน / น้ำมัน</small></span><span class="mv">≈ $803M</span></li><li><span class="r">2</span><span class="lg" contenteditable="false" title="คลิกเพื่อใส่รูปโลโก้ (โหมดแก้ไข)">PRR</span><span class="nm">Pennsylvania Railroad<small>ขนส่ง / รถไฟ</small></span><span class="mv">≈ $220M</span></li><li><span class="r">3</span><span class="lg" contenteditable="false" title="คลิกเพื่อใส่รูปโลโก้ (โหมดแก้ไข)">AC</span><span class="nm">Amalgamated Copper<small>เหมืองแร่ / โลหะ</small></span><span class="mv">≈ $175M</span></li><li><span class="r">4</span><span class="lg" contenteditable="false" title="คลิกเพื่อใส่รูปโลโก้ (โหมดแก้ไข)">CS</span><span class="nm">Carnegie Steel<small>เหล็ก (รวมเป็น U.S. Steel ปี 1901)</small></span><span class="mv">≈ $160M</span></li><li><span class="r">5</span><span class="lg" contenteditable="false" title="คลิกเพื่อใส่รูปโลโก้ (โหมดแก้ไข)">FS</span><span class="nm">Federal Steel<small>เหล็ก (รวมเป็น U.S. Steel ปี 1901)</small></span><span class="mv">≈ $130M</span></li></ol></div>
+      </div>
+      <div class="arrowcell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg></div>
+      <div class="stage st-plat">
+        <div class="top"><div class="era">2000s – 2025</div><h3>Platform Capitalism</h3><div class="th" data-k="s2a" contenteditable="true">ยุคแพลตฟอร์ม</div></div>
+        <div class="art"><svg viewBox="0 0 240 96"><g stroke="#1D74C4" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="102" y="24" width="36" height="52" rx="6"/><path d="M116 68h8"/>
+          <circle cx="44" cy="30" r="9"/><circle cx="44" cy="70" r="9"/><circle cx="196" cy="30" r="9"/><circle cx="196" cy="70" r="9"/><circle cx="120" cy="10" r="7"/>
+          <path d="M53 34l46 10M53 66l46-10M187 34l-46 10M187 66l-46-10M120 17v7"/>
+          <path d="M110 38h20M110 46h20M110 54h14" stroke-width="1.7"/></g></svg></div>
+        <div class="body">
+          <span class="asset"><svg class="ic"><use href="#i-phone"/></svg>Platform = Asset</span>
+          <div class="attr"><span class="k">Focus</span><span class="v" data-k="s2f1" contenteditable="true">สร้างแพลตฟอร์ม เชื่อมผู้ใช้สองฝั่งเข้าหากัน</span></div>
+          <div class="attr"><span class="k">Value Chain</span><span class="v" data-k="s2v1" contenteditable="true"><b>Platform</b> — ยิ่งมีคนใช้มาก ยิ่งมีค่ามาก</span></div>
+          <div class="attr"><span class="k">Key Resource</span><span class="v" data-k="s2r1" contenteditable="true">ข้อมูล · เครือข่ายผู้ใช้ · ซอฟต์แวร์</span></div>
+          <div class="attr"><span class="k">ได้เปรียบเมื่อ</span><span class="v" data-k="s2w1" contenteditable="true">เป็นเจ้าของช่องทางและข้อมูลที่คนอื่นต้องผ่าน</span></div>
+        </div>
+        <div class="t5"><div class="t5h" data-k="t5bh" contenteditable="true"><span>Top 5 Market Cap ปี 2000</span><small>ยุคดอทคอม · USD</small></div><ol data-k="t5b" contenteditable="true"><li><span class="r">1</span><span class="lg" contenteditable="false" title="คลิกเพื่อใส่รูปโลโก้ (โหมดแก้ไข)">MS</span><span class="nm">Microsoft<small>ซอฟต์แวร์ / เทคโนโลยี</small></span><span class="mv">$586B</span></li><li><span class="r">2</span><span class="lg" contenteditable="false" title="คลิกเพื่อใส่รูปโลโก้ (โหมดแก้ไข)">GE</span><span class="nm">General Electric<small>อุตสาหกรรม / การเงิน</small></span><span class="mv">$477B</span></li><li><span class="r">3</span><span class="lg" contenteditable="false" title="คลิกเพื่อใส่รูปโลโก้ (โหมดแก้ไข)">ND</span><span class="nm">NTT Docomo<small>โทรคมนาคม · ญี่ปุ่น</small></span><span class="mv">$367B</span></li><li><span class="r">4</span><span class="lg" contenteditable="false" title="คลิกเพื่อใส่รูปโลโก้ (โหมดแก้ไข)">CS</span><span class="nm">Cisco Systems<small>อุปกรณ์เครือข่าย</small></span><span class="mv">$366B</span></li><li><span class="r">5</span><span class="lg" contenteditable="false" title="คลิกเพื่อใส่รูปโลโก้ (โหมดแก้ไข)">WM</span><span class="nm">Walmart<small>ค้าปลีก</small></span><span class="mv">$302B</span></li></ol></div>
+      </div>
+      <div class="arrowcell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg></div>
+      <div class="stage st-eco">
+        <div class="top"><div class="era">2025 – 2035</div><h3>Ecosystem Capitalism</h3><div class="th" data-k="s3a" contenteditable="true">ยุคระบบนิเวศธุรกิจ</div></div>
+        <div class="art"><svg viewBox="0 0 240 96"><g stroke="#2E9E62" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="120" cy="48" r="16"/><path d="M113 48h14M120 41v14" stroke-width="1.8"/>
+          <circle cx="56" cy="24" r="8"/><circle cx="56" cy="72" r="8"/><circle cx="184" cy="24" r="8"/><circle cx="184" cy="72" r="8"/>
+          <circle cx="120" cy="12" r="7"/><circle cx="120" cy="84" r="7"/>
+          <path d="M64 28l42 14M64 68l42-14M176 28l-42 14M176 68l-42-14M120 19v13M120 77V64"/>
+          <path d="M64 24h112" stroke-dasharray="3 5" stroke-width="1.4"/><path d="M64 72h112" stroke-dasharray="3 5" stroke-width="1.4"/></g></svg></div>
+        <div class="body">
+          <span class="asset"><svg class="ic"><use href="#i-eco"/></svg>Ecosystem = Advantage</span>
+          <div class="attr"><span class="k">Focus</span><span class="v" data-k="s3f1" contenteditable="true">สร้างและขยายระบบนิเวศ ให้คนอื่นมาต่อยอดบนเรา</span></div>
+          <div class="attr"><span class="k">Value Chain</span><span class="v" data-k="s3v1" contenteditable="true"><b>Ecosystem</b> — คุณค่าเกิดจากเครือข่าย ไม่ใช่จากเราคนเดียว</span></div>
+          <div class="attr"><span class="k">Key Resource</span><span class="v" data-k="s3r1" contenteditable="true">พาร์ทเนอร์ · มาตรฐาน · ความเชื่อมั่น</span></div>
+          <div class="attr"><span class="k">ได้เปรียบเมื่อ</span><span class="v" data-k="s3w1" contenteditable="true">เป็นศูนย์กลางที่คู่ค้าเลือกมาต่อ และย้ายออกยาก</span></div>
+        </div>
+        <div class="t5"><div class="t5h" data-k="t5ch" contenteditable="true"><span>Top 5 Market Cap ปี 2026</span><small>ยุค AI · USD</small></div><ol data-k="t5c" contenteditable="true"><li><span class="r">1</span><span class="lg" contenteditable="false" title="คลิกเพื่อใส่รูปโลโก้ (โหมดแก้ไข)">NV</span><span class="nm">NVIDIA<small>AI / เซมิคอนดักเตอร์</small></span><span class="mv">$5.42T</span></li><li><span class="r">2</span><span class="lg" contenteditable="false" title="คลิกเพื่อใส่รูปโลโก้ (โหมดแก้ไข)">AP</span><span class="nm">Apple<small>อุปกรณ์อิเล็กทรอนิกส์</small></span><span class="mv">$4.97T</span></li><li><span class="r">3</span><span class="lg" contenteditable="false" title="คลิกเพื่อใส่รูปโลโก้ (โหมดแก้ไข)">AB</span><span class="nm">Alphabet (Google)<small>บริการดิจิทัล / AI</small></span><span class="mv">$4.20T</span></li><li><span class="r">4</span><span class="lg" contenteditable="false" title="คลิกเพื่อใส่รูปโลโก้ (โหมดแก้ไข)">MS</span><span class="nm">Microsoft<small>คลาวด์ / ซอฟต์แวร์</small></span><span class="mv">$3.83T</span></li><li><span class="r">5</span><span class="lg" contenteditable="false" title="คลิกเพื่อใส่รูปโลโก้ (โหมดแก้ไข)">AZ</span><span class="nm">Amazon<small>อีคอมเมิร์ซ / คลาวด์</small></span><span class="mv">$2.78T</span></li></ol></div>
+      </div>
+    </div>
+    <div class="card t5scale" data-k="t5s" contenteditable="true"><span><b>บริษัทอันดับ 1 ของโลก</b></span><span>1900 Standard Oil ≈ <b>$0.8 พันล้าน</b></span><span>2000 Microsoft <b>$586 พันล้าน</b></span><span>2026 NVIDIA <b>$5.42 ล้านล้าน</b></span><span>ใหญ่ขึ้นราว <b>6,700 เท่า</b> ใน 126 ปี: จาก <b>น้ำมันและราง</b> → <b>คอมพิวเตอร์และอินเทอร์เน็ต</b> → <b>โครงสร้างพื้นฐาน AI</b></span></div>
+    <div class="t5note" data-k="t5n" contenteditable="true">หมายเหตุ: มูลค่าตามราคาตลาด ณ ปีนั้น ไม่ปรับเงินเฟ้อ · ปี 1900 เป็นค่าประมาณ (Carnegie Steel เป็นบริษัทเอกชน จึงเป็นมูลค่าประเมิน) · ตัวเลขปี 2026 เปลี่ยนตามราคาหุ้นรายวัน · ที่มา: AlphaSense, Visual Capitalist, The Motley Fool, Finaeon, InvestmentNews, companiesmarketcap.com</div>
+    <a class="card xlink" href="amazon-walmart.html"><span class="xi">🕸</span><span><b>Amazon Ecosystem vs Walmart</b><span>ภาพเครือข่าย API: ใครเป็นศูนย์กลางที่คนอื่นมาเชื่อมต่อ</span></span><span class="go">เปิดหน้า ›</span></a>
+  </div>
+
+  <!-- ========== 2 ตารางเทียบ ========== -->
+  <div class="sec" id="sec2">
+    <div class="sech"><span class="n">2</span><h2 data-k="s2h" contenteditable="true">อะไรเปลี่ยนบ้าง</h2><span class="cap" data-k="s2c" contenteditable="true">อ่านแนวนอนทีละบรรทัด จะเห็นว่ากติกาการแข่งขันเปลี่ยนไปทั้งหมด</span></div>
+    <table class="cmp"><thead><tr>
+      <th style="width:15%">หัวข้อ</th>
+      <th class="h1c" style="width:28%">1 · Industrial</th>
+      <th class="h2c" style="width:28%">2 · Platform</th>
+      <th class="h3c" style="width:29%">3 · Ecosystem</th>
+    </tr></thead><tbody>
+      <tr><td class="rk"><svg class="ic"><use href="#i-box"/></svg>เราขายอะไร</td>
+        <td class="c1" data-k="t11" contenteditable="true">สินค้าและบริการเป็นชิ้น จบเป็นครั้ง ๆ</td>
+        <td class="c2" data-k="t12" contenteditable="true">การเข้าถึงและธุรกรรมบนแพลตฟอร์ม เก็บเป็นรายเดือนหรือต่อครั้ง</td>
+        <td class="c3" data-k="t13" contenteditable="true">ผลลัพธ์ที่เกิดจากทั้งเครือข่าย — เราขาย “ระบบที่ทำงานได้” ไม่ใช่ชิ้นส่วน</td></tr>
+      <tr><td class="rk"><svg class="ic"><use href="#i-money"/></svg>รายได้มาจากไหน</td>
+        <td class="c1" data-k="t21" contenteditable="true">ขายของ ยิ่งขายมากยิ่งได้มาก แต่ต้องผลิตเพิ่มทุกครั้ง</td>
+        <td class="c2" data-k="t22" contenteditable="true">ค่าธรรมเนียม ค่าสมาชิก ค่าโฆษณา — โตได้โดยไม่ต้องเพิ่มโรงงาน</td>
+        <td class="c3" data-k="t23" contenteditable="true">ส่วนแบ่งจากมูลค่าที่พาร์ทเนอร์สร้าง + รายได้ประจำจากมาตรฐานที่เราวาง</td></tr>
+      <tr><td class="rk"><svg class="ic"><use href="#i-chart"/></svg>โตอย่างไร</td>
+        <td class="c1" data-k="t31" contenteditable="true">เพิ่มกำลังผลิต เพิ่มพนักงาน — โตแบบเส้นตรง</td>
+        <td class="c2" data-k="t32" contenteditable="true">เพิ่มผู้ใช้ ต้นทุนต่อรายลดลงเรื่อย ๆ — โตแบบเร่ง</td>
+        <td class="c3" data-k="t33" contenteditable="true">เพิ่มพาร์ทเนอร์ ทุกรายที่เข้ามาทำให้ระบบมีค่ากับทุกคนมากขึ้น — <b>Network Effect</b></td></tr>
+      <tr><td class="rk"><svg class="ic"><use href="#i-lock"/></svg>ป้องกันคู่แข่งด้วยอะไร</td>
+        <td class="c1" data-k="t41" contenteditable="true">ขนาดโรงงานและต้นทุนที่ต่ำกว่า</td>
+        <td class="c2" data-k="t42" contenteditable="true">ข้อมูลผู้ใช้และความเคยชิน — ย้ายแล้วเสียประโยชน์</td>
+        <td class="c3" data-k="t43" contenteditable="true">ต้นทุนการย้ายออกของทั้งเครือข่าย — คู่แข่งต้องชวนพาร์ทเนอร์ย้ายตามทั้งระบบ</td></tr>
+      <tr><td class="rk"><svg class="ic"><use href="#i-users"/></svg>มองคู่ค้าอย่างไร</td>
+        <td class="c1" data-k="t51" contenteditable="true">ซัพพลายเออร์ที่ต้องกดราคาให้ถูกที่สุด</td>
+        <td class="c2" data-k="t52" contenteditable="true">ผู้ใช้ที่ต้องดึงเข้ามาให้มากที่สุด</td>
+        <td class="c3" data-k="t53" contenteditable="true"><b>หุ้นส่วนที่ต้องทำให้เขาโตไปด้วยกัน</b> — ถ้าพาร์ทเนอร์ไม่กำไร ระบบนิเวศพัง</td></tr>
+      <tr><td class="rk"><svg class="ic"><use href="#i-gear"/></svg>ความสามารถหลัก</td>
+        <td class="c1" data-k="t61" contenteditable="true">วิศวกรรม การผลิต การควบคุมคุณภาพ</td>
+        <td class="c2" data-k="t62" contenteditable="true">ซอฟต์แวร์ ข้อมูล ความปลอดภัยไซเบอร์ การออกแบบประสบการณ์</td>
+        <td class="c3" data-k="t63" contenteditable="true">การวางมาตรฐาน การบริหารพาร์ทเนอร์ การกำกับดูแล และความน่าเชื่อถือ</td></tr>
+      <tr><td class="rk"><svg class="ic"><use href="#i-target"/></svg>ตัวชี้วัดที่ผู้บริหารดู</td>
+        <td class="c1" data-k="t71" contenteditable="true">ยอดขาย · กำลังการผลิต · ต้นทุนต่อหน่วย</td>
+        <td class="c2" data-k="t72" contenteditable="true">จำนวนผู้ใช้ · ธุรกรรมต่อเดือน · รายได้ประจำ</td>
+        <td class="c3" data-k="t73" contenteditable="true">จำนวนพาร์ทเนอร์ · โซลูชันในมาร์เก็ตเพลส · % รายได้ที่มาจากระบบนิเวศ</td></tr>
+    </tbody></table>
+  </div>
+
+  <!-- ========== 3 จุดเปลี่ยน 2 ครั้ง ========== -->
+  <div class="sec" id="sec3">
+    <div class="sech"><span class="n">3</span><h2 data-k="s3h" contenteditable="true">จุดเปลี่ยน 2 ครั้งที่ต้องข้ามให้ได้</h2><span class="cap" data-k="s3c" contenteditable="true">แต่ละครั้งไม่ใช่แค่ทำของเดิมให้ดีขึ้น แต่ต้องเปลี่ยนวิธีคิดเรื่องรายได้</span></div>
+    <div class="shifts">
+      <div class="shift" style="border-top-color:var(--plat)">
+        <div class="lbl">Shift 1</div>
+        <h3 style="color:var(--plat2)">จากขายสินค้า → เป็นเจ้าของแพลตฟอร์ม</h3>
+        <div class="fromto">
+          <span class="pill"><svg class="ic"><use href="#i-box"/></svg>Product</span>
+          <svg class="ic" style="color:#B4C4D6;font-size:20px"><use href="#i-arrow"/></svg>
+          <span class="pill to" style="background:var(--plat)"><svg class="ic"><use href="#i-phone"/></svg>Platform</span>
+        </div>
+        <ul>
+          <li data-k="sh1a" contenteditable="true"><b>สิ่งที่ต้องเปลี่ยน:</b> เลิกมองว่าขายของจบแล้วจบเลย — เปลี่ยนอุปกรณ์ที่ขายไปแล้วให้ยัง “คุยกับเรา” ได้ผ่าน IoT และเก็บข้อมูลกลับมา</li>
+          <li data-k="sh1b" contenteditable="true"><b>สิ่งที่ต้องสร้าง:</b> ฐานข้อมูลกลางที่เป็นมาตรฐานเดียวกัน · แพลตฟอร์มที่ลูกค้าเข้ามาใช้งานได้เอง · ความปลอดภัยไซเบอร์ที่ลูกค้าองค์กรยอมรับ</li>
+          <li data-k="sh1c" contenteditable="true"><b>อุปสรรคที่พบบ่อย:</b> ทำแพลตฟอร์มแต่ไม่มีคนใช้ เพราะไม่ได้แก้ปัญหาที่ลูกค้ามีจริง · และวัฒนธรรมองค์กรยังวัดผลด้วยยอดขายรายชิ้น</li>
+        </ul>
+        <div class="dd">
+          <div class="col do">
+            <h4><i>✓</i><span data-k="dd4h" contenteditable="true">สิ่งที่ต้องทำ</span></h4>
+            <ul data-k="dd4" contenteditable="true">
+              <li><b>เริ่มจาก API ภายในก่อน</b> เชื่อมระบบในบริษัทให้คุยกันได้ งานวิจัยพบว่าบริษัทที่เริ่มจากจุดนี้เห็นผลเร็วที่สุด</li>
+              <li><b>เปลี่ยนจากขายอุปกรณ์เป็นขายบริการ</b> เหมือนหลอดไฟ IoT ที่แจกตัวหลอดได้ แล้วเก็บเงินจากบริการบนหลอด</li>
+              <li><b>เริ่มจากปัญหาต้นทุนข้อมูลที่ลูกค้ามีจริง</b> เช่น บำรุงรักษาเชิงคาดการณ์และจัดการอาคารอัจฉริยะ ซึ่งต้นทุนข้อมูลช่วงใช้งานอาคารสูงถึง 10–20%</li>
+              <li><b>หาสินทรัพย์ที่ใช้ไม่เต็มกำลัง</b> เครื่องจักรหรืออุปกรณ์ที่ว่างอยู่คือโอกาสแรกของแพลตฟอร์ม</li>
+              <li><b>สร้างความคล่องตัว 3 ด้านพร้อมกัน</b> วัฒนธรรม (กระจายการตัดสินใจ) · สินทรัพย์ IT (API, SDK, template) · กระบวนการ (นำของเดิมกลับมาใช้ ทดลองแล้วล้มให้เร็ว)</li>
+            </ul>
+          </div>
+          <div class="col dont">
+            <h4><i>✕</i><span data-k="dd5h" contenteditable="true">สิ่งที่ห้ามทำ</span></h4>
+            <ul data-k="dd5" contenteditable="true">
+              <li><b>ห้ามใช้ IoT เป็นแค่ฟีเจอร์เพื่อขึ้นราคาสินค้า</b> ถ้ารายได้ยังมาจากการขายชิ้นเดียว ก็ยังเป็นโมเดลเดิม</li>
+              <li><b>ห้ามตัดสินใจด้วยตรรกะของโมเดลเก่า</b> BlackBerry ตัดสินใจถูกทุกครั้งตามโมเดลขายสินค้า แต่โมเดลนั้นเองที่แพ้</li>
+              <li><b>ห้ามให้หน่วยธุรกิจขายสินค้าเป็นเจ้าของแพลตฟอร์ม</b> แพลตฟอร์มจะถูกวัดด้วยยอดขายเครื่องและถูกตัดงบก่อนเสมอ</li>
+              <li><b>ห้ามรอให้แพลตฟอร์มสมบูรณ์ก่อนเปิดใช้</b> เริ่มจากกรณีใช้งานเล็ก ๆ ที่พิสูจน์คุณค่าได้เร็ว แล้วค่อยขยาย</li>
+            </ul>
+          </div>
+          <div class="src" data-k="dd6" contenteditable="true">เรียบเรียงจาก Parker &amp; Van Alstyne, “Platform Shift” · ตัวอย่างหลอดไฟ IoT, ต้นทุนข้อมูลในงานก่อสร้าง (IFMA) และงานวิจัย API ของ Benzell, Lagarda &amp; Van Alstyne (2016)</div>
+        </div>
+        <div class="mini">
+          <div class="mbox"><div class="mt">สัญญาณว่าข้ามได้แล้ว</div><div class="mv" data-k="sh1d" contenteditable="true">มีรายได้ประจำจากแพลตฟอร์ม และลูกค้าเข้ามาใช้เองโดยไม่ต้องมีพนักงานพาไป</div></div>
+          <div class="mbox"><div class="mt">ตัวชี้วัด</div><div class="mv" data-k="sh1e" contenteditable="true">% Digital Revenue · จำนวนอุปกรณ์ที่เชื่อมต่อ · ผู้ใช้ที่กลับมาใช้ซ้ำ</div></div>
+        </div>
+      </div>
+      <div class="shift" style="border-top-color:var(--eco)">
+        <div class="lbl">Shift 2</div>
+        <h3 style="color:var(--eco2)">จากเจ้าของแพลตฟอร์ม → เป็นผู้จัดวางระบบนิเวศ</h3>
+        <div class="fromto">
+          <span class="pill"><svg class="ic"><use href="#i-phone"/></svg>Platform</span>
+          <svg class="ic" style="color:#B4C4D6;font-size:20px"><use href="#i-arrow"/></svg>
+          <span class="pill to" style="background:var(--eco)"><svg class="ic"><use href="#i-eco"/></svg>Ecosystem</span>
+        </div>
+        <ul>
+          <li data-k="sh2a" contenteditable="true"><b>สิ่งที่ต้องเปลี่ยน:</b> เลิกทำทุกอย่างเอง — เปิดให้คนอื่นมาสร้างของขายบนแพลตฟอร์มของเรา แล้วเราได้ส่วนแบ่งและได้ข้อมูล</li>
+          <li data-k="sh2b" contenteditable="true"><b>สิ่งที่ต้องสร้าง:</b> API และประตูให้นักพัฒนาเข้ามาต่อได้ · มาตรฐานกลางที่ทุกคนยอมรับ · มาร์เก็ตเพลสและกติกาการแบ่งรายได้ที่ยุติธรรม</li>
+          <li data-k="sh2c" contenteditable="true"><b>อุปสรรคที่พบบ่อย:</b> กลัวเสียลูกค้าให้พาร์ทเนอร์ จึงไม่กล้าเปิดจริง · และบริหารความสัมพันธ์หลายสิบรายพร้อมกันไม่ไหว</li>
+        </ul>
+        <div class="dd">
+          <div class="col do">
+            <h4><i>✓</i><span data-k="dd1h" contenteditable="true">สิ่งที่ต้องทำ</span></h4>
+            <ul data-k="dd1" contenteditable="true">
+              <li><b>เลือกแกนหลัก 5–10 อย่างที่เราเก่งจริง</b> แล้วเปิดส่วนที่เหลือให้พาร์ทเนอร์สร้าง</li>
+              <li><b>ขยาย API ไปสู่คู่ค้า (B2B) และลูกค้า (B2C)</b> ต่อยอดจาก API ภายในที่วางไว้ใน Shift 1</li>
+              <li><b>ให้พาร์ทเนอร์ทำเงินได้ก่อน</b> ด้วยส่วนแบ่งรายได้ที่ชัด ยุติธรรม และคาดเดาได้</li>
+              <li><b>คุมคุณภาพการเชื่อมต่อ</b> ด้วยมาตรฐาน กติกา และการคัดกรองพาร์ทเนอร์ เพราะ network effect ต้องมาจากการเชื่อมต่อที่ดี</li>
+              <li><b>จับต้นทุนข้อมูล ไม่ใช่แค่ขายของเพิ่ม</b> งานออกแบบ วางแผน ประสานงาน และบำรุงรักษา มีมูลค่าสูงกว่าตัววัสดุหลายเท่า</li>
+              <li><b>ปรับตัวชี้วัดและรางวัล</b> ให้วัดจากความสำเร็จของเครือข่าย และให้รางวัลคนที่ทำให้พาร์ทเนอร์สำเร็จ</li>
+            </ul>
+          </div>
+          <div class="col dont">
+            <h4><i>✕</i><span data-k="dd2h" contenteditable="true">สิ่งที่ห้ามทำ</span></h4>
+            <ul data-k="dd2" contenteditable="true">
+              <li><b>ห้ามทำทุกฟีเจอร์เอง</b> บทเรียนจาก MySpace ที่แพ้ Facebook เพราะไม่ยอมให้คนนอกมาสร้าง</li>
+              <li><b>ห้ามแข่งกับพาร์ทเนอร์บนแพลตฟอร์มของเราเอง</b> หรือเปลี่ยนกติกาและส่วนแบ่งกะทันหัน เพราะความเชื่อใจที่เสียไปแล้วเรียกคืนยาก</li>
+              <li><b>ห้ามเปิดแค่ในนาม</b> API ที่ไม่มีเอกสาร ไม่มีเครื่องมือ ไม่มีที่ให้ทดลอง จะไม่มีใครมาต่อ</li>
+              <li><b>ห้ามยึดติดกำแพงกันคู่แข่งแบบเดิม</b> ความได้เปรียบย้ายจากการกีดกัน ไปเป็นการดูแลระบบนิเวศให้เติบโต</li>
+              <li><b>ห้ามวัดผลด้วยยอดขายของเราอย่างเดียว</b> จะทำให้ทีมมองพาร์ทเนอร์เป็นคู่แข่งแย่งรายได้</li>
+            </ul>
+          </div>
+          <div class="src" data-k="dd3" contenteditable="true">เรียบเรียงจาก Parker &amp; Van Alstyne, “Platform Shift” (ผู้เขียน <i>Platform Revolution</i>) · ผู้ก่อตั้ง MySpace ยอมรับภายหลังว่าควรโฟกัสเพียงไม่กี่ฟีเจอร์หลัก แล้วปล่อยให้คนอื่นสร้างส่วนที่เหลือ</div>
+        </div>
+        <div class="mini">
+          <div class="mbox"><div class="mt">สัญญาณว่าข้ามได้แล้ว</div><div class="mv" data-k="sh2d" contenteditable="true">พาร์ทเนอร์สร้างรายได้บนระบบเราได้เอง และมีคนขอเข้ามาต่อโดยที่เราไม่ต้องไปชวน</div></div>
+          <div class="mbox"><div class="mt">ตัวชี้วัด</div><div class="mv" data-k="sh2e" contenteditable="true">จำนวนพาร์ทเนอร์ · โซลูชันในมาร์เก็ตเพลส · % รายได้จากระบบนิเวศ</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 4 ทางเลือกเชิงกลยุทธ์ ========== -->
+  <div class="sec" id="sec4">
+    <div class="sech"><span class="n">4</span><h2 data-k="s4h" contenteditable="true">PCC มี 2 ทางเลือก</h2><span class="cap" data-k="s4c" contenteditable="true">ไม่ใช่ทางเลือกที่ต้องเลือกอย่างใดอย่างหนึ่ง — ทางที่ 1 เป็นบันไดขั้นแรกของทางที่ 2</span></div>
+    <div class="opts">
+      <div class="opt">
+        <div class="oh" style="background:linear-gradient(135deg,var(--plat2),var(--plat))"><span class="tag">OPTION 1</span><b>Become Platform Owner</b></div>
+        <div class="chain">
+          <span class="chip"><svg class="ic"><use href="#i-box"/></svg>Product</span><svg class="ic ar"><use href="#i-arrow"/></svg>
+          <span class="chip"><svg class="ic"><use href="#i-phone"/></svg>Platform</span><svg class="ic ar"><use href="#i-arrow"/></svg>
+          <span class="chip"><svg class="ic"><use href="#i-data"/></svg>Data</span><svg class="ic ar"><use href="#i-arrow"/></svg>
+          <span class="chip"><svg class="ic"><use href="#i-money"/></svg>Monetize</span>
+        </div>
+        <div class="ob">
+          <div class="orow"><span class="k">PCC จะเป็น</span><span data-k="o1a" contenteditable="true"><b>Smart Infrastructure Platform Company</b> — เจ้าของแพลตฟอร์มของตัวเอง เช่น Smart Utility Platform และ Smart Factory Platform</span></div>
+          <div class="orow"><span class="k">ตัวอย่าง</span><span><span class="brands"><span class="brand-chip">Google</span><span class="brand-chip">Amazon</span><span class="brand-chip">Uber</span><span class="brand-chip">Alibaba</span></span></span></div>
+          <div class="orow"><span class="k">จุดแข็ง</span><span data-k="o1b" contenteditable="true">ควบคุมแพลตฟอร์มและ<b>ข้อมูลของตัวเองได้ทั้งหมด</b> · กำไรต่อรายสูงเพราะไม่ต้องแบ่งใคร</span></div>
+          <div class="orow"><span class="k">ความเสี่ยง</span><span data-k="o1c" contenteditable="true"><b style="color:#C0392B">ต้องแข่งกับแพลตฟอร์มระดับโลกโดยตรง</b> และต้องลงทุนสูงต่อเนื่อง · ถ้าคนใช้ไม่ถึงมวลวิกฤต แพลตฟอร์มจะไม่มีค่า</span></div>
+          <div class="endstate" style="background:#E8F2FB;color:var(--plat2)"><svg class="ic"><use href="#i-flag"/></svg> End State — Owner of Platform</div>
+        </div>
+      </div>
+      <div class="opt">
+        <div class="oh" style="background:linear-gradient(135deg,var(--eco2),var(--eco))"><span class="tag">OPTION 2</span><b>Become Ecosystem Orchestrator</b></div>
+        <div class="chain">
+          <span class="chip"><svg class="ic"><use href="#i-phone"/></svg>Platform (Core)</span><svg class="ic ar"><use href="#i-arrow"/></svg>
+          <span class="chip"><svg class="ic"><use href="#i-users"/></svg>Partner</span><svg class="ic ar"><use href="#i-arrow"/></svg>
+          <span class="chip"><svg class="ic"><use href="#i-eco"/></svg>Ecosystem</span><svg class="ic ar"><use href="#i-arrow"/></svg>
+          <span class="chip"><svg class="ic"><use href="#i-globe"/></svg>Value Network</span>
+        </div>
+        <div class="ob">
+          <div class="orow"><span class="k">PCC จะเป็น</span><span data-k="o2a" contenteditable="true"><b>Smart Infrastructure Ecosystem Orchestrator</b> — ผู้เชื่อม <b>11 Smart Segments</b> เข้าด้วยกัน แล้วเก็บมูลค่าจากทั้งเครือข่าย</span></div>
+          <div class="orow"><span class="k">ตัวอย่าง</span><span><span class="brands"><span class="brand-chip">Apple</span><span class="brand-chip">Tencent</span><span class="brand-chip">Microsoft</span><span class="brand-chip">Grab</span></span></span></div>
+          <div class="orow"><span class="k">จุดแข็ง</span><span data-k="o2b" contenteditable="true">สร้าง<b>เครือข่ายที่ใหญ่และแข็งแกร่งกว่าคู่แข่ง</b> · โตได้เร็วโดยใช้เงินลงทุนของพาร์ทเนอร์ ไม่ใช่ของเราทั้งหมด</span></div>
+          <div class="orow"><span class="k">ความเสี่ยง</span><span data-k="o2c" contenteditable="true"><b style="color:#C0392B">ความซับซ้อนในการบริหาร</b> · ต้องสร้างความร่วมมือจำนวนมากพร้อมกัน และต้องยอมแบ่งผลประโยชน์ให้พาร์ทเนอร์อยู่ได้จริง</span></div>
+          <div class="endstate" style="background:#E7F6ED;color:var(--eco2)"><svg class="ic"><use href="#i-flag"/></svg> End State — Owner of Ecosystem</div>
+        </div>
+      </div>
+    </div>
+    <div class="take" style="margin-top:14px">
+      <div class="tk"><div class="ti"><svg class="ic"><use href="#i-bulb"/></svg></div><div class="tb"><b>ทางที่ 1 คือรากฐาน</b><span data-k="k1" contenteditable="true">ไม่มีแพลตฟอร์มและข้อมูลของตัวเอง ก็เป็นผู้จัดวางระบบนิเวศไม่ได้ — ทางที่ 1 จึงเป็นบันไดขั้นแรก ไม่ใช่ทางเลือกที่ตัดกัน</span></div></div>
+      <div class="tk"><div class="ti"><svg class="ic"><use href="#i-rocket"/></svg></div><div class="tb"><b>ทางที่ 2 คือการเติบโต</b><span data-k="k2" contenteditable="true">การเติบโตแบบก้าวกระโดดมาจาก Network Effect ของระบบนิเวศ ไม่ได้มาจากการขยายกำลังผลิตของเราเอง</span></div></div>
+      <div class="tk"><div class="ti"><svg class="ic"><use href="#i-shield"/></svg></div><div class="tb"><b>ความได้เปรียบที่ยั่งยืน</b><span data-k="k3" contenteditable="true">โรงงานลอกได้ แพลตฟอร์มลอกได้ แต่<b>เครือข่ายพาร์ทเนอร์ที่ไว้ใจกันลอกไม่ได้</b> — นี่คือคูเมืองที่แท้จริง</span></div></div>
+    </div>
+  </div>
+
+  <!-- ========== 5 Roadmap ========== -->
+  <div class="sec" id="sec5">
+    <div class="sech"><span class="n">5</span><h2 data-k="s5h" contenteditable="true">แผน 3 ระยะ · 2026 – 2035</h2><span class="cap" data-k="s5c" contenteditable="true">แต่ละระยะมีเป้าหมายเดียวที่ชัด และมีตัวชี้วัดที่บอกได้ว่าข้ามไปแล้วจริงหรือยัง</span></div>
+    <div class="rm">
+      <div class="ph ph1">
+        <div class="pt"><div class="yy">PHASE 1 · 2026 – 2027</div><b>Digital Foundation</b></div>
+        <div class="pb">
+          <div class="focus" data-k="p1f" contenteditable="true"><svg class="ic" style="color:var(--blue)"><use href="#i-target"/></svg> Digitize Core Business — สร้างรากฐานดิจิทัลและข้อมูล</div>
+          <div class="grp"><div class="gt"><svg class="ic"><use href="#i-flag"/></svg>สิ่งที่ต้องทำ</div>
+            <ul><li data-k="p1a" contenteditable="true">Digital Products &amp; Solutions</li><li data-k="p1b" contenteditable="true">Data Collection &amp; Standardization</li><li data-k="p1c" contenteditable="true">Process Digitization</li></ul></div>
+          <div class="grp"><div class="gt"><svg class="ic"><use href="#i-gear"/></svg>ความสามารถที่ต้องมี</div>
+            <ul><li data-k="p1d" contenteditable="true">IoT · Data Platform · Cybersecurity · System Integration</li></ul></div>
+          <div class="grp"><div class="gt"><svg class="ic"><use href="#i-money"/></svg>คุณค่าที่เกิด</div>
+            <ul><li data-k="p1e" contenteditable="true">เพิ่มประสิทธิภาพ ลดต้นทุน และมองเห็นข้อมูลแบบ Real-time</li></ul></div>
+          <div class="grp"><div class="gt"><svg class="ic"><use href="#i-chart"/></svg>ตัวชี้วัด</div>
+            <div class="kpis"><span class="kpi">% Digital Revenue</span><span class="kpi">อุปกรณ์ที่เชื่อมต่อ</span><span class="kpi">Data Quality Score</span></div></div>
+        </div>
+        <div class="done">
+          <div class="dh"><i>✓</i><span data-k="dn1h" contenteditable="true">สิ่งที่ดำเนินการแล้ว</span><small data-k="dn1d" contenteditable="true">อัปเดต: ก.ย. 2026</small></div>
+          <ul data-k="dn1" contenteditable="true">
+            <li>พิมพ์ชื่องานที่ทำแล้ว · เดือน/ปี · ผลลัพธ์</li>
+            <li>พิมพ์ชื่องานที่ทำแล้ว · เดือน/ปี · ผลลัพธ์</li>
+          </ul>
+          <div class="hint">คลิกที่รายการเพื่อแก้ · กด Enter ท้ายบรรทัดเพื่อเพิ่มรายการใหม่</div>
+        </div>
+      </div>
+      <div class="ph ph2">
+        <div class="pt"><div class="yy">PHASE 2 · 2028 – 2030</div><b>Platform Building</b></div>
+        <div class="pb">
+          <div class="focus" data-k="p2f" contenteditable="true"><svg class="ic" style="color:var(--plat)"><use href="#i-target"/></svg> Build &amp; Scale Smart Platforms — สร้างแพลตฟอร์มหลักของกลุ่ม</div>
+          <div class="grp"><div class="gt"><svg class="ic"><use href="#i-flag"/></svg>สิ่งที่ต้องทำ</div>
+            <ul><li data-k="p2a" contenteditable="true">พัฒนา Smart Platform (Core Platform)</li><li data-k="p2b" contenteditable="true">เปิด API &amp; Developer Portal</li><li data-k="p2c" contenteditable="true">สร้างบริการบนแพลตฟอร์ม</li></ul></div>
+          <div class="grp"><div class="gt"><svg class="ic"><use href="#i-cloud"/></svg>ความสามารถที่ต้องมี</div>
+            <ul><li data-k="p2d" contenteditable="true">Cloud Platform · API Management · Data Lake · DevOps</li></ul></div>
+          <div class="grp"><div class="gt"><svg class="ic"><use href="#i-money"/></svg>คุณค่าที่เกิด</div>
+            <ul><li data-k="p2e" contenteditable="true">รายได้จากแพลตฟอร์ม ขยายฐานลูกค้า และเพิ่มความผูกพัน (Lock-in)</li></ul></div>
+          <div class="grp"><div class="gt"><svg class="ic"><use href="#i-chart"/></svg>ตัวชี้วัด</div>
+            <div class="kpis"><span class="kpi">Platform Users</span><span class="kpi">Platform Revenue</span><span class="kpi">API Calls / Transactions</span></div></div>
+        </div>
+        <div class="done">
+          <div class="dh"><i>✓</i><span data-k="dn2h" contenteditable="true">สิ่งที่ดำเนินการแล้ว</span><small data-k="dn2d" contenteditable="true">อัปเดต: ก.ย. 2026</small></div>
+          <ul data-k="dn2" contenteditable="true">
+            <li>พิมพ์ชื่องานที่ทำแล้ว · เดือน/ปี · ผลลัพธ์</li>
+            <li>พิมพ์ชื่องานที่ทำแล้ว · เดือน/ปี · ผลลัพธ์</li>
+          </ul>
+          <div class="hint">คลิกที่รายการเพื่อแก้ · กด Enter ท้ายบรรทัดเพื่อเพิ่มรายการใหม่</div>
+        </div>
+      </div>
+      <div class="ph ph3">
+        <div class="pt"><div class="yy">PHASE 3 · 2031 – 2035</div><b>Ecosystem Expansion</b></div>
+        <div class="pb">
+          <div class="focus" data-k="p3f" contenteditable="true"><svg class="ic" style="color:var(--eco)"><use href="#i-target"/></svg> Grow Ecosystem &amp; Partnerships — ขยายระบบนิเวศและพาร์ทเนอร์</div>
+          <div class="grp"><div class="gt"><svg class="ic"><use href="#i-flag"/></svg>สิ่งที่ต้องทำ</div>
+            <ul><li data-k="p3a" contenteditable="true">ดึงพาร์ทเนอร์ Developer และ Supplier เข้าร่วม</li><li data-k="p3b" contenteditable="true">สร้าง Solutions Marketplace</li><li data-k="p3c" contenteditable="true">ขยาย 11 Smart Segments</li></ul></div>
+          <div class="grp"><div class="gt"><svg class="ic"><use href="#i-store"/></svg>ความสามารถที่ต้องมี</div>
+            <ul><li data-k="p3d" contenteditable="true">Ecosystem Management · Marketplace · Partner Onboarding · Standards</li></ul></div>
+          <div class="grp"><div class="gt"><svg class="ic"><use href="#i-money"/></svg>คุณค่าที่เกิด</div>
+            <ul><li data-k="p3e" contenteditable="true">Network Effects · โมเดลธุรกิจใหม่ · Ecosystem Revenue</li></ul></div>
+          <div class="grp"><div class="gt"><svg class="ic"><use href="#i-chart"/></svg>ตัวชี้วัด</div>
+            <div class="kpis"><span class="kpi">Ecosystem Partners</span><span class="kpi">Solutions in Marketplace</span><span class="kpi">Ecosystem Revenue %</span></div></div>
+        </div>
+        <div class="done">
+          <div class="dh"><i>✓</i><span data-k="dn3h" contenteditable="true">สิ่งที่ดำเนินการแล้ว</span><small data-k="dn3d" contenteditable="true">อัปเดต: ก.ย. 2026</small></div>
+          <ul data-k="dn3" contenteditable="true">
+            <li>พิมพ์ชื่องานที่ทำแล้ว · เดือน/ปี · ผลลัพธ์</li>
+            <li>พิมพ์ชื่องานที่ทำแล้ว · เดือน/ปี · ผลลัพธ์</li>
+          </ul>
+          <div class="hint">คลิกที่รายการเพื่อแก้ · กด Enter ท้ายบรรทัดเพื่อเพิ่มรายการใหม่</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 6 สรุปสำหรับผู้ฟัง ========== -->
+  <div class="sec" id="sec6">
+    <div class="sech"><span class="n">6</span><h2 data-k="s6h" contenteditable="true">ถ้าจำได้แค่ 4 ข้อ</h2><span class="cap" data-k="s6c" contenteditable="true">สรุปสำหรับปิดการนำเสนอ</span></div>
+    <div class="now">
+      <h3 data-k="n0" contenteditable="true"><svg class="ic"><use href="#i-globe"/></svg> จากบริษัทที่ขายสินค้าและระบบ สู่ผู้จัดวางระบบนิเวศโครงสร้างพื้นฐานอัจฉริยะ</h3>
+      <div class="nb">
+        <div class="nbox"><b>1 · นิยามของสินทรัพย์เปลี่ยนไปแล้ว</b><span data-k="n1" contenteditable="true">เมื่อก่อนสินทรัพย์คือโรงงาน วันนี้คือแพลตฟอร์มและข้อมูล พรุ่งนี้คือเครือข่ายพาร์ทเนอร์ — ถ้ายังวัดคุณค่าด้วยสินทรัพย์แบบเก่า เราจะประเมินตัวเองผิด</span></div>
+        <div class="nbox"><b>2 · ต้องข้ามให้ได้ 2 จุด</b><span data-k="n2" contenteditable="true">จากขายของ → เป็นเจ้าของแพลตฟอร์ม แล้วจากแพลตฟอร์ม → เป็นผู้จัดวางระบบนิเวศ · ข้ามไม่ได้ทั้งสองจุด ก็ยังเป็นผู้รับจ้างผลิตเหมือนเดิม</span></div>
+        <div class="nbox"><b>3 · เริ่มจากข้อมูล ไม่ใช่เริ่มจากเทคโนโลยี</b><span data-k="n3" contenteditable="true">Phase 1 คือการทำให้ข้อมูลของธุรกิจเดิมเป็นมาตรฐานเดียวกันให้ได้ก่อน — ถ้าฐานนี้ไม่แน่น แพลตฟอร์มที่สร้างทีหลังจะไม่มีอะไรให้ใช้</span></div>
+        <div class="nbox"><b>4 · คูเมืองที่แท้จริงคือเครือข่าย</b><span data-k="n4" contenteditable="true">โรงงานลอกได้ แพลตฟอร์มลอกได้ แต่ความไว้ใจของพาร์ทเนอร์หลายสิบรายลอกไม่ได้ — นี่คือเหตุผลที่ปลายทางต้องเป็น Ecosystem ไม่ใช่แค่ Platform</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tip" id="tip"></div>
+<script>
+(function(){
+"use strict";
+var LSK='pcc_cap_local_v1';
+var SRC=document.documentElement.outerHTML; /* สำเนาต้นฉบับ ใช้ตอนบันทึกเป็นไฟล์ */
+var $=function(id){ return document.getElementById(id); };
+
+/* ---------- state: เก็บเฉพาะข้อความที่ถูกแก้ ทับลงบน HTML ต้นฉบับ ---------- */
+function fileData(){ try{ var el=$('cap-data'); if(el){ var o=JSON.parse(el.textContent); if(o) return o; } }catch(e){} return {}; }
+var FD=fileData(), baseSavedAt=(typeof FD.savedAt==='number')?FD.savedAt:0;
+var S={savedAt:baseSavedAt, txt:{}};
+try{ var raw=localStorage.getItem(LSK); if(raw){ var ls=JSON.parse(raw); if(ls&&ls.txt&&(ls.savedAt||0)>=baseSavedAt) S=ls; } }catch(e){}
+if(!S.txt && FD.txt) S=FD;
+if(FD.txt && (S.savedAt||0)<baseSavedAt) S={savedAt:baseSavedAt, txt:FD.txt};
+if(!S.txt) S.txt={};
+
+var editMode=true, saveT=null;
+var tipEl=$('tip'), saveEl=$('autosave');
+function tip(m){ tipEl.textContent=m; tipEl.classList.add('show'); clearTimeout(tip._t); tip._t=setTimeout(function(){tipEl.classList.remove('show')},2800); }
+function persistRaw(){ try{ localStorage.setItem(LSK,JSON.stringify(S)); saveEl.classList.add('hit'); setTimeout(function(){saveEl.classList.remove('hit')},450); }catch(e){} }
+function schedulePersist(){ clearTimeout(saveT); saveT=setTimeout(persistRaw,500); }
+
+var NODES=[].slice.call(document.querySelectorAll('[data-k]'));
+var ORIG={}; NODES.forEach(function(el){ ORIG[el.dataset.k]=el.innerHTML; });
+function applyTxt(){ NODES.forEach(function(el){ var k=el.dataset.k; if(S.txt[k]!==undefined) el.innerHTML=S.txt[k]; }); }
+function setEditable(){ NODES.forEach(function(el){ el.setAttribute('contenteditable', editMode?'true':'false'); }); }
+document.addEventListener('input',function(e){
+  var el=e.target.closest?e.target.closest('[data-k]'):null; if(!el) return;
+  S.txt[el.dataset.k]=el.innerHTML; schedulePersist();
+});
+function syncAll(){ NODES.forEach(function(el){ var k=el.dataset.k; if(el.innerHTML!==ORIG[k]) S.txt[k]=el.innerHTML; }); }
+
+/* ---------- แถบจัดรูปแบบ ---------- */
+var FORE=['#12233A','#0077B6','#1D74C4','#2E9E62','#C0392B','#B7841A','#7B4FA8','#5A6E88','#FFFFFF'];
+var BACK=['#FFF3B0','#D6F5D6','#FFD9D9','#DCE9FA','#EFE0FA','#FFE4C7','transparent'];
+function swatches(box,list,fn){
+  box.innerHTML=list.map(function(c){
+    var bg=(c==='transparent')?'repeating-linear-gradient(45deg,#eee 0 4px,#fff 4px 8px)':c;
+    return '<i data-c="'+c+'" style="background:'+bg+'"></i>';
+  }).join('');
+  box.addEventListener('mousedown',function(e){ e.preventDefault(); });
+  box.addEventListener('click',function(e){ var t=e.target.closest('i'); if(t) fn(t.dataset.c); });
+}
+function inEditable(){ var s=window.getSelection(); if(!s||!s.rangeCount) return null;
+  var n=s.getRangeAt(0).commonAncestorContainer; if(n.nodeType===3) n=n.parentNode;
+  return n.closest?n.closest('[contenteditable="true"]'):null; }
+function afterCmd(){ syncAll(); schedulePersist(); }
+function cmd(c,v){ if(!inEditable()){ tip('เลือกข้อความที่ต้องการจัดรูปแบบก่อน'); return; }
+  try{ document.execCommand('styleWithCSS',false,true); }catch(e){}
+  try{ document.execCommand(c,false,v||null); }catch(e){} afterCmd(); }
+function applySize(px){
+  var host=inEditable(); if(!host){ tip('เลือกข้อความก่อน'); return; }
+  var sel=window.getSelection(); if(sel.isCollapsed){ tip('ลากคลุมข้อความที่ต้องการก่อน'); return; }
+  var r=sel.getRangeAt(0);
+  try{ var sp=document.createElement('span'); sp.style.fontSize=px;
+    sp.appendChild(r.extractContents()); r.insertNode(sp);
+    var nr=document.createRange(); nr.selectNodeContents(sp); sel.removeAllRanges(); sel.addRange(nr);
+  }catch(e){ tip('เลือกข้อความที่อยู่ในย่อหน้าเดียวกัน'); return; }
+  afterCmd();
+}
+$('fmt').addEventListener('mousedown',function(e){ if(e.target.closest('button,select,.sws')) e.preventDefault(); });
+$('fmt').addEventListener('click',function(e){ var b=e.target.closest('button'); if(b&&b.dataset.cmd) cmd(b.dataset.cmd); });
+$('fSize').addEventListener('change',function(){ if(this.value) applySize(this.value); this.value=''; });
+swatches($('swFore'),FORE,function(c){ cmd('foreColor',c); });
+swatches($('swBack'),BACK,function(c){ cmd('hiliteColor',c); });
+$('cFore').addEventListener('input',function(){ cmd('foreColor',this.value); });
+
+/* ---------- ปุ่ม ---------- */
+$('bEdit').addEventListener('click',function(){
+  syncAll(); editMode=!editMode;
+  this.classList.toggle('on',editMode); document.body.classList.toggle('edit',editMode);
+  setEditable(); tip(editMode?'แก้ไขได้ — ลากคลุมข้อความแล้วใช้แถบด้านบน':'ล็อกแล้ว');
+});
+$('bPrint').addEventListener('click',function(){ window.print(); });
+
+/* ---------- บันทึกเป็นไฟล์ .html (ฝังข้อความที่แก้ไว้ในไฟล์) ---------- */
+var DATA_RE=/<!--CAP_DATA_START-->[\s\S]*?<!--CAP_DATA_END-->/;
+function dataBlock(json){ return '<!--CAP_DATA_START-->\n<script id="cap-data" type="application/json">'+json+'<\/script>\n<!--CAP_DATA_END-->'; }
+function saveFile(){
+  syncAll(); S.savedAt=Date.now(); persistRaw();
+  var safe=JSON.stringify(S).replace(/</g,'\\u003c');
+  var out='<!DOCTYPE html>\n'+SRC.replace(DATA_RE,function(){ return dataBlock(safe); });
+  var blob=new Blob([out],{type:'text/html;charset=utf-8'});
+  var a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='capitalism.html'; document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); },1000);
+  tip('✓ ดาวน์โหลดแล้ว — ไฟล์ใหม่มีข้อความที่แก้ฝังอยู่ในตัว');
+}
+$('bSave').addEventListener('click',saveFile);
+document.addEventListener('keydown',function(e){ if((e.ctrlKey||e.metaKey)&&(e.key==='s'||e.key==='S')){ e.preventDefault(); saveFile(); } });
+$('bReset').addEventListener('click',function(){
+  if(!confirm('ล้างการแก้ไขทั้งหมด และกลับเป็นข้อความเดิมของไฟล์นี้?')) return;
+  NODES.forEach(function(el){ el.innerHTML=ORIG[el.dataset.k]; });
+  S={savedAt:Date.now(), txt:{}}; persistRaw(); tip('คืนค่าเดิมแล้ว');
+});
+
+
+/* ================= แถบเลื่อน + เมนูส่วน + ค่อย ๆ ปรากฏ ================= */
+var SECS=[].slice.call(document.querySelectorAll('.sec'));
+var NAVA=[].slice.call(document.querySelectorAll('#secnav a'));
+function onScroll(){
+  var h=document.documentElement.scrollHeight-window.innerHeight;
+  $('scrollbar').style.width=(h>0?(window.scrollY/h*100):0)+'%';
+  var best=-1, bt=1e9;
+  SECS.forEach(function(el,i){ var t=Math.abs(el.getBoundingClientRect().top-150); if(t<bt){bt=t;best=i;} });
+  NAVA.forEach(function(a,i){ a.classList.toggle('act', i===best); });
+}
+window.addEventListener('scroll',onScroll,{passive:true}); window.addEventListener('resize',onScroll);
+if(window.IntersectionObserver){
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('inview'); io.unobserve(e.target);} }); },{rootMargin:'-40px 0px -80px 0px'});
+  SECS.forEach(function(el){ io.observe(el); });
+} else document.body.classList.add('noanim');
+NAVA.forEach(function(a){ a.addEventListener('click',function(e){ e.preventDefault();
+  var t=document.querySelector(this.getAttribute('href')); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); }); });
+
+/* ================= โหมดนำเสนอทีละขั้น ================= */
+function stepify(){
+  document.querySelectorAll('.stages .stage').forEach(function(el,i){ el.dataset.step=i+1; });
+  document.querySelectorAll('.stages .arrowcell').forEach(function(el,i){ el.dataset.step=i+2; });
+  var t=document.querySelector('.cmp');
+  if(t){
+    t.querySelectorAll('thead th').forEach(function(th,i){ if(i>0) th.dataset.step=i; });
+    t.querySelectorAll('tbody tr').forEach(function(tr){ [].slice.call(tr.cells).forEach(function(td,i){ if(i>0) td.dataset.step=i; }); });
+  }
+  document.querySelectorAll('.shifts .shift').forEach(function(el,i){ el.dataset.step=i+1; });
+  document.querySelectorAll('.opts .opt').forEach(function(el,i){ el.dataset.step=i+1; });
+  document.querySelectorAll('.take .tk').forEach(function(el){ el.dataset.step=3; });
+  document.querySelectorAll('.rm .ph').forEach(function(el,i){ el.dataset.step=i+1; });
+  document.querySelectorAll('.now .nbox').forEach(function(el,i){ el.dataset.step=i+1; });
+}
+stepify();
+var SLIDES=[document.querySelector('.hero')].concat(SECS);
+var TITLES=['ภาพรวม','1 · การเดินทาง 3 ยุค','2 · อะไรเปลี่ยนบ้าง','3 · จุดเปลี่ยน 2 ครั้ง','4 · PCC มี 2 ทางเลือก','5 · แผน 3 ระยะ','6 · ถ้าจำได้แค่ 4 ข้อ'];
+var HOMES=SLIDES.map(function(el){ return {p:el.parentNode, n:el.nextSibling}; });
+var MAXSTEP=SLIDES.map(function(el){
+  var m=0; el.querySelectorAll('[data-step]').forEach(function(x){ m=Math.max(m,+x.dataset.step||0); }); return m; });
+var cur=-1, step=0;
+var PRES_W=[1500,1360,1240,1120,1000,880];
+function fitPres(){
+  var inner=$('presInner'), stage=$('presStage'); if(!inner.firstChild) return;
+  inner.style.transform='none';
+  var sw=stage.clientWidth-8, sh=stage.clientHeight-10;
+  var best=null;
+  // ลองหลายความกว้าง แล้วเลือกอันที่ขยายได้ใหญ่สุด (ต้องดีกว่าอันที่กว้างกว่าเกิน 3% ถึงจะเปลี่ยน)
+  PRES_W.forEach(function(w){
+    inner.style.width=w+'px';
+    inner.classList.toggle('narrow', w<1180);
+    var cw=inner.scrollWidth||1, ch=inner.scrollHeight||1;
+    var sc=Math.min(1.6, sw/cw, sh/ch);
+    if(!best||sc>best.sc*1.03) best={sc:sc,w:w};
+  });
+  inner.style.width=best.w+'px';
+  inner.classList.toggle('narrow', best.w<1180);
+  inner.style.transform='scale('+best.sc.toFixed(3)+')';
+}
+function paintSteps(){
+  var el=SLIDES[cur]; if(!el) return;
+  el.querySelectorAll('[data-step]').forEach(function(x){ x.classList.toggle('pdim', (+x.dataset.step)>step); });
+}
+function paintNav(){
+  $('presNum').textContent=(cur+1)+' / '+SLIDES.length;
+  $('presTitle').textContent=TITLES[cur]||'';
+  var tot=SLIDES.reduce(function(a,_,i){ return a+1+MAXSTEP[i]; },0);
+  var done=0; for(var i=0;i<cur;i++) done+=1+MAXSTEP[i]; done+=1+step;
+  $('presFill').style.width=(done/tot*100)+'%';
+  $('presDots').innerHTML=SLIDES.map(function(_,i){ return '<i data-i="'+i+'"'+(i===cur?' class="on"':'')+'></i>'; }).join('');
+  $('presPrev').disabled=(cur===0&&step===0);
+  $('presNext').disabled=(cur===SLIDES.length-1&&step>=MAXSTEP[cur]);
+}
+function goSlide(i,st){
+  if(i<0||i>=SLIDES.length) return;
+  if(cur>=0){ var h=HOMES[cur]; h.p.insertBefore(SLIDES[cur], h.n);
+    SLIDES[cur].querySelectorAll('[data-step]').forEach(function(x){ x.classList.remove('pdim'); }); }
+  cur=i; step=(st===undefined)?0:Math.max(0,Math.min(st,MAXSTEP[i]));
+  $('presInner').innerHTML=''; $('presInner').appendChild(SLIDES[cur]);
+  paintSteps(); paintNav(); requestAnimationFrame(fitPres);
+}
+// การเผยทีละขั้นเปลี่ยนแค่ opacity/transform จึงไม่กระทบ layout ไม่ต้อง fit ใหม่
+function nextStep(){ if(step<MAXSTEP[cur]){ step++; paintSteps(); paintNav(); }
+  else if(cur<SLIDES.length-1) goSlide(cur+1,0); }
+function prevStep(){ if(step>0){ step--; paintSteps(); paintNav(); }
+  else if(cur>0) goSlide(cur-1, MAXSTEP[cur-1]); }
+function presOn(){
+  if(editMode){ editMode=false; $('bEdit').classList.remove('on'); document.body.classList.remove('edit'); setEditable(); }
+  document.body.classList.add('pres'); $('bPres').classList.add('on'); goSlide(0,0);
+}
+function presOff(){
+  if(cur>=0){ var h=HOMES[cur]; h.p.insertBefore(SLIDES[cur], h.n);
+    SLIDES[cur].querySelectorAll('[data-step]').forEach(function(x){ x.classList.remove('pdim'); }); cur=-1; }
+  $('presInner').innerHTML='';
+  document.body.classList.remove('pres'); $('bPres').classList.remove('on');
+  if(document.fullscreenElement) document.exitFullscreen().catch(function(){});
+  onScroll();
+}
+$('bPres').addEventListener('click',function(){ document.body.classList.contains('pres')?presOff():presOn(); });
+$('presX').addEventListener('click',presOff);
+$('presNext').addEventListener('click',nextStep);
+$('presPrev').addEventListener('click',prevStep);
+$('presFs').addEventListener('click',function(){
+  if(document.fullscreenElement) document.exitFullscreen().catch(function(){});
+  else document.documentElement.requestFullscreen().catch(function(){ tip('เบราว์เซอร์ไม่อนุญาตเต็มจอ'); });
+});
+$('presDots').addEventListener('click',function(e){ var d=e.target.closest('i'); if(d) goSlide(+d.dataset.i,0); });
+$('presStage').addEventListener('click',function(e){
+  if(e.target.closest('a,button,input,select')) return;
+  (e.clientX < window.innerWidth*0.28) ? prevStep() : nextStep();
+});
+window.addEventListener('resize',function(){ if(document.body.classList.contains('pres')) requestAnimationFrame(fitPres); });
+document.addEventListener('fullscreenchange',function(){ if(document.body.classList.contains('pres')) setTimeout(fitPres,120); });
+document.addEventListener('keydown',function(e){
+  var P=document.body.classList.contains('pres');
+  if(!P){ if((e.key==='p'||e.key==='P')&&!inEditable()&&!/INPUT|TEXTAREA/.test(document.activeElement.tagName)) presOn(); return; }
+  if(e.key==='Escape'){ presOff(); return; }
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){ e.preventDefault(); nextStep(); }
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){ e.preventDefault(); prevStep(); }
+  else if(e.key==='ArrowDown'){ e.preventDefault(); goSlide(cur+1,0); }
+  else if(e.key==='ArrowUp'){ e.preventDefault(); goSlide(cur-1,0); }
+  else if(e.key==='Home'){ goSlide(0,0); }
+  else if(e.key==='End'){ goSlide(SLIDES.length-1,MAXSTEP[SLIDES.length-1]); }
+  else if(e.key==='f'||e.key==='F'){ $('presFs').click(); }
+  else if(/^[1-9]$/.test(e.key)){ goSlide(+e.key-1,0); }
+});
+
+/* ---------- ใส่รูปโลโก้เอง: โหมดแก้ไข → คลิกกรอบตัวย่อ ---------- */
+var logoIn=document.createElement('input'); logoIn.type='file'; logoIn.accept='image/*'; logoIn.style.display='none'; document.body.appendChild(logoIn);
+var logoTarget=null;
+document.addEventListener('click',function(e){
+  var lg=e.target.closest?e.target.closest('.t5 .lg'):null; if(!lg||!editMode) return;
+  e.preventDefault(); logoTarget=lg; logoIn.value=''; logoIn.click();
+});
+logoIn.addEventListener('change',function(){
+  var f=logoIn.files&&logoIn.files[0]; if(!f||!logoTarget) return;
+  if(f.size>400*1024){ tip('รูปใหญ่เกิน 400KB — ย่อขนาดก่อน'); return; }
+  var rd=new FileReader(); rd.onload=function(){
+    logoTarget.dataset.ini=logoTarget.dataset.ini||logoTarget.textContent;
+    logoTarget.innerHTML='<img alt="" src="'+rd.result+'">'; syncAll(); schedulePersist(); tip('ใส่โลโก้แล้ว');
+  }; rd.readAsDataURL(f);
+});
+
+applyTxt(); setEditable(); onScroll();
+tip('แก้ข้อความได้ทุกจุด · กด 🎬 นำเสนอ หรือปุ่ม P เพื่อเข้าโหมดนำเสนอทีละขั้น');
+})();
+</script>
+</body>
+</html>

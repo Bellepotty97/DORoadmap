@@ -12,6 +12,8 @@ Digital Organization to Agentic Transformation
 ```
 .
 ├── digital-organization.html     # หน้าหลัก — 5Ps Pyramid 7 Layers + PF Modals
+├── capitalism.html               # PCC — Evolution of Capitalism (Industrial → Platform → Ecosystem)
+├── amazon-walmart.html           # PCC — Amazon Ecosystem vs Walmart (ลิงก์จาก capitalism.html)
 ├── index.html                    # redirect ไป digital-organization.html (สำหรับ URL ราก)
 ├── assets/                       # รูปประกอบ 7 ไฟล์
 ├── .nojekyll                     # ปิด Jekyll processing บน GitHub Pages
