@@ -421,22 +421,21 @@
 
   /* ---------- ภาพประกอบประจำ section ---------- */
   .sec-photo{
-    margin:0 auto 30px;max-width:960px;
+    margin:0 auto 30px;max-width:820px;
   }
   .sec-photo .ph-frame{
     background:var(--white);border:1px solid var(--line);
     border-top:4px solid var(--pf-color);border-radius:18px;
     padding:10px;box-shadow:0 10px 30px rgba(18,32,61,.10);
   }
-  /* ต้นฉบับเป็นภาพแนวตั้ง จึงครอบเป็นแนวนอนโดยยึดกึ่งกลาง
-     ให้ได้ทางเดินตู้ Rack เต็มแถวและพื้นยกระดับที่ลู่เข้าหาจุดรวมสายตา */
+  /* ต้นฉบับเป็นภาพแนวตั้ง 3:4 — object-fit:cover ตัดเฉพาะแนวตั้ง
+     4:3 จึงยังเห็นภาพรวมถึง 56% ของต้นฉบับ ตั้งแต่ไฟเพดานลงมาถึงพื้นยกระดับ
+     ยึดที่ 42% เพื่อให้ปลายทางเดินอยู่กลางเฟรมและตู้ Rack สองฝั่งสมมาตร */
   .sec-photo img{
     display:block;width:100%;height:auto;
-    aspect-ratio:2/1;object-fit:cover;object-position:center 50%;
+    aspect-ratio:4/3;object-fit:cover;object-position:center 42%;
     border-radius:0 0 11px 11px;background:var(--paper-2);
   }
-  /* จอแคบ 2:1 จะเตี้ยจนภาพไม่มีน้ำหนัก จึงคลายอัตราส่วนลง */
-  @media (max-width:760px){ .sec-photo img{aspect-ratio:3/2;} }
   .sec-photo figcaption{
     margin-top:13px;font-size:12.5px;font-weight:600;color:var(--ink-soft);
     display:flex;align-items:center;gap:8px;line-height:var(--lh-dense);
