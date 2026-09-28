@@ -243,8 +243,14 @@
 
   /* ---------- SECTION ของ PF2 / PF3 / PF4 ---------- */
   section.pfsec{padding:66px 0 58px;border-top:1px solid var(--line);}
-  section.pfsec:nth-of-type(odd){background:var(--white);}
-  section.pfsec.alt{background:var(--paper);}
+  /* กำหนดพื้นหลังตรงๆ ต่อ section แทน :nth-of-type(odd) เพราะกฎนั้นนับ
+     ลำดับ <section> ทั้งหน้า ทำให้ PF2 ไม่เข้าเงื่อนไขและโปร่งใสจนได้
+     สี paper เท่ากับ PF1
+     PF3 / PF4 ใช้โทนของสีประจำตัวเอง ผสมบนขาวอ่อนๆ ให้แยกออกจากกัน
+     แต่ยังไม่แย่งความเด่นจากการ์ดสีขาวข้างใน */
+  section.pfsec.pf2c{background:var(--white);}
+  section.pfsec.pf3c{background:#e3edf7;}
+  section.pfsec.pf4c{background:#efe9f7;}
   .pfsec h2{font-size:clamp(24px,3vw,32px);font-weight:800;margin:10px 0 12px;color:var(--ink);}
   .pfsec .pfsec-lead{
     font-size:15px;font-weight:500;color:var(--ink-soft);
@@ -319,6 +325,10 @@
     margin-top:auto;align-self:flex-start;
     background:#fff6e8;border:1px solid #f0d3a8;color:#8a5f1d;
     font-size:11.5px;font-weight:700;padding:6px 13px;border-radius:999px;
+  }
+  /* ป้ายชี้ไปแหล่งข้อมูลอื่น ไม่ใช่การรอเอกสาร จึงใช้โทนกลางไม่ใช่สีเตือน */
+  .sub-pending.sub-ref{
+    background:#eef3fb;border-color:#c5d8ef;color:#2f4b73;
   }
   .pfsec-back{
     display:inline-flex;align-items:center;gap:7px;margin-top:30px;
@@ -1689,7 +1699,7 @@
           สรุปกิจกรรมด้าน Digital Mindset &amp; Culture ที่ดำเนินการไปแล้ว
           — รอเติมรายการกิจกรรมและผลลัพธ์
         </p>
-        <span class="sub-pending">⏳ รอเอกสารรายละเอียด</span>
+        <span class="sub-pending sub-ref">📎 รายละเอียดเพิ่มเติมที่ Human Capital</span>
       </div>
 
       <div class="sub-card">
@@ -1724,7 +1734,7 @@
             <div class="ph-name">Full Agentic Organization</div>
           </div>
         </div>
-        <span class="sub-pending">⏳ รอเอกสารรายละเอียด</span>
+        <span class="sub-pending sub-ref">📎 รายละเอียดเพิ่มเติมที่ Human Capital</span>
       </div>
     </div>
 
