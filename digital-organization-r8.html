@@ -173,6 +173,10 @@
   .pyr-fold{margin-bottom:8px;}
   .pyr-fold > summary{display:inline-block;}
   .pyr-fold-body{margin-top:26px;}
+  /* กล่องพับเนื้อหาเชิงลึกใน PF1 — PSP+Governance และ PMIS-II */
+  .pf1-fold{margin:10px 0 6px;}
+  .pf1-fold > summary{display:inline-block;}
+  .pf1-fold > .fold-body{margin-top:24px;}
 
   /* ---------- DBTP 5 ห่วง (Gartner Digital Business Technology Platform) ---------- */
   .dbtp-wrap{margin:0 0 38px;}
@@ -272,6 +276,19 @@
   }
   .phase-box .ph-name{
     font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-top:6px;line-height:1.55;
+  }
+  /* Phase ที่มีเอกสารแล้ว กดเข้าไปดูได้ */
+  .phase-box.is-link{
+    display:block;text-decoration:none;cursor:pointer;
+    transition:transform .16s,box-shadow .16s,border-color .16s;
+  }
+  .phase-box.is-link:hover{
+    transform:translateY(-3px);border-color:var(--pf4);
+    box-shadow:0 8px 20px rgba(106,79,158,.22);
+  }
+  .phase-box .ph-go{
+    margin-top:10px;font-size:11.5px;font-weight:800;color:var(--pf4);
+    display:inline-flex;align-items:center;gap:5px;
   }
   @media (max-width:760px){.sub-grid,.sub-grid.one{grid-template-columns:1fr;}}
   .sub-card{
@@ -1289,152 +1306,158 @@
 
       </div>
 
+
+    </div>
+    <!-- ============ END OPTION C PANEL ============ -->
+
+    <details class="opt-archive pf1-fold">
+      <summary>ดูรายละเอียด PSP และ Governance</summary>
+      <div class="fold-body">
       <div class="callout" style="margin-top:28px;background:#eef3fb;border-color:#c9dcf3;border-left-color:var(--l3-pmis);">
-        <h4 style="color:var(--l3-pmis);">ℹ️ สถานะปัจจุบันของ PSP — เหตุผลที่ต้องพิจารณา Timeline อย่างรอบคอบ</h4>
-        <p style="color:#2c3c55;">
-          ระหว่างรอ Implementation จริง PSP จะทำ <b>Process Improvement (TOM &amp; Blueprint "to be")</b> ในปี 2570
-          เพื่อนำข้อมูลไปทำ Gap Analysis เนื่องจาก PSP มีเป้าหมายลดจำนวนพนักงานในองค์กร แต่ยังไม่มีแนวทางที่ชัดเจน
-          จากการประเมินสถานะปัจจุบันพบว่า:
-        </p>
-        <ul style="margin:10px 0 0;padding-left:20px;color:#2c3c55;">
-          <li style="margin-bottom:6px;font-size:13px;line-height:1.7;">มี Application แยกจาก Epicor ERP จำนวนมาก การทำงานอยู่บน Excel/Manual/Silo ข้อมูลไม่รวมศูนย์เชื่อมโยงกัน พนักงานต้องทำงานหลายระบบ</li>
-          <li style="margin-bottom:6px;font-size:13px;line-height:1.7;">ยังไม่มีระบบ CRM และ Manufacturing Execution System (MES)</li>
-          <li style="margin-bottom:6px;font-size:13px;line-height:1.7;">Document Control และระบบอนุมัติไม่รวมศูนย์ แยกกันคนละแอป และไม่อัปเดตตาม Organization Chart ที่เปลี่ยนแปลง</li>
-          <li style="margin-bottom:6px;font-size:13px;line-height:1.7;">ระบบบัญชี (เช่น เบิกเงินสดย่อย) และหลายกระบวนการยังเป็น Manual ข้อมูลไม่เชื่อมโยงกัน เช่น Quotation → Sale Order, Claim Ticket → Costing, Plan → Produce (Manufacturing), Produce/Receive → Quality Check, Costing (Plan vs Actual)</li>
-          <li style="margin-bottom:0;font-size:13px;line-height:1.7;">Application ส่วนใหญ่ของ PSP ดำเนินการทำขึ้นเอง ไม่ได้มีการควบคุมหรือดูแลจากส่วนกลาง/PDE หากต้องการสร้าง KM และ Blueprint ขององค์กร จะต้องอาศัยองค์ความรู้จากคนคนเดียวเป็นหลัก</li>
-        </ul>
+      <h4 style="color:var(--l3-pmis);">ℹ️ สถานะปัจจุบันของ PSP — เหตุผลที่ต้องพิจารณา Timeline อย่างรอบคอบ</h4>
+      <p style="color:#2c3c55;">
+      ระหว่างรอ Implementation จริง PSP จะทำ <b>Process Improvement (TOM &amp; Blueprint "to be")</b> ในปี 2570
+      เพื่อนำข้อมูลไปทำ Gap Analysis เนื่องจาก PSP มีเป้าหมายลดจำนวนพนักงานในองค์กร แต่ยังไม่มีแนวทางที่ชัดเจน
+      จากการประเมินสถานะปัจจุบันพบว่า:
+      </p>
+      <ul style="margin:10px 0 0;padding-left:20px;color:#2c3c55;">
+      <li style="margin-bottom:6px;font-size:13px;line-height:1.7;">มี Application แยกจาก Epicor ERP จำนวนมาก การทำงานอยู่บน Excel/Manual/Silo ข้อมูลไม่รวมศูนย์เชื่อมโยงกัน พนักงานต้องทำงานหลายระบบ</li>
+      <li style="margin-bottom:6px;font-size:13px;line-height:1.7;">ยังไม่มีระบบ CRM และ Manufacturing Execution System (MES)</li>
+      <li style="margin-bottom:6px;font-size:13px;line-height:1.7;">Document Control และระบบอนุมัติไม่รวมศูนย์ แยกกันคนละแอป และไม่อัปเดตตาม Organization Chart ที่เปลี่ยนแปลง</li>
+      <li style="margin-bottom:6px;font-size:13px;line-height:1.7;">ระบบบัญชี (เช่น เบิกเงินสดย่อย) และหลายกระบวนการยังเป็น Manual ข้อมูลไม่เชื่อมโยงกัน เช่น Quotation → Sale Order, Claim Ticket → Costing, Plan → Produce (Manufacturing), Produce/Receive → Quality Check, Costing (Plan vs Actual)</li>
+      <li style="margin-bottom:0;font-size:13px;line-height:1.7;">Application ส่วนใหญ่ของ PSP ดำเนินการทำขึ้นเอง ไม่ได้มีการควบคุมหรือดูแลจากส่วนกลาง/PDE หากต้องการสร้าง KM และ Blueprint ขององค์กร จะต้องอาศัยองค์ความรู้จากคนคนเดียวเป็นหลัก</li>
+      </ul>
       </div>
 
       <h3 style="margin:38px 0 6px;font-size:17px;">ทางเลือกเสริม (Optional) — จังหวะและรูปแบบการเข้าระบบของ PSP</h3>
       <p style="font-size:12.5px;color:var(--ink-soft);margin:0 0 4px;line-height:1.7;">
-        ขึ้นอยู่กับประเด็นค่าเสื่อมของระบบเดิม (Epicor) ที่ PSP ใช้อยู่ เทียบกับเป้าหมายเชิงปฏิบัติการเรื่องการลดจำนวนพนักงานของ PSP
-        ซึ่งยังอยู่ระหว่างทำ Process Improvement (TOM &amp; Blueprint) เพื่อหาแนวทางที่ชัดเจนก่อน
+      ขึ้นอยู่กับประเด็นค่าเสื่อมของระบบเดิม (Epicor) ที่ PSP ใช้อยู่ เทียบกับเป้าหมายเชิงปฏิบัติการเรื่องการลดจำนวนพนักงานของ PSP
+      ซึ่งยังอยู่ระหว่างทำ Process Improvement (TOM &amp; Blueprint) เพื่อหาแนวทางที่ชัดเจนก่อน
       </p>
 
       <div class="compare-wrap">
 
-        <div class="compare-card main">
-          <span class="ctag">Phase 3 · แนวทางหลัก</span>
-          <h4>PSP บน Odoo เต็มรูปแบบ</h4>
-          <div class="cdate">12/2571</div>
-          <ul>
-            <li>Go-Live พร้อม Subsidiary (PPD) (ภายใน 05/2570 คาดว่า PSP ถือหุ้น 100%) — Console PSP + Console PCC</li>
-            <li>ค่าเสื่อมระบบ Epicor เดิมเหลืออีก 4 ปี ณ วันที่เปลี่ยนระบบ</li>
-            <li>ได้ Automation สนับสนุนเป้าหมายลดคนของ PSP เร็วที่สุด</li>
-            <li>Budget Owner: PSP</li>
-          </ul>
-        </div>
+      <div class="compare-card main">
+      <span class="ctag">Phase 3 · แนวทางหลัก</span>
+      <h4>PSP บน Odoo เต็มรูปแบบ</h4>
+      <div class="cdate">12/2571</div>
+      <ul>
+      <li>Go-Live พร้อม Subsidiary (PPD) (ภายใน 05/2570 คาดว่า PSP ถือหุ้น 100%) — Console PSP + Console PCC</li>
+      <li>ค่าเสื่อมระบบ Epicor เดิมเหลืออีก 4 ปี ณ วันที่เปลี่ยนระบบ</li>
+      <li>ได้ Automation สนับสนุนเป้าหมายลดคนของ PSP เร็วที่สุด</li>
+      <li>Budget Owner: PSP</li>
+      </ul>
+      </div>
 
-        <div class="compare-vs">VS</div>
+      <div class="compare-vs">VS</div>
 
-        <div class="compare-card optional">
-          <span class="ctag">Optional 1</span>
-          <h4>PSP — เลื่อน Go-Live ออกไป</h4>
-          <div class="cdate">12/2573–2575</div>
-          <ul>
-            <li>เงื่อนไข: กรณีมีประเด็นค่าเสื่อม แต่ต้องดู Operation เป้าหมายลดคนของ PSP ด้วย</li>
-            <li>Go-Live พร้อม Subsidiary (PPD) — Console PSP + Console PCC</li>
-            <li>ค่าเสื่อมระบบ Epicor เดิมเหลืออีก 0-2 ปี ในช่วงเวลานี้</li>
-            <li>Budget Owner: PSP</li>
-          </ul>
-        </div>
+      <div class="compare-card optional">
+      <span class="ctag">Optional 1</span>
+      <h4>PSP — เลื่อน Go-Live ออกไป</h4>
+      <div class="cdate">12/2573–2575</div>
+      <ul>
+      <li>เงื่อนไข: กรณีมีประเด็นค่าเสื่อม แต่ต้องดู Operation เป้าหมายลดคนของ PSP ด้วย</li>
+      <li>Go-Live พร้อม Subsidiary (PPD) — Console PSP + Console PCC</li>
+      <li>ค่าเสื่อมระบบ Epicor เดิมเหลืออีก 0-2 ปี ในช่วงเวลานี้</li>
+      <li>Budget Owner: PSP</li>
+      </ul>
+      </div>
 
       </div>
 
       <h3 style="margin:34px 0 6px;font-size:17px;">Pro &amp; Cons — PSP+PPD ใช้ Odoo</h3>
       <p style="font-size:12.5px;color:var(--ink-soft);margin:0 0 4px;line-height:1.7;">
-        ประเมินเทียบกับวัตถุประสงค์หลักของบริษัทแม่ (PCC) คือ <b>Single Source of Truth</b> และ <b>Group Financial Consolidation</b>
+      ประเมินเทียบกับวัตถุประสงค์หลักของบริษัทแม่ (PCC) คือ <b>Single Source of Truth</b> และ <b>Group Financial Consolidation</b>
       </p>
 
       <table class="data-table">
-        <tbody><tr><th style="width:22%;">ด้าน</th><th style="width:39%;">Pro</th><th style="width:39%;">Con</th></tr>
-        <tr>
-          <td class="dim">IT Governance ระยะยาว</td>
-          <td class="pro">Application ใหม่ที่ PSP ต้องการ ต้องผ่าน Governance ของ Odoo/ส่วนกลาง ทำให้ควบคุมมาตรฐานและลด Silo ได้</td>
-          <td class="con">การพัฒนา Application แยกตามความต้องการเฉพาะหน้าจะยังดำเนินต่อไปโดยไม่ผ่านการควบคุมจากส่วนกลาง/PDE เหมือนที่ผ่านมา ทำให้ระบบ IT ของ PSP กระจัดกระจายมากขึ้นเรื่อย ๆ ยากต่อการวางมาตรฐานและ Data Governance ของกลุ่ม อีกทั้งยังผูกติดกับความรู้เฉพาะบุคคล (Key Person Dependency)</td>
-        </tr>
-        <tr>
-          <td class="dim">Single Source of Truth</td>
-          <td class="pro">ข้อมูล PSP+PPD อยู่ Database เดียวกับ PEM/PSL/PPP/PCC — PCC ดูข้อมูลได้ Real-time ลึกถึงระดับ Transaction ไม่ใช่แค่ตัวเลขสรุป (เช่น CRM, Customer, Vendor, Product, Catalog)</td>
-          <td class="con">ต้องรอ Ownership ของ PPD ชัดเจนก่อน (คาดว่า PSP ถือหุ้น 100% ภายใน 05/2570) ไม่งั้นโครงสร้าง Company ใน Odoo อาจต้องปรับใหม่ภายหลัง</td>
-        </tr>
-        <tr>
-          <td class="dim">Intercompany</td>
-          <td class="pro">ลด Manual Reconciliation ของคู่ Transaction ที่หนักที่สุดในกลุ่มได้จริง (เช่น TCS, Omni Revenue → Stock, Pricelist, Catalog, Delivery)</td>
-          <td class="con">ถ้าเลือกแนวทางหลัก (2571) ต้อง Write-off มูลค่าคงเหลือของ Epicor ที่ยังเหลืออีก 4 ปี — กระทบงบกำไรขาดทุนก้อนเดียว</td>
-        </tr>
-        <tr>
-          <td class="dim">Operation ของ PSP</td>
-          <td class="pro">สนับสนุนเป้าหมายลดคนของ PSP ด้วย Automation จาก Odoo</td>
-          <td class="con">เพิ่มภาระ Change Management ให้ PSP ในช่วงที่กำลังปรับโครงสร้างองค์กร (ลดคน) พร้อมกัน</td>
-        </tr>
-        <tr>
-          <td class="dim">Audit</td>
-          <td class="pro">Auditor ตรวจสอบผ่านระบบเดียวได้ทั้งกลุ่ม ลดความซับซ้อนตอน Audit ประจำปี</td>
-          <td class="con">—</td>
-        </tr>
-        <tr>
-          <td class="dim">Others</td>
-          <td class="pro">—</td>
-          <td class="con">ทุก Feature ใหม่ของกลุ่มบน Odoo ในอนาคต (เช่น Real-time Dashboard, Automated Statutory Report) จะยังไม่ครอบคลุม PSP จนกว่าจะ Go-Live จริง</td>
-        </tr>
+      <tbody><tr><th style="width:22%;">ด้าน</th><th style="width:39%;">Pro</th><th style="width:39%;">Con</th></tr>
+      <tr>
+      <td class="dim">IT Governance ระยะยาว</td>
+      <td class="pro">Application ใหม่ที่ PSP ต้องการ ต้องผ่าน Governance ของ Odoo/ส่วนกลาง ทำให้ควบคุมมาตรฐานและลด Silo ได้</td>
+      <td class="con">การพัฒนา Application แยกตามความต้องการเฉพาะหน้าจะยังดำเนินต่อไปโดยไม่ผ่านการควบคุมจากส่วนกลาง/PDE เหมือนที่ผ่านมา ทำให้ระบบ IT ของ PSP กระจัดกระจายมากขึ้นเรื่อย ๆ ยากต่อการวางมาตรฐานและ Data Governance ของกลุ่ม อีกทั้งยังผูกติดกับความรู้เฉพาะบุคคล (Key Person Dependency)</td>
+      </tr>
+      <tr>
+      <td class="dim">Single Source of Truth</td>
+      <td class="pro">ข้อมูล PSP+PPD อยู่ Database เดียวกับ PEM/PSL/PPP/PCC — PCC ดูข้อมูลได้ Real-time ลึกถึงระดับ Transaction ไม่ใช่แค่ตัวเลขสรุป (เช่น CRM, Customer, Vendor, Product, Catalog)</td>
+      <td class="con">ต้องรอ Ownership ของ PPD ชัดเจนก่อน (คาดว่า PSP ถือหุ้น 100% ภายใน 05/2570) ไม่งั้นโครงสร้าง Company ใน Odoo อาจต้องปรับใหม่ภายหลัง</td>
+      </tr>
+      <tr>
+      <td class="dim">Intercompany</td>
+      <td class="pro">ลด Manual Reconciliation ของคู่ Transaction ที่หนักที่สุดในกลุ่มได้จริง (เช่น TCS, Omni Revenue → Stock, Pricelist, Catalog, Delivery)</td>
+      <td class="con">ถ้าเลือกแนวทางหลัก (2571) ต้อง Write-off มูลค่าคงเหลือของ Epicor ที่ยังเหลืออีก 4 ปี — กระทบงบกำไรขาดทุนก้อนเดียว</td>
+      </tr>
+      <tr>
+      <td class="dim">Operation ของ PSP</td>
+      <td class="pro">สนับสนุนเป้าหมายลดคนของ PSP ด้วย Automation จาก Odoo</td>
+      <td class="con">เพิ่มภาระ Change Management ให้ PSP ในช่วงที่กำลังปรับโครงสร้างองค์กร (ลดคน) พร้อมกัน</td>
+      </tr>
+      <tr>
+      <td class="dim">Audit</td>
+      <td class="pro">Auditor ตรวจสอบผ่านระบบเดียวได้ทั้งกลุ่ม ลดความซับซ้อนตอน Audit ประจำปี</td>
+      <td class="con">—</td>
+      </tr>
+      <tr>
+      <td class="dim">Others</td>
+      <td class="pro">—</td>
+      <td class="con">ทุก Feature ใหม่ของกลุ่มบน Odoo ในอนาคต (เช่น Real-time Dashboard, Automated Statutory Report) จะยังไม่ครอบคลุม PSP จนกว่าจะ Go-Live จริง</td>
+      </tr>
       </tbody></table>
 
       <div class="callout" style="margin-top:28px;">
-        <h4>⚠ ข้อควรพิจารณา — เลือกจังหวะของ PSP ตามตัวแปรทางบัญชีและปฏิบัติการ</h4>
-        <p>
-          ทั้งแนวทางหลักและ Optional 1 ท้ายที่สุดแล้ว PSP จะได้ใช้ Automation จาก Odoo เหมือนกัน ต่างกันแค่ปีที่ Go-Live จริง
-          (2571 หรือช่วง 2573–2575) การเลือกช้าลงช่วยลดผลกระทบทางบัญชีจากค่าเสื่อม Epicor ที่ยังตัดไม่หมด แต่แลกมาด้วย
-          ระยะเวลา Manual Intercompany Reconciliation ระหว่าง PEM-PSP ที่ยาวขึ้น และอาจทำให้เป้าหมายลดจำนวนพนักงานของ PSP
-          (ซึ่งต้องพึ่ง Automation จาก Odoo) ล่าช้าตามไปด้วย ควรตัดสินใจร่วมกับทีมบัญชี (เรื่องค่าเสื่อม Epicor) และทีม
-          Operation ของ PSP (เรื่องผลจาก Process Improvement/Blueprint ที่กำลังทำอยู่ในปี 2570) ก่อนล็อกแนวทางจริง
-        </p>
+      <h4>⚠ ข้อควรพิจารณา — เลือกจังหวะของ PSP ตามตัวแปรทางบัญชีและปฏิบัติการ</h4>
+      <p>
+      ทั้งแนวทางหลักและ Optional 1 ท้ายที่สุดแล้ว PSP จะได้ใช้ Automation จาก Odoo เหมือนกัน ต่างกันแค่ปีที่ Go-Live จริง
+      (2571 หรือช่วง 2573–2575) การเลือกช้าลงช่วยลดผลกระทบทางบัญชีจากค่าเสื่อม Epicor ที่ยังตัดไม่หมด แต่แลกมาด้วย
+      ระยะเวลา Manual Intercompany Reconciliation ระหว่าง PEM-PSP ที่ยาวขึ้น และอาจทำให้เป้าหมายลดจำนวนพนักงานของ PSP
+      (ซึ่งต้องพึ่ง Automation จาก Odoo) ล่าช้าตามไปด้วย ควรตัดสินใจร่วมกับทีมบัญชี (เรื่องค่าเสื่อม Epicor) และทีม
+      Operation ของ PSP (เรื่องผลจาก Process Improvement/Blueprint ที่กำลังทำอยู่ในปี 2570) ก่อนล็อกแนวทางจริง
+      </p>
       </div>
 
-    </div>
-    <!-- ============ END OPTION C PANEL ============ -->
+      <!-- GOVERNANCE ACCORDIONS -->
+      <h3 style="margin:0 0 6px;font-size:18px;">Governance ที่ต้องคุมตลอดทั้ง 3 Phase</h3>
+      <p style="font-size:13px;color:var(--ink-soft);margin:0 0 20px;">คลิกเพื่อดูรายละเอียดแต่ละหัวข้อ</p>
 
-    <!-- GOVERNANCE ACCORDIONS -->
-    <h3 style="margin:0 0 6px;font-size:18px;">Governance ที่ต้องคุมตลอดทั้ง 3 Phase</h3>
-    <p style="font-size:13px;color:var(--ink-soft);margin:0 0 20px;">คลิกเพื่อดูรายละเอียดแต่ละหัวข้อ</p>
-
-    <div class="gov-grid">
+      <div class="gov-grid">
       <details class="gov">
-        <summary>Naming Convention</summary>
-        <div class="gov-body">
-          <ul>
-            <li>Company Code 3 ตัวอักษร ไม่ซ้ำกันทั้งกลุ่ม เช่น <code>PEM</code>, <code>PSL</code>, <code>PPP</code></li>
-            <li>Partner Code: <code>[Company]-[C/V]-[เลขรัน]</code> เช่น <code>PEM-C-00001</code></li>
-            <li>Sequence เอกสาร: <code>[Company]-INV/2569/00001</code></li>
-            <li>Custom Field ต้องมี Prefix เฉพาะบริษัท เช่น <code>x_pem_...</code>, <code>x_ppp_...</code></li>
-          </ul>
-        </div>
+      <summary>Naming Convention</summary>
+      <div class="gov-body">
+      <ul>
+      <li>Company Code 3 ตัวอักษร ไม่ซ้ำกันทั้งกลุ่ม เช่น <code>PEM</code>, <code>PSL</code>, <code>PPP</code></li>
+      <li>Partner Code: <code>[Company]-[C/V]-[เลขรัน]</code> เช่น <code>PEM-C-00001</code></li>
+      <li>Sequence เอกสาร: <code>[Company]-INV/2569/00001</code></li>
+      <li>Custom Field ต้องมี Prefix เฉพาะบริษัท เช่น <code>x_pem_...</code>, <code>x_ppp_...</code></li>
+      </ul>
+      </div>
       </details>
 
       <details class="gov">
-        <summary>Hardcode Governance</summary>
-        <div class="gov-body">
-          <ul>
-            <li>ห้าม Hardcode Company ID / Partner ID / Warehouse ID ในโค้ด Custom ใด ๆ</li>
-            <li>ใช้ <code>ir.config_parameter</code> หรือ XML ID แทนตัวเลข ID ที่ Database สร้างอัตโนมัติ</li>
-            <li>% NCI ของ SBP (24%) ต้องเป็น Parameter ที่แก้ไขได้ ไม่ Fix ในโค้ด</li>
-            <li>ทุก Custom Module ต้อง Scope ด้วย <code>company_id</code> อย่างถูกต้อง</li>
-          </ul>
-        </div>
+      <summary>Hardcode Governance</summary>
+      <div class="gov-body">
+      <ul>
+      <li>ห้าม Hardcode Company ID / Partner ID / Warehouse ID ในโค้ด Custom ใด ๆ</li>
+      <li>ใช้ <code>ir.config_parameter</code> หรือ XML ID แทนตัวเลข ID ที่ Database สร้างอัตโนมัติ</li>
+      <li>% NCI ของ SBP (24%) ต้องเป็น Parameter ที่แก้ไขได้ ไม่ Fix ในโค้ด</li>
+      <li>ทุก Custom Module ต้อง Scope ด้วย <code>company_id</code> อย่างถูกต้อง</li>
+      </ul>
+      </div>
       </details>
 
       <details class="gov">
-        <summary>Implementor Strategy</summary>
-        <div class="gov-body">
-          <ul>
-            <li><b>Core Layer</b> (Implementor เดียวกัน): PEM, PPP+Subsidiary, PCC, PSP</li>
-            <li><b>Standard Layer</b> (แยก Vendor ได้): PSL, PDE</li>
-            <li>ต้องมี Central Governance Team ตรวจสอบทุกบริษัทก่อน Go-Live</li>
-            <li>ส่งมอบ Data Dictionary + Dependency Map ทุกครั้งหลัง Go-Live แต่ละ Phase</li>
-          </ul>
-        </div>
+      <summary>Implementor Strategy</summary>
+      <div class="gov-body">
+      <ul>
+      <li><b>Core Layer</b> (Implementor เดียวกัน): PEM, PPP+Subsidiary, PCC, PSP</li>
+      <li><b>Standard Layer</b> (แยก Vendor ได้): PSL, PDE</li>
+      <li>ต้องมี Central Governance Team ตรวจสอบทุกบริษัทก่อน Go-Live</li>
+      <li>ส่งมอบ Data Dictionary + Dependency Map ทุกครั้งหลัง Go-Live แต่ละ Phase</li>
+      </ul>
+      </div>
       </details>
-    </div>
+      </div>
+      </div>
+    </details>
 
     <!-- RECOMMENDATION -->
     <div class="reco">
@@ -1472,82 +1495,87 @@
       </div>
     </div>
 
-    <div class="mtimeline" style="grid-template-columns:repeat(3,1fr);margin-top:10px;">
+    <details class="opt-archive pf1-fold">
+      <summary>ดูรายละเอียด PMIS-II Roadmap</summary>
+      <div class="fold-body">
+        <div class="mtimeline" style="grid-template-columns:repeat(3,1fr);margin-top:10px;">
 
-      <!-- Phase 1 -->
-      <div class="mstep" style="--dotcolor:var(--l3-pmis);">
-        <div class="mdot">1</div>
-        <div class="mdate">ปี 2569</div>
-        <div class="mcard">
-          <div class="mrow" style="border-top:none;padding-top:2px;">
-            <div class="mbadge" style="--badgecolor:var(--l3-pmis);">1</div>
-            <div class="mrow-body">
-              <div class="mrow-title">Gap Analysis PMIS (PCF 13 Category) vs Odoo ERP</div>
-              <div class="mrow-desc">เริ่มทำ Gap Analysis เปรียบเทียบระบบ PMIS ปัจจุบันกับ Odoo ERP ตามกรอบ PCF 13 Category</div>
-              <div class="progress-track"><div class="progress-fill" style="width:100%;"></div></div>
-              <div class="progress-label">ความคืบหน้า 100%</div>
+          <!-- Phase 1 -->
+          <div class="mstep" style="--dotcolor:var(--l3-pmis);">
+            <div class="mdot">1</div>
+            <div class="mdate">ปี 2569</div>
+            <div class="mcard">
+              <div class="mrow" style="border-top:none;padding-top:2px;">
+                <div class="mbadge" style="--badgecolor:var(--l3-pmis);">1</div>
+                <div class="mrow-body">
+                  <div class="mrow-title">Gap Analysis PMIS (PCF 13 Category) vs Odoo ERP</div>
+                  <div class="mrow-desc">เริ่มทำ Gap Analysis เปรียบเทียบระบบ PMIS ปัจจุบันกับ Odoo ERP ตามกรอบ PCF 13 Category</div>
+                  <div class="progress-track"><div class="progress-fill" style="width:100%;"></div></div>
+                  <div class="progress-label">ความคืบหน้า 100%</div>
+                </div>
+              </div>
+              <div class="team-strip">Digital Process: TBD · Owner: TBD · PM: TBD · Budget Owner: TBD</div>
             </div>
           </div>
-          <div class="team-strip">Digital Process: TBD · Owner: TBD · PM: TBD · Budget Owner: TBD</div>
+
+          <!-- Phase 2 -->
+          <div class="mstep" style="--dotcolor:#2f8f5b;">
+            <div class="mdot">2</div>
+            <div class="mdate">05/2570–12/2570</div>
+            <div class="mcard">
+
+              <div style="font-size:11px;font-weight:800;color:var(--l3-pmis);letter-spacing:.04em;margin-bottom:8px;">05/2570</div>
+              <div class="mrow" style="border-top:none;padding-top:2px;">
+                <div class="mbadge" style="--badgecolor:var(--l3-pmis);">•</div>
+                <div class="mrow-body">
+                  <div class="mrow-title">Category 1: Strategy</div>
+                  <div class="mrow-desc">ปิด Gap Analysis ของ Category 1: Strategy ให้ครบ 100% เพื่อใช้ทำ Strategy ช่วงเดือน 8/2570</div>
+                  <div class="progress-track"><div class="progress-fill" style="width:100%;background:#2f8f5b;"></div></div>
+                  <div class="progress-label" style="color:#2f8f5b;">ความคืบหน้า 100%</div>
+                </div>
+              </div>
+
+              <div style="font-size:11px;font-weight:800;color:#c1852f;letter-spacing:.04em;margin:14px 0 8px;padding-top:10px;border-top:1px dashed var(--line);">12/2570</div>
+              <div class="mrow" style="border-top:none;padding-top:2px;">
+                <div class="mbadge" style="--badgecolor:#c1852f;">•</div>
+                <div class="mrow-body">
+                  <div class="mrow-title">Data Visualization + Platform</div>
+                  <div class="mrow-desc">เริ่มขั้นตอน Implementation ตามผลจาก Gap Analysis ในด้าน Data Visualization และ Platform</div>
+                  <span class="status-pill" style="background:#fdf2e9;color:#c1852f;">เริ่มดำเนินการ</span>
+                </div>
+              </div>
+              <div class="team-strip">Digital Process: TBD · Owner: TBD · PM: TBD · Budget Owner: TBD</div>
+            </div>
+          </div>
+
+          <!-- Phase 3 -->
+          <div class="mstep final" style="--dotcolor:var(--red);">
+            <div class="mdot">3</div>
+            <div class="mdate" style="background:var(--red);color:#fff;border-color:var(--red);">ปี 2571</div>
+            <div class="mcard">
+              <div class="mrow" style="border-top:none;padding-top:2px;">
+                <div class="mbadge" style="--badgecolor:var(--red);">•</div>
+                <div class="mrow-body">
+                  <div class="mrow-title">Implementation ต่อเนื่อง</div>
+                  <div class="mrow-desc">ดำเนินการ Implementation ต่อเนื่องจากขอบเขตที่เริ่มไว้ใน Phase 2 (Data Visualization, Platform) และติดตามปิดงาน Implementation ส่วนที่เหลือจาก Gap Analysis ให้ครบตามแผน</div>
+                  <span class="status-pill" style="background:#fdecec;color:var(--red-dark);">ต่อเนื่อง</span>
+                </div>
+              </div>
+              <div class="team-strip">Digital Process: TBD · Owner: TBD · PM: TBD · Budget Owner: TBD</div>
+            </div>
+          </div>
+
         </div>
+
+        <p style="font-size:11.5px;color:var(--ink-soft);line-height:1.7;margin:20px 0 0;font-style:italic;">
+          หมายเหตุ: PCF (Process Classification Framework) 13 Category คือกรอบหมวดหมู่กระบวนการที่ใช้เปรียบเทียบ Gap
+          ระหว่างระบบ PMIS ปัจจุบันกับ Odoo ERP ในสโคปของ Roadmap ฉบับนี้ ระบุ Category 1: Strategy เป็นหมวดแรกที่ดำเนินการ
+          ส่วน Category ที่เหลืออีก 12 หมวด ยังไม่ได้ระบุรายละเอียดหรือ Timeline — ควรกำหนดเพิ่มเติมเมื่อ Scope ชัดเจนขึ้น
+          และคอลัมน์ Digital Process, Owner, PM และ Budget Owner ยังไม่ได้กำหนดผู้รับผิดชอบ — ใส่เป็น TBD ไว้ก่อน รอการยืนยันทีมงานที่เกี่ยวข้อง
+        </p>
+
       </div>
-
-      <!-- Phase 2 -->
-      <div class="mstep" style="--dotcolor:#2f8f5b;">
-        <div class="mdot">2</div>
-        <div class="mdate">05/2570–12/2570</div>
-        <div class="mcard">
-
-          <div style="font-size:11px;font-weight:800;color:var(--l3-pmis);letter-spacing:.04em;margin-bottom:8px;">05/2570</div>
-          <div class="mrow" style="border-top:none;padding-top:2px;">
-            <div class="mbadge" style="--badgecolor:var(--l3-pmis);">•</div>
-            <div class="mrow-body">
-              <div class="mrow-title">Category 1: Strategy</div>
-              <div class="mrow-desc">ปิด Gap Analysis ของ Category 1: Strategy ให้ครบ 100% เพื่อใช้ทำ Strategy ช่วงเดือน 8/2570</div>
-              <div class="progress-track"><div class="progress-fill" style="width:100%;background:#2f8f5b;"></div></div>
-              <div class="progress-label" style="color:#2f8f5b;">ความคืบหน้า 100%</div>
-            </div>
-          </div>
-
-          <div style="font-size:11px;font-weight:800;color:#c1852f;letter-spacing:.04em;margin:14px 0 8px;padding-top:10px;border-top:1px dashed var(--line);">12/2570</div>
-          <div class="mrow" style="border-top:none;padding-top:2px;">
-            <div class="mbadge" style="--badgecolor:#c1852f;">•</div>
-            <div class="mrow-body">
-              <div class="mrow-title">Data Visualization + Platform</div>
-              <div class="mrow-desc">เริ่มขั้นตอน Implementation ตามผลจาก Gap Analysis ในด้าน Data Visualization และ Platform</div>
-              <span class="status-pill" style="background:#fdf2e9;color:#c1852f;">เริ่มดำเนินการ</span>
-            </div>
-          </div>
-          <div class="team-strip">Digital Process: TBD · Owner: TBD · PM: TBD · Budget Owner: TBD</div>
-        </div>
-      </div>
-
-      <!-- Phase 3 -->
-      <div class="mstep final" style="--dotcolor:var(--red);">
-        <div class="mdot">3</div>
-        <div class="mdate" style="background:var(--red);color:#fff;border-color:var(--red);">ปี 2571</div>
-        <div class="mcard">
-          <div class="mrow" style="border-top:none;padding-top:2px;">
-            <div class="mbadge" style="--badgecolor:var(--red);">•</div>
-            <div class="mrow-body">
-              <div class="mrow-title">Implementation ต่อเนื่อง</div>
-              <div class="mrow-desc">ดำเนินการ Implementation ต่อเนื่องจากขอบเขตที่เริ่มไว้ใน Phase 2 (Data Visualization, Platform) และติดตามปิดงาน Implementation ส่วนที่เหลือจาก Gap Analysis ให้ครบตามแผน</div>
-              <span class="status-pill" style="background:#fdecec;color:var(--red-dark);">ต่อเนื่อง</span>
-            </div>
-          </div>
-          <div class="team-strip">Digital Process: TBD · Owner: TBD · PM: TBD · Budget Owner: TBD</div>
-        </div>
-      </div>
-
-    </div>
-
-    <p style="font-size:11.5px;color:var(--ink-soft);line-height:1.7;margin:20px 0 0;font-style:italic;">
-      หมายเหตุ: PCF (Process Classification Framework) 13 Category คือกรอบหมวดหมู่กระบวนการที่ใช้เปรียบเทียบ Gap
-      ระหว่างระบบ PMIS ปัจจุบันกับ Odoo ERP ในสโคปของ Roadmap ฉบับนี้ ระบุ Category 1: Strategy เป็นหมวดแรกที่ดำเนินการ
-      ส่วน Category ที่เหลืออีก 12 หมวด ยังไม่ได้ระบุรายละเอียดหรือ Timeline — ควรกำหนดเพิ่มเติมเมื่อ Scope ชัดเจนขึ้น
-      และคอลัมน์ Digital Process, Owner, PM และ Budget Owner ยังไม่ได้กำหนดผู้รับผิดชอบ — ใส่เป็น TBD ไว้ก่อน รอการยืนยันทีมงานที่เกี่ยวข้อง
-    </p>
-
+    </details>
   </div>
 </section>
 
@@ -1686,11 +1714,14 @@
           ไล่ระดับจากการเริ่มใช้ AI ไปจนถึงองค์กรที่ทำงานได้เองเต็มรูปแบบ
         </p>
         <div class="phase-row">
-          <div class="phase-box" style="--lv:1;">
+          <a class="phase-box is-link" style="--lv:1;"
+             href="https://jinnaphas.github.io/AIadoption/ai_adoption_dashboard.html"
+             target="_blank" rel="noopener">
             <div class="ph-no">Ph 1</div>
             <div class="ph-stage">Foundation</div>
             <div class="ph-name">AI Adoption</div>
-          </div>
+            <div class="ph-go">เปิด Dashboard ↗</div>
+          </a>
           <div class="phase-box" style="--lv:2;">
             <div class="ph-no">Ph 2</div>
             <div class="ph-stage">Integration</div>
