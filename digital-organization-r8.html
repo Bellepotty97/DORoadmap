@@ -67,12 +67,19 @@
     display:flex;align-items:center;gap:10px;
   }
   nav.topnav .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--red);}
-  nav.topnav ul{list-style:none;display:flex;gap:26px;margin:0;padding:0;}
+  nav.topnav ul{list-style:none;display:flex;gap:19px;margin:0;padding:0;align-items:center;}
   nav.topnav a.navlink{
     color:#c7d3ea;font-size:13px;text-decoration:none;font-weight:500;
-    transition:color .15s;
+    transition:color .15s;white-space:nowrap;
   }
   nav.topnav a.navlink:hover{color:#fff;}
+  /* PF2-PF4 ใช้ป้ายสั้นเพราะพื้นที่แถบไม่พอ จึงทำเป็นชิปให้อ่านเป็นกลุ่มเดียวกัน
+     ชื่อเต็มอยู่ใน title ให้ hover ดูได้ */
+  nav.topnav a.navpf{
+    border:1px solid rgba(255,255,255,.2);border-radius:7px;
+    padding:4px 9px;font-size:12px;font-weight:600;
+  }
+  nav.topnav a.navpf:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.4);}
   /* ลิงก์กลับไปฉบับเดิม (5Ps Pyramid) — วางนอก ul เพื่อให้ยังเห็นบนจอเล็ก */
   nav.topnav a.backlink{
     color:#c7d3ea;font-size:12px;font-weight:600;text-decoration:none;
@@ -85,8 +92,14 @@
     background:rgba(255,255,255,.14);border-radius:5px;
     padding:1px 6px;font-size:10px;letter-spacing:.5px;
   }
+  /* จอแคบลง: ตัดข้อความแบรนด์ออกก่อน (เหลือจุด) เพื่อคืนพื้นที่ให้เมนู 9 รายการ
+     ไม่งั้นแบรนด์จะตัดเป็นหลายบรรทัดและเบียดปุ่มขวาจนล้น */
+  @media (max-width:1040px){
+    nav.topnav .brand-t{display:none;}
+  }
   @media (max-width:760px){
     nav.topnav ul{display:none;}
+    nav.topnav .brand-t{display:inline;}
   }
 
   /* ---------- SECTION LABEL ---------- */
@@ -578,14 +591,14 @@
 
 <nav class="topnav">
   <div class="wrap">
-    <div class="brand"><span class="dot"></span> PCC GROUP · DIGITAL ROADMAP</div>
+    <div class="brand"><span class="dot"></span> <span class="brand-t">PCC GROUP · DIGITAL ROADMAP</span></div>
     <ul>
       <li><a class="navlink" href="#objective">Objective</a></li>
       <li><a class="navlink" href="#functions">Project Functions</a></li>
-      <li><a class="navlink" href="#pf1">PF1 Pyramid</a></li>
-      <li><a class="navlink" href="#oneerp">1 Enterprise 1 ERP</a></li>
-      <li><a class="navlink" href="#odoo">Odoo ERP Rollout</a></li>
-      <li><a class="navlink" href="#pmis2">PMIS-II Roadmap</a></li>
+      <li><a class="navlink navpf" href="#pf1" title="PF1 · The Internal Engine — PCF 13 Categories">PF1 Digital Business Process &amp; Operations</a></li>
+      <li><a class="navlink navpf" href="#pf2" title="PF2 · Digital Technology &amp; Platform Ecosystem">PF2</a></li>
+      <li><a class="navlink navpf" href="#pf3" title="PF3 · Digital Infrastructure">PF3</a></li>
+      <li><a class="navlink navpf" href="#pf4" title="PF4 · Intellectual Capital &amp; Agentic Transformation">PF4</a></li>
     </ul>
     <a class="backlink" href="./digital-organization.html" title="กลับไปฉบับเดิม 5Ps Pyramid">
       ← ฉบับเดิม <span class="ver">5Ps</span>
