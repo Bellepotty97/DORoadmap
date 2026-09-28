@@ -318,6 +318,33 @@
   .opt-tab.on .opt-sub{color:#aebbd9;}
   .opt-panel{display:none;}
   .opt-panel.on{display:block;}
+  /* ป้ายบอกว่าอันไหนคือแผนที่ใช้จริง */
+  .opt-badge{
+    display:inline-block;background:var(--red);color:#fff;font-size:10px;font-weight:700;
+    letter-spacing:.06em;padding:2px 8px;border-radius:20px;margin-right:8px;
+    vertical-align:middle;
+  }
+  .opt-tab.on .opt-badge{background:#fff;color:var(--navy-900);}
+  /* กล่องพับเก็บทางเลือกที่ไม่ได้ใช้แล้ว — ยังกดกางดูได้ */
+  .opt-archive{align-self:center;}
+  .opt-archive summary{
+    list-style:none;cursor:pointer;font-size:12px;color:var(--ink-soft);
+    border:1px dashed var(--line);border-radius:8px;padding:7px 13px;
+    user-select:none;transition:all .15s;white-space:nowrap;
+  }
+  .opt-archive summary::-webkit-details-marker{display:none;}
+  .opt-archive summary::before{content:'\25B8  ';font-size:10px;}
+  .opt-archive[open] summary::before{content:'\25BE  ';}
+  .opt-archive summary:hover{background:var(--paper-2);color:var(--ink);}
+  .opt-archive-body{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;}
+  .opt-archive-body .opt-tab{font-size:12px;padding:8px 14px;}
+  /* แถบเตือนบนหัว Panel A/B */
+  .opt-legacy{
+    background:#fff6e8;border:1px solid #f0d3a8;border-left:3px solid #d98829;
+    border-radius:8px;padding:10px 14px;margin-bottom:18px;
+    font-size:12.5px;color:#7a5418;line-height:1.7;
+  }
+  .opt-legacy b{color:#5c3d0f;}
 
   /* ---------- MILESTONE TIMELINE (Option B) ---------- */
   .mtimeline{
@@ -569,22 +596,29 @@
 
     <!-- ROADMAP OPTION TABS -->
     <div class="opt-tabs">
-      <button class="opt-tab" onclick="showOpt('A', this)">
-        Option A · Grouped by Fiscal Phase
-        <span class="opt-sub">3 Phase ตามปีงบประมาณ 2569–2571</span>
-      </button>
-      <button class="opt-tab" onclick="showOpt('B', this)">
-        Option B · Sequential Standalone Rollout
-        <span class="opt-sub">PEM→PSL→PPP→PCC(แยก)→PDE→PSP→PCC(Console) · 12/2570–12/2572</span>
-      </button>
-      <button class="opt-tab on" onclick="showOpt('C', this)">
-        Option C · 3 Phase หลัก + Optional
+      <button class="opt-tab opt-main on" onclick="showOpt('C', this)">
+        <span class="opt-badge">แผนหลัก</span>Option C · 3 Phase หลัก + Optional
         <span class="opt-sub">Group Go-Live เร่งรวม 12/2570 · PSP มีทางเลือกเสริม 1 แนวทาง</span>
       </button>
+
+      <details class="opt-archive">
+        <summary>ทางเลือกที่พิจารณาแล้ว (A, B)</summary>
+        <div class="opt-archive-body">
+          <button class="opt-tab" onclick="showOpt('A', this)">
+            Option A · Grouped by Fiscal Phase
+            <span class="opt-sub">3 Phase ตามปีงบประมาณ 2569–2571</span>
+          </button>
+          <button class="opt-tab" onclick="showOpt('B', this)">
+            Option B · Sequential Standalone Rollout
+            <span class="opt-sub">PEM→PSL→PPP→PCC(แยก)→PDE→PSP→PCC(Console) · 12/2570–12/2572</span>
+          </button>
+        </div>
+      </details>
     </div>
 
     <!-- ============ OPTION A PANEL ============ -->
     <div class="opt-panel" id="panelA">
+      <div class="opt-legacy"><b>ทางเลือกที่พิจารณาแล้ว — ไม่ใช่แผนที่ใช้จริง</b><br>เก็บไว้เพื่ออ้างอิงประวัติการตัดสินใจเท่านั้น วันที่ Go-Live ในหน้านี้<b>ไม่ตรงกับแผนหลัก</b> โปรดยึดตาม <b>Option C</b></div>
 
     <!-- TIMELINE -->
     <div class="timeline">
@@ -659,6 +693,7 @@
 
     <!-- ============ OPTION B PANEL (MILESTONE TIMELINE) ============ -->
     <div class="opt-panel" id="panelB">
+      <div class="opt-legacy"><b>ทางเลือกที่พิจารณาแล้ว — ไม่ใช่แผนที่ใช้จริง</b><br>เก็บไว้เพื่ออ้างอิงประวัติการตัดสินใจเท่านั้น วันที่ Go-Live ในหน้านี้<b>ไม่ตรงกับแผนหลัก</b> โปรดยึดตาม <b>Option C</b></div>
 
       <p style="font-size:13px;color:var(--ink-soft);line-height:1.75;margin:0 0 6px;">
         แนวทางนี้อิงจาก <b>PCC Group Odoo Roadmap v3 (อัปเดตล่าสุด)</b> จัดกลุ่มตาม<b>วันที่แล้วเสร็จจริง</b>ของแต่ละบริษัท
@@ -1206,6 +1241,20 @@ function showOpt(which, btn){
   document.querySelectorAll('.opt-tab').forEach(function(t){t.classList.remove('on');});
   btn.classList.add('on');
 }
+
+/* พับกล่องทางเลือกเก่าแล้วยังค้างที่ Panel A/B ให้เด้งกลับแผนหลักเอง
+   ไม่งั้นจะเหลือ panel ที่ไม่มีปุ่มไหน active ให้กดกลับ */
+(function(){
+  var box = document.querySelector('.opt-archive');
+  if (!box) return;
+  box.addEventListener('toggle', function(){
+    if (box.open) return;
+    var main = document.querySelector('.opt-tab.opt-main');
+    if (main && !document.getElementById('panelC').classList.contains('on')) {
+      showOpt('C', main);
+    }
+  });
+})();
 </script>
 <script src="./edit-mode.js"></script>
 
