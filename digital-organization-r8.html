@@ -320,6 +320,18 @@
     content:'';width:7px;height:7px;border-radius:50%;
     background:var(--pf-color);opacity:.7;flex:0 0 auto;
   }
+  /* หัวข้อย่อยที่ทำเสร็จแล้ว ใช้สีเขียวแยกจากที่ยังไม่เริ่ม */
+  .sub-item.is-done{
+    background:#e7f4ec;border-color:#a8d8be;color:#1c6640;
+  }
+  .sub-item.is-done::before{
+    content:'✓';width:auto;height:auto;border-radius:0;background:none;opacity:1;
+    color:#2f8f5b;font-size:13px;font-weight:900;line-height:1;
+  }
+  .sub-item .si-tag{
+    margin-left:4px;background:#2f8f5b;color:#fff;border-radius:999px;
+    padding:2px 8px;font-size:10.5px;font-weight:700;letter-spacing:.02em;
+  }
   /* ป้ายบอกว่ายังรอเนื้อหา */
   .sub-pending{
     margin-top:auto;align-self:flex-start;
@@ -1633,12 +1645,21 @@
         <div class="sub-icon">🏭</div>
         <h3>Factory 4.0</h3>
         <p>Smart Manufacturing — IoT, Automation และ Data Analytics บนสายการผลิต</p>
+        <div class="sub-items">
+          <div class="sub-item">PEM</div>
+          <div class="sub-item">PSL</div>
+          <div class="sub-item">PPP</div>
+        </div>
         <span class="sub-pending">⏳ รอเอกสารรายละเอียด</span>
       </div>
       <div class="sub-card">
         <div class="sub-icon">⚡</div>
         <h3>DBTP : EMS</h3>
         <p>ระบบอัจฉริยะเพื่อบริหารและควบคุมการใช้พลังงานและสาธารณูปโภค</p>
+        <div class="sub-items">
+          <div class="sub-item is-done">Phase 1 · PEM<span class="si-tag">เสร็จแล้ว</span></div>
+          <div class="sub-item">Phase 2 · PEM, PCC</div>
+        </div>
         <span class="sub-pending">⏳ รอเอกสารรายละเอียด</span>
       </div>
     </div>
