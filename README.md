@@ -14,6 +14,7 @@ Digital Organization to Agentic Transformation
 ├── digital-organization.html     # ฉบับเดิม — 5Ps Pyramid 7 Layers + PF Modals
 ├── digital-organization-r8.html  # ฉบับปรับปรุง R.8 — Odoo / PMIS-II Roadmap
 ├── customer360.html              # PF3 · Data Management — Customer 360 (เข้าจากกล่อง Customer 360 ใน PF3)
+├── dx-vertical-horizontal.html   # Objective — Digital Transformation แกนตั้ง × แกนนอน (เข้าจากปุ่มใน Objective)
 ├── index.html                    # redirect ไป digital-organization.html (สำหรับ URL ราก)
 ├── edit-mode.js                  # โหมดแก้ไขข้อความในหน้า (ใช้ร่วมกันทั้งสองหน้า)
 ├── assets/                       # รูปประกอบ 7 ไฟล์

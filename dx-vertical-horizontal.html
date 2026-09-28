@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Digital Transformation: แกนตั้ง × แกนนอน</title>
+<style>
+  :root {
+    --ink: #1c2a44;
+    --muted: #5b6780;
+    --line: #cfd6e4;
+    --paper: #ffffff;
+
+    --eis: #f2a08e;   --eis-soft: #fdebe6;
+    --dss: #f6cf64;   --dss-soft: #fef5d9;
+    --tps: #8ca3e6;   --tps-soft: #e8edfb;
+
+    --chain: #2a7f93; --chain-soft: #e3f2f5;
+    --money: #3b6fd4; --money-soft: #e6eefc;
+    --prod: #6b7488;  --prod-soft: #eceef3;
+    --feed: #3f4a63;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--paper); color: var(--ink); }
+  body {
+    font-family: "Noto Sans Thai", "Sarabun", "Tahoma", "Leelawadee UI", sans-serif;
+    line-height: 1.5;
+    padding: 24px;
+  }
+  .scroll { overflow-x: auto; }
+  .stage { min-width: 1120px; max-width: 1360px; margin: 0 auto; }
+
+  h1 { font-size: 24px; margin: 0 0 4px; font-weight: 700; }
+  .sub { color: var(--muted); font-size: 14px; margin: 0 0 20px; }
+  h2 { font-size: 16px; margin: 0 0 8px; font-weight: 700; }
+  h2 small { font-weight: 400; color: var(--muted); font-size: 13px; margin-left: 6px; }
+
+  section { margin-bottom: 22px; }
+
+  /* ---------- ภาพอธิบายต้นหน้า ---------- */
+  .explain { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+  .ex { border: 1.5px solid var(--line); border-radius: 12px; background: #fafbfd; padding: 12px 14px 14px; }
+  .ex .icon { height: 74px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
+  .ex svg { height: 100%; width: auto; }
+  .ex h3 { font-size: 15px; margin: 0 0 4px; }
+  .ex p { font-size: 13px; margin: 0; color: #38445e; }
+  .f-eis { fill: var(--eis); } .f-dss { fill: var(--dss); } .f-tps { fill: var(--tps); }
+  .f-chain { fill: var(--chain-soft); stroke: var(--chain); stroke-width: 1.5; }
+  .f-node { fill: #fff; stroke: var(--line); stroke-width: 1.5; }
+  .f-line { stroke: var(--muted); stroke-width: 1.5; fill: none; }
+  .f-arrow { fill: var(--muted); }
+  .f-teal { fill: var(--chain); }
+  .mini { display: grid; grid-template-columns: repeat(8, 12px); gap: 3px; }
+  .mini i { display: block; height: 14px; border-radius: 3px; }
+  .mini .a { background: var(--eis); } .mini .b { background: var(--dss); } .mini .c { background: var(--tps); }
+
+  /* ---------- แกนนอน: ห่วงโซ่ ---------- */
+  .chain-wrap { display: grid; gap: 6px; }
+  .flow-bar {
+    border-radius: 999px; padding: 4px 16px; text-align: center;
+    font-size: 13px; font-weight: 600;
+  }
+  .flow-info { background: var(--chain-soft); border: 1.5px solid var(--chain); color: #185a6a; }
+  .nodes {
+    display: grid; gap: 10px; align-items: stretch;
+    grid-template-columns: 1fr 1fr 3.6fr 1fr 1fr;
+  }
+  .node {
+    border: 1.5px solid var(--line); border-radius: 10px; background: #fafbfd;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    padding: 10px 6px; font-size: 14px; font-weight: 600; position: relative;
+  }
+  .node + .node::before {
+    content: ""; position: absolute; left: -10px; top: 50%;
+    border: 5px solid transparent; border-left-color: var(--muted);
+    transform: translate(-100%, -50%) translateX(8px);
+  }
+  .mfr {
+    flex-direction: column; gap: 8px; background: var(--chain-soft);
+    border-color: var(--chain); align-items: stretch;
+  }
+  .mfr-title { font-size: 14px; color: #185a6a; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+  .chip {
+    background: #fff; border: 1px solid var(--chain); border-radius: 999px;
+    padding: 2px 10px; font-size: 12.5px; font-weight: 500;
+  }
+  .chip.de { border-style: dashed; }
+  .flow-prod { background: var(--prod-soft); border: 1.5px solid var(--prod); color: #3d4558; }
+  .money-row { display: grid; gap: 10px; grid-template-columns: 1fr 1fr 3.6fr 1fr 1fr; }
+  .flow-money { background: var(--money-soft); border: 1.5px solid var(--money); color: #21458f; }
+  .money-a { grid-column: 1 / 4; }
+  .money-b { grid-column: 4 / 6; }
+
+  /* ---------- จุดตัด: matrix ---------- */
+  .matrix {
+    display: grid; gap: 5px;
+    grid-template-columns: 300px repeat(8, minmax(98px, 1fr));
+  }
+  .corner {
+    font-size: 12px; color: var(--muted); display: flex; align-items: flex-end;
+    justify-content: center; padding-bottom: 6px; text-align: center;
+  }
+  .span-head {
+    grid-column: 2 / 10; text-align: center; font-size: 13px; font-weight: 600;
+    color: #185a6a; border-bottom: 2px solid var(--chain); padding-bottom: 3px;
+  }
+  .col-head {
+    background: var(--chain-soft); border: 1px solid var(--chain); border-radius: 8px;
+    padding: 6px 4px; text-align: center; font-size: 12.5px; font-weight: 600; line-height: 1.3;
+  }
+  .col-head span { display: block; font-weight: 400; font-size: 11px; color: var(--muted); }
+
+  .level { position: relative; min-height: 96px; display: flex; align-items: center; justify-content: center; text-align: center; }
+  .level::before { content: ""; position: absolute; inset: 0; z-index: 0; }
+  .level > div { position: relative; z-index: 1; line-height: 1.35; }
+  .level b { display: block; font-size: 15px; }
+  .level small { display: block; font-size: 11px; }
+  .l1::before { background: var(--eis); clip-path: polygon(33% 0, 67% 0, 78% 100%, 22% 100%); }
+  .l2::before { background: var(--dss); clip-path: polygon(22% 0, 78% 0, 89% 100%, 11% 100%); }
+  .l3::before { background: var(--tps); clip-path: polygon(11% 0, 89% 0, 100% 100%, 0 100%); }
+
+  .cell { border-radius: 8px; padding: 8px 8px; font-size: 12px; line-height: 1.4; display: flex; align-items: center; }
+  .c1 { background: var(--eis-soft); border: 1px solid var(--eis); }
+  .c2 { background: var(--dss-soft); border: 1px solid var(--dss); }
+  .c3 { background: var(--tps-soft); border: 1px solid var(--tps); }
+
+  .side-note { font-size: 12px; color: var(--muted); margin: 6px 0 0; }
+
+  /* ---------- ตัวป้อนที่ 4 และ 5 ---------- */
+  .feeds { display: grid; gap: 6px; margin-top: 8px; }
+  .feed {
+    display: flex; align-items: center; gap: 12px; border-radius: 10px;
+    border: 1.5px solid var(--feed); background: #f3f4f8; padding: 8px 14px; font-size: 13.5px;
+  }
+  .feed b { white-space: nowrap; }
+  .feed .tag { color: var(--muted); font-size: 12.5px; white-space: nowrap; }
+
+  /* ---------- หมายเหตุ ---------- */
+  .notes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .note { border-left: 4px solid var(--chain); background: #f6f8fb; padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: 13.5px; }
+  .note b { display: block; margin-bottom: 2px; }
+  .note ul { margin: 8px 0 0; padding-left: 20px; font-size: 13px; }
+  .note li { margin-bottom: 2px; }
+
+  /* ---------- ปุ่มกลับไปหน้า Digital Organization Roadmap ---------- */
+  .backlink {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1.5px solid var(--line); border-radius: 999px;
+    padding: 6px 15px; margin-bottom: 16px;
+    color: var(--muted); font-size: 13px; font-weight: 600; text-decoration: none;
+    transition: border-color .16s, color .16s, background .16s;
+  }
+  .backlink:hover, .backlink:focus-visible {
+    border-color: var(--chain); color: var(--chain); background: var(--chain-soft);
+  }
+  @media (prefers-reduced-motion: reduce) { .backlink { transition: none; } }
+</style>
+</head>
+<body>
+<div class="scroll">
+<div class="stage">
+
+  <a class="backlink" href="./digital-organization-r8.html#objective">← กลับไป Digital Organization Roadmap</a>
+  <h1>Digital Transformation: แกนตั้ง × แกนนอน</h1>
+  <p class="sub">แกนตั้งคือระดับการตัดสินใจของผู้บริหาร (ภาพที่ 1) แกนนอนคือห่วงโซ่อุปทาน SCM (ภาพที่ 2) เป้าหมายคือทำให้ครบทุกช่องที่ทั้งสองแกนตัดกัน</p>
+
+  <div class="explain">
+    <div class="ex">
+      <div class="icon">
+        <svg viewBox="0 0 120 70" role="img" aria-label="พีระมิด 3 ชั้น">
+          <polygon class="f-eis" points="45,4 75,4 82,24 38,24"/>
+          <polygon class="f-dss" points="37,27 83,27 91,47 29,47"/>
+          <polygon class="f-tps" points="28,50 92,50 100,68 20,68"/>
+        </svg>
+      </div>
+      <h3>แกนตั้งคืออะไร</h3>
+      <p>ใครใช้ข้อมูลระดับไหน ตั้งแต่งานประจำวัน (TPS) ผู้บริหารระดับกลาง (MIS/DSS) ถึงผู้บริหารระดับสูง (EIS)</p>
+    </div>
+
+    <div class="ex">
+      <div class="icon">
+        <svg viewBox="0 0 120 70" role="img" aria-label="ห่วงโซ่อุปทานจาก Supplier ถึงลูกค้า">
+          <rect class="f-node" x="2" y="14" width="16" height="26" rx="4"/>
+          <rect class="f-node" x="24" y="14" width="16" height="26" rx="4"/>
+          <rect class="f-chain" x="46" y="14" width="28" height="26" rx="4"/>
+          <rect class="f-node" x="80" y="14" width="16" height="26" rx="4"/>
+          <rect class="f-node" x="102" y="14" width="16" height="26" rx="4"/>
+          <line class="f-line" x1="4" y1="56" x2="108" y2="56"/>
+          <polygon class="f-arrow" points="118,56 108,51 108,61"/>
+        </svg>
+      </div>
+      <h3>แกนนอนคืออะไร</h3>
+      <p>ข้อมูลไหลผ่านกระบวนการอะไรบ้าง 8 กระบวนการ SCM ตั้งแต่ Supplier ถึง End Customer</p>
+    </div>
+
+    <div class="ex">
+      <div class="icon">
+        <div class="mini" role="img" aria-label="ตาราง 3 แถว 8 คอลัมน์">
+          <i class="a"></i><i class="a"></i><i class="a"></i><i class="a"></i><i class="a"></i><i class="a"></i><i class="a"></i><i class="a"></i>
+          <i class="b"></i><i class="b"></i><i class="b"></i><i class="b"></i><i class="b"></i><i class="b"></i><i class="b"></i><i class="b"></i>
+          <i class="c"></i><i class="c"></i><i class="c"></i><i class="c"></i><i class="c"></i><i class="c"></i><i class="c"></i><i class="c"></i>
+        </div>
+      </div>
+      <h3>ตัดกันได้อะไร</h3>
+      <p>24 ช่อง (3 ระดับ × 8 กระบวนการ) แต่ละช่องคือระบบหรือรายงานที่ต้องมีในกระบวนการนั้นที่ระดับนั้น</p>
+    </div>
+
+    <div class="ex">
+      <div class="icon">
+        <svg viewBox="0 0 120 70" role="img" aria-label="กราฟแท่งและเครื่องหมายถูก">
+          <rect class="f-tps" x="16" y="42" width="16" height="22" rx="2"/>
+          <rect class="f-dss" x="40" y="30" width="16" height="34" rx="2"/>
+          <rect class="f-eis" x="64" y="16" width="16" height="48" rx="2"/>
+          <circle class="f-teal" cx="100" cy="20" r="12"/>
+          <polyline points="94,20 99,25 107,15" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3>ทำไปเพื่ออะไร</h3>
+      <p>ให้ข้อมูลของทุกกระบวนการไหลถึงผู้บริหารทุกระดับอย่างถูกต้อง ทันเวลา และเป็นชุดเดียวกัน เพื่อตัดสินใจบนข้อมูลที่เชื่อถือได้</p>
+    </div>
+  </div>
+
+  <section aria-labelledby="h-horizontal">
+    <h2 id="h-horizontal">แกนนอน: ห่วงโซ่อุปทาน<small>สินค้า ข้อมูล และเงินไหลข้ามองค์กร</small></h2>
+    <div class="chain-wrap">
+      <div class="flow-bar flow-info">Information Flow: ข้อมูลไหลเชื่อมทุกฝ่ายตลอดห่วงโซ่</div>
+      <div class="nodes">
+        <div class="node">Tier 2<br>Supplier</div>
+        <div class="node">Tier 1<br>Supplier</div>
+        <div class="node mfr">
+          <div class="mfr-title">Manufacturer (องค์กรของเรา)</div>
+          <div class="chips">
+            <span class="chip">Purchasing</span>
+            <span class="chip">Logistics</span>
+            <span class="chip">Marketing &amp; Sale</span>
+            <span class="chip">Production</span>
+            <span class="chip">R&amp;D</span>
+            <span class="chip de">DE: Digital Engineering (การออกแบบ)</span>
+            <span class="chip">Finance</span>
+          </div>
+        </div>
+        <div class="node">Customer</div>
+        <div class="node">End<br>Customer</div>
+      </div>
+      <div class="flow-bar flow-prod">Product Flow: สินค้าไหลจาก Supplier ไปถึง End Customer</div>
+      <div class="money-row">
+        <div class="flow-bar flow-money money-a">Financial Management &amp; Flow: ฝั่ง Supplier</div>
+        <div class="flow-bar flow-money money-b">Financial Management &amp; Flow: ฝั่ง Customer</div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-matrix">
+    <h2 id="h-matrix">จุดตัดของสองแกน<small>แถวคือระดับการตัดสินใจ คอลัมน์คือกระบวนการ SCM ข้อความในช่องเป็นตัวอย่างงานเพื่อประกอบความเข้าใจ</small></h2>
+
+    <div class="matrix">
+      <div></div>
+      <div class="span-head">8 กระบวนการ SCM ที่ตัดผ่านทั้งห่วงโซ่ (แกนนอน)</div>
+
+      <div class="corner">ระดับการตัดสินใจ (แกนตั้ง)<br>ยิ่งสูง ยิ่งเห็นภาพรวม</div>
+      <div class="col-head">CRM<span>ความสัมพันธ์ลูกค้า</span></div>
+      <div class="col-head">SRM<span>ความสัมพันธ์ผู้ขาย</span></div>
+      <div class="col-head">Customer Service<span>บริการลูกค้า</span></div>
+      <div class="col-head">Demand<span>บริหารความต้องการ</span></div>
+      <div class="col-head">Order Fulfillment<span>ส่งมอบคำสั่งซื้อ</span></div>
+      <div class="col-head">Manufacturing Flow<span>การไหลของการผลิต</span></div>
+      <div class="col-head">Product Dev.<span>พัฒนาและนำสินค้าสู่ตลาด</span></div>
+      <div class="col-head">Returns<span>การรับคืนสินค้า</span></div>
+
+      <!-- EIS -->
+      <div class="level l1"><div><b>① EIS</b><small>Strategic View</small><small>ผู้บริหารระดับสูง</small></div></div>
+      <div class="cell c1">ภาพรวมลูกค้าและยอดขายทั้งบริษัท</div>
+      <div class="cell c1">ภาพรวมผู้ขายหลักและความเสี่ยง</div>
+      <div class="cell c1">ความพึงพอใจลูกค้าภาพรวม</div>
+      <div class="cell c1">Forecast เทียบเป้า</div>
+      <div class="cell c1">ส่งมอบตรงเวลาระดับบริษัท</div>
+      <div class="cell c1">ต้นทุนและประสิทธิภาพรวม</div>
+      <div class="cell c1">สินค้าใหม่เทียบเป้า</div>
+      <div class="cell c1">อัตราการคืนสินค้าภาพรวม</div>
+
+      <!-- DSS / MIS -->
+      <div class="level l2"><div><b>② DSS / MIS</b><small>Tactical + Managerial View</small><small>ผู้บริหารระดับกลาง</small></div></div>
+      <div class="cell c2">วิเคราะห์ลูกค้าและโอกาสขาย</div>
+      <div class="cell c2">เปรียบเทียบและประเมินผู้ขาย</div>
+      <div class="cell c2">วิเคราะห์ข้อร้องเรียน</div>
+      <div class="cell c2">วางแผนกำลังผลิตแบบ what-if</div>
+      <div class="cell c2">วิเคราะห์จุดติดขัดการส่งมอบ</div>
+      <div class="cell c2">แผนผลิตเทียบผลผลิตจริง</div>
+      <div class="cell c2">ติดตามโครงการพัฒนาสินค้า</div>
+      <div class="cell c2">วิเคราะห์สาเหตุการคืน</div>
+
+      <!-- TPS -->
+      <div class="level l3"><div><b>③ TPS</b><small>Operational View</small><small>ผู้บริหารระดับต้น</small></div></div>
+      <div class="cell c3">บันทึกใบเสนอราคาและออเดอร์</div>
+      <div class="cell c3">บันทึก PR / PO / รับของ</div>
+      <div class="cell c3">บันทึกเคสลูกค้า</div>
+      <div class="cell c3">บันทึกความต้องการลูกค้า</div>
+      <div class="cell c3">ใบส่งของและใบแจ้งหนี้</div>
+      <div class="cell c3">ใบสั่งผลิตและเบิกวัตถุดิบ</div>
+      <div class="cell c3">บันทึกแบบและ BOM</div>
+      <div class="cell c3">ใบรับคืนและเครดิตโน้ต</div>
+    </div>
+
+    <div class="feeds">
+      <div class="feed"><b>④ External Data</b><span class="tag">API, EDI</span><span>ข้อมูลจากภายนอก (Supplier ลูกค้า หน่วยงานรัฐ) ไหลเข้าทุกชั้นและทุกกระบวนการ</span></div>
+      <div class="feed"><b>⑤ Knowledge</b><span class="tag">KMS, AI/ML</span><span>องค์ความรู้และโมเดลที่เรียนรู้จากข้อมูล ทำให้ทุกชั้นวิเคราะห์และคาดการณ์ได้ดีขึ้น</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-notes">
+    <h2 id="h-notes">สองข้อที่ต้องมีเพื่อให้ตารางนี้ใช้งานได้จริง</h2>
+    <div class="notes">
+      <div class="note"><b>Single Data Entry: บันทึกครั้งเดียว</b>บันทึกที่ต้นทาง (TPS) ครั้งเดียว ระบบอื่นใช้ต่อ ไม่คีย์ซ้ำ
+        <ul>
+          <li>ลดข้อผิดพลาดจากการคีย์ซ้ำ ตัวเลขไม่เพี้ยนระหว่างฝ่าย</li>
+          <li>ตัดงานซ้ำซ้อน ประหยัดเวลาคน</li>
+          <li>ข้อมูลจาก TPS ไหลขึ้นถึง MIS, DSS และ EIS ทันที ไม่ต้องรอใครคีย์ต่อ</li>
+        </ul>
+      </div>
+      <div class="note"><b>Single Source of Truth: ข้อมูลชุดเดียวทั้งองค์กร</b>มี Master Data กลาง (ลูกค้า สินค้า ผู้ขาย) เป็นข้อมูลอ้างอิงเดียว ทุกฝ่ายใช้ตัวเลขชุดเดียวกัน
+        <ul>
+          <li>ทุกฝ่ายใช้ตัวเลขตรงกัน ไม่เสียเวลาเถียงว่าตัวเลขใครถูก</li>
+          <li>ผู้บริหารเชื่อถือรายงานและ Dashboard จึงตัดสินใจได้เร็ว</li>
+          <li>เชื่อมแกนนอนกับแกนตั้งได้ และเป็นฐานให้ AI/ML (ข้อ ⑤) เรียนรู้จากข้อมูลที่เชื่อถือได้ ถ้าไม่มี แต่ละกระบวนการจะเป็นเกาะแยกกัน</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</div>
+</div>
+<script src="./edit-mode.js"></script>
+</body>
+</html>

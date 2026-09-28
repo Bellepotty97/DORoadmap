@@ -158,6 +158,24 @@
     font-size:17px;line-height:var(--lh-body);color:#c7d3ea;max-width:720px;margin:0;
   }
   header.hero p.sub b{color:#fff;font-weight:600;}
+  /* ปุ่มลูกศรใน Objective — เข้าไปดูภาพแกนตั้ง x แกนนอน */
+  header.hero .hero-go{
+    display:inline-flex;align-items:center;gap:10px;margin-top:26px;
+    background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.26);
+    border-radius:999px;padding:11px 21px;
+    color:#fff;font-size:13.5px;font-weight:600;text-decoration:none;
+    transition:background .16s,border-color .16s,transform .16s;
+  }
+  header.hero .hero-go:hover,header.hero .hero-go:focus-visible{
+    background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.5);
+    transform:translateY(-2px);
+  }
+  header.hero .hero-go .hg-arrow{font-size:15px;font-weight:800;transition:transform .16s;}
+  header.hero .hero-go:hover .hg-arrow{transform:translateX(4px);}
+  @media (prefers-reduced-motion:reduce){
+    header.hero .hero-go,header.hero .hero-go .hg-arrow{transition:none;}
+    header.hero .hero-go:hover{transform:none;}
+  }
 
   /* ---------- PROJECT FUNCTIONS ---------- */
   section.pf{padding:64px 0 20px;}
@@ -794,6 +812,9 @@
       พัฒนาองค์กรสู่ <b>Digital Organization</b> ใน Horizontal (SCM) และ Vertical (IS for Management)
       ทุกระดับตามแผนระยะที่2 เพื่อรองรับการพัฒนาไปสู่ <b>Agentic Organization</b> ในอนาคต
     </p>
+    <a class="hero-go" href="./dx-vertical-horizontal.html"
+       title="Digital Transformation: แกนตั้ง × แกนนอน — 24 ช่องที่สองแกนตัดกัน">
+      Digital Transformation — แกนตั้ง × แกนนอน<span class="hg-arrow">→</span></a>
   </div>
 </header>
 
