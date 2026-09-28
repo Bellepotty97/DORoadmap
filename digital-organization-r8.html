@@ -174,6 +174,63 @@
   .pyr-fold > summary{display:inline-block;}
   .pyr-fold-body{margin-top:26px;}
 
+  /* ---------- DBTP 5 ห่วง (Gartner Digital Business Technology Platform) ---------- */
+  .dbtp-wrap{margin:0 0 38px;}
+  .dbtp-cap{
+    font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:6px;
+  }
+  .dbtp-note{font-size:13px;color:var(--ink-soft);line-height:1.7;margin:0 0 22px;}
+  .dbtp-stage{
+    position:relative;width:100%;max-width:720px;aspect-ratio:1;margin:0 auto;
+  }
+  .dbtp-ring{
+    position:absolute;border-radius:50%;
+    border:2px solid var(--c);background:var(--bg);
+  }
+  /* ป้ายชื่อวางชิดด้านนอกของแต่ละวง ไม่ให้ทับวงกลางและไม่ชนกันเอง */
+  .dbtp-ring .r-label{position:absolute;width:74%;text-align:center;}
+  .dbtp-ring.tl .r-label{top:19%;left:13%;}
+  .dbtp-ring.tr .r-label{top:19%;right:13%;}
+  .dbtp-ring.bl .r-label{bottom:19%;left:13%;}
+  .dbtp-ring.br .r-label{bottom:19%;right:13%;}
+  .dbtp-ring.core .r-label{
+    top:50%;left:50%;transform:translate(-50%,-50%);width:82%;
+  }
+  .dbtp-ring .r-name{
+    font-size:clamp(11px,1.55vw,15px);font-weight:800;line-height:1.3;color:var(--c);
+  }
+  .dbtp-ring .r-th{
+    font-size:clamp(9px,1.15vw,11.5px);font-weight:500;line-height:1.45;
+    color:var(--ink-soft);margin-top:5px;
+  }
+  /* ห่วงรอบนอก 4 ใบ วางมุมละใบให้ซ้อนเข้าหากลาง */
+  .dbtp-ring.outer{width:50%;aspect-ratio:1;}
+  .dbtp-ring.tl{left:5%;top:5%;}
+  .dbtp-ring.tr{right:5%;top:5%;}
+  .dbtp-ring.bl{left:5%;bottom:5%;}
+  .dbtp-ring.br{right:5%;bottom:5%;}
+  /* ห่วงกลาง — ศูนย์กลางข้อมูล ทับอยู่บนสุด */
+  .dbtp-ring.core{
+    width:38%;aspect-ratio:1;left:31%;top:31%;z-index:2;
+    background:linear-gradient(150deg,var(--navy-900),var(--navy-950));
+    border-color:var(--navy-700);box-shadow:0 14px 36px rgba(12,23,48,.34);
+  }
+  .dbtp-ring.core .r-name{color:#fff;}
+  .dbtp-ring.core .r-th{color:#a9bcdd;}
+  /* จอแคบ: วงกลมอ่านไม่ออก เปลี่ยนเป็นการ์ดเรียงลงแทน */
+  @media (max-width:720px){
+    .dbtp-stage{aspect-ratio:auto;display:flex;flex-direction:column;gap:12px;max-width:460px;}
+    .dbtp-ring,.dbtp-ring.outer,.dbtp-ring.core{
+      position:static;width:auto;aspect-ratio:auto;border-radius:12px;
+      padding:16px 18px;border-left:5px solid var(--c);
+    }
+    .dbtp-ring .r-label,.dbtp-ring.core .r-label{
+      position:static;width:auto;transform:none;text-align:left;
+    }
+    .dbtp-ring.core{order:-1;border-left-color:var(--navy-700);}
+  }
+
   /* ---------- SECTION ของ PF2 / PF3 / PF4 ---------- */
   section.pfsec{padding:66px 0 58px;border-top:1px solid var(--line);}
   section.pfsec:nth-of-type(odd){background:var(--white);}
@@ -1476,6 +1533,37 @@
       [The Architecture — DE &amp; DBTP Core Products] แบ่งเป็น 2 ส่วนหลัก
       รายละเอียดของแต่ละส่วนจะทยอยเพิ่มเข้ามาในลำดับถัดไป
     </p>
+
+    <div class="dbtp-wrap">
+      <div class="dbtp-cap">DBTP · Digital Business Technology Platform</div>
+      <p class="dbtp-note">
+        กรอบ 5 แพลตฟอร์มตามแนวคิด DBTP ของ Gartner
+        โดยมี <b>Data and Analytics Platform</b> เป็นศูนย์กลางเชื่อมอีก 4 แพลตฟอร์มเข้าด้วยกัน
+      </p>
+
+      <div class="dbtp-stage">
+        <div class="dbtp-ring outer tl" style="--c:#2f6fb0;--bg:rgba(47,111,176,.09);">
+          <div class="r-label"><div class="r-name">Customer Engagement Platform</div>
+          <div class="r-th">แพลตฟอร์มการมีส่วนร่วมกับลูกค้า</div></div>
+        </div>
+        <div class="dbtp-ring outer tr" style="--c:#d9713b;--bg:rgba(217,113,59,.09);">
+          <div class="r-label"><div class="r-name">Ecosystems Platform</div>
+          <div class="r-th">แพลตฟอร์มระบบนิเวศ / พันธมิตร</div></div>
+        </div>
+        <div class="dbtp-ring core">
+          <div class="r-label"><div class="r-name">Data and Analytics Platform</div>
+          <div class="r-th">แพลตฟอร์มข้อมูลและการวิเคราะห์</div></div>
+        </div>
+        <div class="dbtp-ring outer bl" style="--c:#6a4f9e;--bg:rgba(106,79,158,.09);">
+          <div class="r-label"><div class="r-name">IoT Platform</div>
+          <div class="r-th">แพลตฟอร์ม Internet of Things</div></div>
+        </div>
+        <div class="dbtp-ring outer br" style="--c:#2f8f5b;--bg:rgba(47,143,91,.09);">
+          <div class="r-label"><div class="r-name">Information Systems Platform</div>
+          <div class="r-th">แพลตฟอร์มระบบสารสนเทศภายในองค์กร</div></div>
+        </div>
+      </div>
+    </div>
 
     <div class="sub-grid">
       <div class="sub-card">
