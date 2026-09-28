@@ -13,6 +13,7 @@ Digital Organization to Agentic Transformation
 .
 ├── digital-organization.html     # ฉบับเดิม — 5Ps Pyramid 7 Layers + PF Modals
 ├── digital-organization-r8.html  # ฉบับปรับปรุง R.8 — Odoo / PMIS-II Roadmap
+├── datacenter-cybersecurity.html # PF3 · New Data Center + Cyber Security (เข้าจากปุ่ม "คลิกดูข้อมูล" ใน PF3)
 ├── customer360.html              # PF3 · Data Management — Customer 360 (เข้าจากกล่อง Customer 360 ใน PF3)
 ├── dx-vertical-horizontal.html   # Objective — Digital Transformation แกนตั้ง × แกนนอน (เข้าจากปุ่มใน Objective)
 ├── index.html                    # redirect ไป digital-organization.html (สำหรับ URL ราก)

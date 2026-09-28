@@ -401,6 +401,23 @@
   .sub-pending.sub-ref{
     background:#eef3fb;border-color:#c5d8ef;color:#2f4b73;
   }
+  /* ป้ายที่กดเข้าไปดูหน้ารายละเอียดได้ — มีเอกสารแล้ว จึงใช้สีของ PF ไม่ใช่สีเตือน */
+  .sub-pending.sub-open{
+    display:inline-flex;align-items:center;gap:7px;
+    background:var(--white);border-color:var(--pf-color);color:var(--pf-color);
+    text-decoration:none;cursor:pointer;
+    transition:background .16s,color .16s,box-shadow .16s,transform .16s;
+  }
+  .sub-pending.sub-open:hover,.sub-pending.sub-open:focus-visible{
+    background:var(--pf-color);color:var(--white);
+    transform:translateY(-2px);box-shadow:0 6px 16px rgba(18,32,61,.18);
+  }
+  .sub-pending.sub-open .sp-go{font-size:13px;font-weight:800;transition:transform .16s;}
+  .sub-pending.sub-open:hover .sp-go{transform:translateX(3px);}
+  @media (prefers-reduced-motion:reduce){
+    .sub-pending.sub-open,.sub-pending.sub-open .sp-go{transition:none;}
+    .sub-pending.sub-open:hover{transform:none;}
+  }
   .pfsec-back{
     display:inline-flex;align-items:center;gap:7px;margin-top:30px;
     font-size:13px;font-weight:600;color:var(--ink-soft);text-decoration:none;
@@ -1739,7 +1756,8 @@
         <div class="sub-icon">🛡️</div>
         <h3>New Data Center + Cyber Security</h3>
         <p>ศูนย์ข้อมูลใหม่ พร้อมมาตรฐานความปลอดภัยของระบบเครือข่ายและข้อมูล</p>
-        <span class="sub-pending">⏳ รอเอกสารรายละเอียด</span>
+        <a class="sub-pending sub-open" href="./datacenter-cybersecurity.html"
+           title="เปิดหน้า New Data Center + Cyber Security">📄 คลิกดูข้อมูล<span class="sp-go">→</span></a>
       </div>
       <div class="sub-card">
         <div class="sub-icon">🗄️</div>
