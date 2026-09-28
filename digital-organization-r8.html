@@ -177,6 +177,8 @@
   .pf1-fold{margin:10px 0 6px;}
   .pf1-fold > summary{display:inline-block;}
   .pf1-fold > .fold-body{margin-top:24px;}
+  /* ตอน PMIS พับอยู่ เหลือแค่ปุ่มเดียว จึงไม่ต้องกินพื้นที่แนวตั้งเท่า section เต็ม */
+  section#pmis2:has(.pf1-fold:not([open])){padding:24px 0 22px;}
 
   /* ---------- DBTP 5 ห่วง (Gartner Digital Business Technology Platform) ---------- */
   .dbtp-wrap{margin:0 0 38px;}
@@ -1168,21 +1170,6 @@
     <!-- ============ OPTION C PANEL ============ -->
     <div class="opt-panel on" id="panelC">
 
-      <p style="font-size:13px;color:var(--ink-soft);line-height:1.75;margin:0 0 6px;">
-        แนวทางนี้อิงจากตาราง Timeline ล่าสุด (<b>PCC Group Odoo Roadmap v7</b>) จัดกลุ่มเป็น
-        <b>3 Phase หลัก</b> โดยเร่งให้ 5 บริษัท (PEM, PSL, PPP, PCC แยก, PDE) แล้วเสร็จพร้อมกันภายใน
-        <b>12/2570</b> ตามด้วย PSP เข้าระบบเต็มรูปแบบใน Phase 3 พร้อม <b>ทางเลือกเสริม (Optional)</b>
-        สำหรับปรับจังหวะการเข้าระบบของ PSP ตามประเด็นค่าเสื่อมระบบเดิมและเป้าหมายด้าน Operation
-      </p>
-      <p style="font-size:12px;color:var(--ink-soft);line-height:1.7;margin:0 0 8px;font-style:italic;">
-        หมายเหตุ: ก่อน PSP เข้าระบบ Odoo จริง (Phase 3) การปิดงบรวมใน Phase 2 (Console) ยังครบทุกนิติบุคคลได้
-        โดยดึงข้อมูลของ PSP มาจากระบบเดิม (Epicor) มา Console ร่วมกับ PCC ไปก่อน
-      </p>
-      <p style="font-size:11.5px;color:#8993ab;line-height:1.7;margin:0 0 26px;">
-        ทุก Phase มีทีมงานรับผิดชอบกำกับชัดเจน (Digital Process Owner · Project Owner · PM Team · Budget Owner)
-        แสดงไว้ท้ายการ์ดแต่ละ Phase ด้านล่าง — รายชื่อที่มี (TBC) ยังรอการยืนยันอย่างเป็นทางการ
-      </p>
-
       <details class="gov" style="margin-bottom:22px;background:#fdf6ec;border-color:#f0d9b5;">
         <summary style="font-size:15px;">
           <span><span style="display:inline-block;background:#c1852f;color:#fff;width:26px;height:26px;border-radius:50%;text-align:center;line-height:26px;font-size:13px;font-weight:800;margin-right:10px;">0</span>Phase 0 · Preparation &amp; Kick-off (12/2569)</span>
@@ -1311,7 +1298,7 @@
     <!-- ============ END OPTION C PANEL ============ -->
 
     <details class="opt-archive pf1-fold">
-      <summary>ดูรายละเอียด PSP และ Governance</summary>
+      <summary>ดูรายละเอียด PSP, Governance และสรุปข้อเสนอแนะ</summary>
       <div class="fold-body">
       <div class="callout" style="margin-top:28px;background:#eef3fb;border-color:#c9dcf3;border-left-color:var(--l3-pmis);">
       <h4 style="color:var(--l3-pmis);">ℹ️ สถานะปัจจุบันของ PSP — เหตุผลที่ต้องพิจารณา Timeline อย่างรอบคอบ</h4>
@@ -1455,21 +1442,21 @@
       </ul>
       </div>
       </details>
+
+      <!-- RECOMMENDATION -->
+      <div class="reco">
+      <h3>สรุปข้อเสนอแนะสำคัญ</h3>
+      <ol>
+      <li><b>PEM คือฐานราก</b> — ทุก Governance/Naming/COA Template ที่วางใน Phase 1 จะเป็นต้นแบบให้ทั้งกลุ่มตามมา ต้องให้เวลาและความรอบคอบที่สุด</li>
+      <li><b>Associate ไม่ต้องเข้าระบบ Odoo</b> — CI, SKB, SBF, NSPC จัดการผ่าน Investment Account/Equity Pickup ที่บริษัทแม่แทน ประหยัด Effort ได้มาก</li>
+      <li><b>PSP ควรมี Transaction Log กลาง</b> ระหว่างรอ Phase 2 เนื่องจากเป็นคู่ Transaction ที่หนักที่สุดของ PEM</li>
+      <li><b>PCC เปิดใช้งาน Consolidation เต็มรูปแบบใน Phase 3</b> เท่านั้น หลังบริษัทลูกทั้งหมด Stable</li>
+      <li><b>ยืนยันสถานะทางบัญชี</b> ของ SBP (NCI 24%) และ NSPC (39.43%) กับผู้สอบบัญชีก่อน Lock Architecture</li>
+      </ol>
+      </div>
       </div>
       </div>
     </details>
-
-    <!-- RECOMMENDATION -->
-    <div class="reco">
-      <h3>สรุปข้อเสนอแนะสำคัญ</h3>
-      <ol>
-        <li><b>PEM คือฐานราก</b> — ทุก Governance/Naming/COA Template ที่วางใน Phase 1 จะเป็นต้นแบบให้ทั้งกลุ่มตามมา ต้องให้เวลาและความรอบคอบที่สุด</li>
-        <li><b>Associate ไม่ต้องเข้าระบบ Odoo</b> — CI, SKB, SBF, NSPC จัดการผ่าน Investment Account/Equity Pickup ที่บริษัทแม่แทน ประหยัด Effort ได้มาก</li>
-        <li><b>PSP ควรมี Transaction Log กลาง</b> ระหว่างรอ Phase 2 เนื่องจากเป็นคู่ Transaction ที่หนักที่สุดของ PEM</li>
-        <li><b>PCC เปิดใช้งาน Consolidation เต็มรูปแบบใน Phase 3</b> เท่านั้น หลังบริษัทลูกทั้งหมด Stable</li>
-        <li><b>ยืนยันสถานะทางบัญชี</b> ของ SBP (NCI 24%) และ NSPC (39.43%) กับผู้สอบบัญชีก่อน Lock Architecture</li>
-      </ol>
-    </div>
 
   </div>
 </section>
@@ -1478,26 +1465,25 @@
 <section class="odoo" id="pmis2">
   <div class="wrap">
 
-    <div class="odoo-head">
-      <div class="seclabel"><div class="num" style="background:var(--l3-pmis);box-shadow:0 4px 10px rgba(47,111,176,.35);">📊</div>
-        <div class="eyebrow" style="color:var(--l3-pmis);">Level 3 · PMIS-II Corporate Performance Management</div>
-      </div>
-      <h2>PMIS-II Roadmap</h2>
-      <p>
-        แผนการพัฒนา PMIS-II ของกลุ่ม PCC เริ่มจากการทำ <b>Gap Analysis</b> เทียบระหว่างระบบ PMIS ปัจจุบันกับ
-        Odoo ERP โดยใช้กรอบ <b>PCF 13 Category</b> (Process Classification Framework) เป็นเกณฑ์เปรียบเทียบ
-        ก่อนเข้าสู่ขั้น Implementation จริงตาม Gap ที่พบ
-      </p>
-      <div class="odoo-scope">
-        <span class="chip" style="background:#e2edf9;color:var(--l3-pmis);border-color:rgba(47,111,176,.35);">PCF 13 Category</span>
-        <span class="chip" style="background:#e2edf9;color:var(--l3-pmis);border-color:rgba(47,111,176,.35);">Gap Analysis → Implementation</span>
-        <span class="chip" style="background:#e2edf9;color:var(--l3-pmis);border-color:rgba(47,111,176,.35);">3 Phase · ปีงบประมาณ 2569–2571</span>
-      </div>
-    </div>
-
     <details class="opt-archive pf1-fold">
-      <summary>ดูรายละเอียด PMIS-II Roadmap</summary>
+      <summary>PMIS-II Roadmap — ดูรายละเอียด</summary>
       <div class="fold-body">
+        <div class="odoo-head">
+          <div class="seclabel"><div class="num" style="background:var(--l3-pmis);box-shadow:0 4px 10px rgba(47,111,176,.35);">📊</div>
+            <div class="eyebrow" style="color:var(--l3-pmis);">Level 3 · PMIS-II Corporate Performance Management</div>
+          </div>
+          <h2>PMIS-II Roadmap</h2>
+          <p>
+            แผนการพัฒนา PMIS-II ของกลุ่ม PCC เริ่มจากการทำ <b>Gap Analysis</b> เทียบระหว่างระบบ PMIS ปัจจุบันกับ
+            Odoo ERP โดยใช้กรอบ <b>PCF 13 Category</b> (Process Classification Framework) เป็นเกณฑ์เปรียบเทียบ
+            ก่อนเข้าสู่ขั้น Implementation จริงตาม Gap ที่พบ
+          </p>
+          <div class="odoo-scope">
+            <span class="chip" style="background:#e2edf9;color:var(--l3-pmis);border-color:rgba(47,111,176,.35);">PCF 13 Category</span>
+            <span class="chip" style="background:#e2edf9;color:var(--l3-pmis);border-color:rgba(47,111,176,.35);">Gap Analysis → Implementation</span>
+            <span class="chip" style="background:#e2edf9;color:var(--l3-pmis);border-color:rgba(47,111,176,.35);">3 Phase · ปีงบประมาณ 2569–2571</span>
+          </div>
+        </div>
         <div class="mtimeline" style="grid-template-columns:repeat(3,1fr);margin-top:10px;">
 
           <!-- Phase 1 -->
