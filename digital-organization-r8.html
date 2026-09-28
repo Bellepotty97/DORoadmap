@@ -383,6 +383,19 @@
     line-height:1;transition:transform .16s;
   }
   .sub-item.is-link:hover .si-go{transform:translateX(3px);}
+  /* หัวการ์ดที่กดเข้าไปดูหน้ารายละเอียดได้ */
+  .sub-card h3 .h3-link{
+    display:inline-flex;align-items:baseline;gap:9px;
+    text-decoration:none;color:inherit;transition:color .16s;
+  }
+  .sub-card h3 .h3-go{
+    font-size:17px;font-weight:800;color:var(--pf-color);transition:transform .16s;
+  }
+  .sub-card h3 .h3-link:hover,.sub-card h3 .h3-link:focus-visible{color:var(--pf-color);}
+  .sub-card h3 .h3-link:hover .h3-go{transform:translateX(4px);}
+  @media (prefers-reduced-motion:reduce){
+    .sub-card h3 .h3-link,.sub-card h3 .h3-go{transition:none;}
+  }
   @media (prefers-reduced-motion:reduce){
     .sub-item.is-link,.sub-item .si-go{transition:none;}
     .sub-item.is-link:hover{transform:none;}
@@ -1791,13 +1804,12 @@
       </div>
       <div class="sub-card">
         <div class="sub-icon">🗄️</div>
-        <h3>Data Management</h3>
+        <h3><a class="h3-link" href="./data-management.html"
+               title="เปิดหน้า Data Management Platform">Data Management<span class="h3-go">→</span></a></h3>
         <p>การบริหารจัดการข้อมูลของกลุ่ม ประกอบด้วย 2 เรื่องหลัก</p>
         <div class="sub-items">
           <a class="sub-item is-link" href="./customer360.html" title="เปิดหน้า Customer 360 — Single View of Customer">Customer 360<span class="si-go">→</span></a>
-          <div class="sub-item">Datalake</div>
         </div>
-        <span class="sub-pending">⏳ รอเอกสารรายละเอียด</span>
       </div>
     </div>
 
