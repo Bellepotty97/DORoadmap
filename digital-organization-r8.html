@@ -160,6 +160,52 @@
   .pf1c{--pf-color:var(--pf1);} .pf2c{--pf-color:var(--pf2);}
   .pf3c{--pf-color:var(--pf3);} .pf4c{--pf-color:var(--pf4);}
 
+  /* ---------- SECTION ของ PF2 / PF3 / PF4 ---------- */
+  section.pfsec{padding:66px 0 58px;border-top:1px solid var(--line);}
+  section.pfsec:nth-of-type(odd){background:var(--white);}
+  section.pfsec.alt{background:var(--paper);}
+  .pfsec h2{font-size:clamp(24px,3vw,32px);font-weight:800;margin:10px 0 12px;color:var(--ink);}
+  .pfsec .pfsec-lead{
+    font-size:15px;font-weight:500;color:var(--ink-soft);
+    max-width:800px;line-height:1.8;margin:0 0 32px;
+  }
+  .sub-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+  .sub-grid.one{grid-template-columns:minmax(0,640px);}
+  @media (max-width:760px){.sub-grid,.sub-grid.one{grid-template-columns:1fr;}}
+  .sub-card{
+    background:var(--white);border:1px solid var(--line);border-radius:16px;
+    padding:26px 26px 22px;border-top:4px solid var(--pf-color);
+    box-shadow:0 2px 10px rgba(18,32,61,.04);
+    display:flex;flex-direction:column;
+  }
+  section.pfsec.alt .sub-card{background:var(--white);}
+  .sub-card .sub-icon{font-size:30px;line-height:1;margin-bottom:12px;}
+  .sub-card h3{font-size:19px;font-weight:800;margin:0 0 8px;color:var(--ink);line-height:1.35;}
+  .sub-card p{font-size:13.5px;font-weight:500;color:var(--ink-soft);line-height:1.75;margin:0 0 16px;}
+  /* รายการหัวข้อย่อยในกล่อง เช่น Customer 360 / Datalake */
+  .sub-items{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 16px;}
+  .sub-item{
+    background:var(--paper-2);border:1px solid var(--line);border-radius:9px;
+    padding:9px 14px;font-size:13.5px;font-weight:700;color:var(--ink);
+    display:flex;align-items:center;gap:8px;
+  }
+  .sub-item::before{
+    content:'';width:7px;height:7px;border-radius:50%;
+    background:var(--pf-color);opacity:.7;flex:0 0 auto;
+  }
+  /* ป้ายบอกว่ายังรอเนื้อหา */
+  .sub-pending{
+    margin-top:auto;align-self:flex-start;
+    background:#fff6e8;border:1px solid #f0d3a8;color:#8a5f1d;
+    font-size:11.5px;font-weight:700;padding:6px 13px;border-radius:999px;
+  }
+  .pfsec-back{
+    display:inline-flex;align-items:center;gap:7px;margin-top:30px;
+    font-size:13px;font-weight:600;color:var(--ink-soft);text-decoration:none;
+    border:1px solid var(--line);border-radius:9px;padding:8px 15px;background:var(--white);
+  }
+  .pfsec-back:hover{color:var(--ink);border-color:var(--ink-soft);}
+
   /* ---------- PYRAMID ---------- */
   section.pyramid{padding:70px 0 10px;}
   .pyr-l1{
@@ -583,19 +629,19 @@
         <div class="pf-id">PF2</div>
         <h3>Digital Technology &amp; Platform Ecosystem</h3>
         <div class="pf-note">[The Architecture — DE &amp; DBTP Core Products]</div>
-        <span class="pf-link" style="opacity:.55;">คลิกดู Document ▸</span>
+        <a class="pf-link" href="#pf2">คลิกดู Document ↓</a>
       </div>
       <div class="pf-card pf3c">
         <div class="pf-id">PF3</div>
         <h3>Digital Infrastructure</h3>
         <div class="pf-note">[The Foundation]</div>
-        <span class="pf-link" style="opacity:.55;">คลิกดู Detail ▸</span>
+        <a class="pf-link" href="#pf3">คลิกดู Detail ↓</a>
       </div>
       <div class="pf-card pf4c">
         <div class="pf-id">PF4</div>
         <h3>Intellectual Capital &amp; Agentic Transformation</h3>
         <div class="pf-note">[The Human–AI Bridge]</div>
-        <span class="pf-link" style="opacity:.55;">คลิกดู Roadmap ▸</span>
+        <a class="pf-link" href="#pf4">คลิกดู Roadmap ↓</a>
       </div>
     </div>
   </div>
@@ -1381,6 +1427,103 @@
       และคอลัมน์ Digital Process, Owner, PM และ Budget Owner ยังไม่ได้กำหนดผู้รับผิดชอบ — ใส่เป็น TBD ไว้ก่อน รอการยืนยันทีมงานที่เกี่ยวข้อง
     </p>
 
+  </div>
+</section>
+
+
+<!-- ============ PF2 ============ -->
+<section class="pfsec pf2c" id="pf2">
+  <div class="wrap">
+    <div class="seclabel">
+      <div class="num" style="background:var(--pf2);box-shadow:0 4px 10px rgba(47,143,91,.35);">2</div>
+      <div class="eyebrow" style="color:var(--pf2);">Project Function 2</div>
+    </div>
+    <h2>Digital Technology &amp; Platform Ecosystem</h2>
+    <p class="pfsec-lead">
+      [The Architecture — DE &amp; DBTP Core Products] แบ่งเป็น 2 ส่วนหลัก
+      รายละเอียดของแต่ละส่วนจะทยอยเพิ่มเข้ามาในลำดับถัดไป
+    </p>
+
+    <div class="sub-grid">
+      <div class="sub-card">
+        <div class="sub-icon">🏭</div>
+        <h3>Factory 4.0</h3>
+        <p>Smart Manufacturing — IoT, Automation และ Data Analytics บนสายการผลิต</p>
+        <span class="sub-pending">⏳ รอเอกสารรายละเอียด</span>
+      </div>
+      <div class="sub-card">
+        <div class="sub-icon">⚡</div>
+        <h3>DBTP : EMS</h3>
+        <p>ระบบอัจฉริยะเพื่อบริหารและควบคุมการใช้พลังงานและสาธารณูปโภค</p>
+        <span class="sub-pending">⏳ รอเอกสารรายละเอียด</span>
+      </div>
+    </div>
+
+    <a class="pfsec-back" href="#functions">← กลับไป Project Functions</a>
+  </div>
+</section>
+
+<!-- ============ PF3 ============ -->
+<section class="pfsec alt pf3c" id="pf3">
+  <div class="wrap">
+    <div class="seclabel">
+      <div class="num" style="background:var(--pf3);box-shadow:0 4px 10px rgba(47,111,176,.35);">3</div>
+      <div class="eyebrow" style="color:var(--pf3);">Project Function 3</div>
+    </div>
+    <h2>Digital Infrastructure</h2>
+    <p class="pfsec-lead">
+      [The Foundation] แบ่งเป็น 2 ส่วนหลัก
+      รายละเอียดของแต่ละส่วนจะทยอยเพิ่มเข้ามาในลำดับถัดไป
+    </p>
+
+    <div class="sub-grid">
+      <div class="sub-card">
+        <div class="sub-icon">🛡️</div>
+        <h3>New Data Center + Cyber Security</h3>
+        <p>ศูนย์ข้อมูลใหม่ พร้อมมาตรฐานความปลอดภัยของระบบเครือข่ายและข้อมูล</p>
+        <span class="sub-pending">⏳ รอเอกสารรายละเอียด</span>
+      </div>
+      <div class="sub-card">
+        <div class="sub-icon">🗄️</div>
+        <h3>Data Management</h3>
+        <p>การบริหารจัดการข้อมูลของกลุ่ม ประกอบด้วย 2 เรื่องหลัก</p>
+        <div class="sub-items">
+          <div class="sub-item">Customer 360</div>
+          <div class="sub-item">Datalake</div>
+        </div>
+        <span class="sub-pending">⏳ รอเอกสารรายละเอียด</span>
+      </div>
+    </div>
+
+    <a class="pfsec-back" href="#functions">← กลับไป Project Functions</a>
+  </div>
+</section>
+
+<!-- ============ PF4 ============ -->
+<section class="pfsec pf4c" id="pf4">
+  <div class="wrap">
+    <div class="seclabel">
+      <div class="num" style="background:var(--pf4);box-shadow:0 4px 10px rgba(106,79,158,.35);">4</div>
+      <div class="eyebrow" style="color:var(--pf4);">Project Function 4</div>
+    </div>
+    <h2>Intellectual Capital &amp; Agentic Transformation</h2>
+    <p class="pfsec-lead">
+      [The Human–AI Bridge] รายละเอียดของแต่ละส่วนจะทยอยเพิ่มเข้ามาในลำดับถัดไป
+    </p>
+
+    <div class="sub-grid one">
+      <div class="sub-card">
+        <div class="sub-icon">🌱</div>
+        <h3>Digital Mindset &amp; Culture</h3>
+        <p>
+          สรุปกิจกรรมด้าน Digital Mindset &amp; Culture ที่ดำเนินการไปแล้ว
+          — รอเติมรายการกิจกรรมและผลลัพธ์
+        </p>
+        <span class="sub-pending">⏳ รอเอกสารรายละเอียด</span>
+      </div>
+    </div>
+
+    <a class="pfsec-back" href="#functions">← กลับไป Project Functions</a>
   </div>
 </section>
 
