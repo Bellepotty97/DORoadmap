@@ -188,15 +188,12 @@
     position:absolute;border-radius:50%;
     border:2px solid var(--c);background:var(--bg);
   }
-  /* ป้ายชื่อวางชิดด้านนอกของแต่ละวง ไม่ให้ทับวงกลางและไม่ชนกันเอง */
-  .dbtp-ring .r-label{position:absolute;width:74%;text-align:center;}
-  .dbtp-ring.tl .r-label{top:19%;left:13%;}
-  .dbtp-ring.tr .r-label{top:19%;right:13%;}
-  .dbtp-ring.bl .r-label{bottom:19%;left:13%;}
-  .dbtp-ring.br .r-label{bottom:19%;right:13%;}
-  .dbtp-ring.core .r-label{
-    top:50%;left:50%;transform:translate(-50%,-50%);width:82%;
+  /* ป้ายชื่ออยู่กึ่งกลางทุกวง — ระยะห่างของวงถูกคำนวณให้ป้ายไม่ทับวงกลาง */
+  .dbtp-ring .r-label{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:68%;text-align:center;
   }
+  .dbtp-ring.core .r-label{width:84%;}
   .dbtp-ring .r-name{
     font-size:clamp(11px,1.55vw,15px);font-weight:800;line-height:1.3;color:var(--c);
   }
@@ -205,14 +202,14 @@
     color:var(--ink-soft);margin-top:5px;
   }
   /* ห่วงรอบนอก 4 ใบ วางมุมละใบให้ซ้อนเข้าหากลาง */
-  .dbtp-ring.outer{width:50%;aspect-ratio:1;}
-  .dbtp-ring.tl{left:5%;top:5%;}
-  .dbtp-ring.tr{right:5%;top:5%;}
-  .dbtp-ring.bl{left:5%;bottom:5%;}
-  .dbtp-ring.br{right:5%;bottom:5%;}
+  .dbtp-ring.outer{width:52%;aspect-ratio:1;}
+  .dbtp-ring.tl{left:0;top:0;}
+  .dbtp-ring.tr{right:0;top:0;}
+  .dbtp-ring.bl{left:0;bottom:0;}
+  .dbtp-ring.br{right:0;bottom:0;}
   /* ห่วงกลาง — ศูนย์กลางข้อมูล ทับอยู่บนสุด */
   .dbtp-ring.core{
-    width:38%;aspect-ratio:1;left:31%;top:31%;z-index:2;
+    width:33%;aspect-ratio:1;left:33.5%;top:33.5%;z-index:2;
     background:linear-gradient(150deg,var(--navy-900),var(--navy-950));
     border-color:var(--navy-700);box-shadow:0 14px 36px rgba(12,23,48,.34);
   }
