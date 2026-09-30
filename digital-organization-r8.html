@@ -383,6 +383,11 @@
     line-height:1;transition:transform .16s;
   }
   .sub-item.is-link:hover .si-go{transform:translateX(3px);}
+  /* กล่องที่ทั้งเสร็จแล้วและกดได้ — คง identity สีเขียวไว้ ไม่ให้ hover ล้างเป็นขาว */
+  .sub-item.is-done.is-link:hover,.sub-item.is-done.is-link:focus-visible{
+    background:#d9edE1;border-color:#2f8f5b;color:#17563a;
+  }
+  .sub-item.is-done .si-go{font-size:11px;color:#2f8f5b;}
   /* หัวการ์ดที่กดเข้าไปดูหน้ารายละเอียดได้ */
   .sub-card h3 .h3-link{
     display:inline-flex;align-items:baseline;gap:9px;
@@ -1766,7 +1771,10 @@
         <h3>DBTP : EMS</h3>
         <p>ระบบอัจฉริยะเพื่อบริหารและควบคุมการใช้พลังงานและสาธารณูปโภค</p>
         <div class="sub-items">
-          <div class="sub-item is-done">Phase 1 · PEM<span class="si-tag">เสร็จแล้ว</span></div>
+          <a class="sub-item is-done is-link"
+             href="https://preciseth.sharepoint.com/:v:/s/DBAPEM/IQBT_fNARxhrTJSXLFkJ0VekAeeshAFtg1wK1CFZbdT1B04?e=guFs1k"
+             target="_blank" rel="noopener"
+             title="เปิดวิดีโอนำร่อง EMS Phase 1 · PEM บน SharePoint (เปิดแท็บใหม่ — ต้องเข้าสู่ระบบ PRECISE)">Phase 1 · PEM<span class="si-tag">เสร็จแล้ว</span><span class="si-go">↗</span></a>
           <div class="sub-item">Phase 2 · PEM</div>
           <div class="sub-item">PCC</div>
         </div>
