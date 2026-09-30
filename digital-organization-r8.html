@@ -350,6 +350,28 @@
   .sub-card .sub-icon{font-size:30px;line-height:1;margin-bottom:12px;}
   .sub-card h3{font-size:19px;font-weight:800;margin:0 0 8px;color:var(--ink);line-height:var(--lh-head);}
   .sub-card p{font-size:13.5px;font-weight:500;color:var(--ink-soft);line-height:var(--lh-body);margin:0 0 16px;}
+  /* ภาพประกอบในการ์ด — กรอบเดียวกับ .sec-photo แต่ย่อสัดส่วนให้พอดีการ์ด */
+  .card-photo{margin:0 0 16px;}
+  .card-photo .ph-frame{
+    background:var(--paper-2);border:1px solid var(--line);
+    border-radius:12px;padding:7px;
+  }
+  /* ต้นฉบับเป็นสไลด์ 16:9 ที่มีขอบขาวบน-ล่างเยอะ ครอบเหลือแถบเนื้อหา (สองพาเนล)
+     ยึดที่ 78% เพราะกึ่งกลางของสองพาเนลอยู่ต่ำกว่ากึ่งกลางภาพ */
+  .card-photo img{
+    display:block;width:100%;height:auto;
+    aspect-ratio:7/3;object-fit:cover;object-position:center 78%;
+    border-radius:7px;background:var(--paper-2);
+  }
+  @media (max-width:640px){ .card-photo img{aspect-ratio:2/1;} }
+  .card-photo figcaption{
+    margin-top:9px;font-size:11.5px;font-weight:600;color:var(--ink-soft);
+    line-height:var(--lh-dense);display:flex;align-items:center;gap:7px;
+  }
+  .card-photo figcaption::before{
+    content:'';width:6px;height:6px;border-radius:50%;
+    background:var(--pf-color);flex:0 0 auto;
+  }
   /* รายการหัวข้อย่อยในกล่อง เช่น Customer 360 / Datalake */
   .sub-items{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 16px;}
   .sub-item{
@@ -1753,11 +1775,20 @@
       </div>
     </div>
 
-    <div class="sub-grid">
+    <div class="sub-grid stack">
       <div class="sub-card">
         <div class="sub-icon">🏭</div>
         <h3>Factory 4.0</h3>
         <p>Smart Manufacturing — IoT, Automation และ Data Analytics บนสายการผลิต</p>
+
+        <figure class="card-photo">
+          <div class="ph-frame">
+            <img src="./assets/pf2-factory40-asis-tobe.webp" width="1672" height="941" loading="lazy"
+                 alt="เทียบก่อน-หลัง: ซ้ายคือ AS IS พนักงานบรรจุและยกกล่องด้วยมือบนโต๊ะทำงาน ขวาคือหลังปรับปรุง หุ่นยนต์แขนกลหยิบกล่องลงสายพานลำเลียงอัตโนมัติ">
+          </div>
+          <figcaption>AS IS → Find Solution and Make it Happens</figcaption>
+        </figure>
+
         <div class="sub-items">
           <div class="sub-item">PEM</div>
           <div class="sub-item">PSL</div>

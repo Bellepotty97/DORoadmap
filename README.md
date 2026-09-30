@@ -20,7 +20,7 @@ Digital Organization to Agentic Transformation
 ├── dx-vertical-horizontal.html   # Objective — Digital Transformation แกนตั้ง × แกนนอน (เข้าจากปุ่มใน Objective)
 ├── index.html                    # redirect ไป digital-organization.html (สำหรับ URL ราก)
 ├── edit-mode.js                  # โหมดแก้ไขข้อความในหน้า (ใช้ร่วมกันทั้งสองหน้า)
-├── assets/                       # รูปประกอบ 8 ไฟล์
+├── assets/                       # รูปประกอบ 9 ไฟล์
 ├── .nojekyll                     # ปิด Jekyll processing บน GitHub Pages
 └── README.md
 ```
